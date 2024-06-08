@@ -1,8 +1,10 @@
 using System.IO;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
-namespace Ja2.Editor
+namespace Ja2
 {
 	/// <summary>
 	/// Settings used while developement.
@@ -37,7 +39,7 @@ namespace Ja2.Editor
 		{
 			get
 			{
-
+#if UNITY_EDITOR
 				// Not loaded yet
 				if(m_Instance is null)
 				{
@@ -53,13 +55,14 @@ namespace Ja2.Editor
 				// Still not found
 				if(m_Instance is null)
 					throw new FileNotFoundException("Cannor find dev settings asset.");
-
+#endif
 				return m_Instance;
 			}
 		}
 #endregion
 
 #region Methods Static
+#if UNITY_EDITOR
 		/// <summary>
 		/// Context menu asset creation.
 		/// </summary>
@@ -70,6 +73,7 @@ namespace Ja2.Editor
 				"Ja2SettingsDev.asset"
 			);
 		}
+#endif
 #endregion
 
 #region Construction
