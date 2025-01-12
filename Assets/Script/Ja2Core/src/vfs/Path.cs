@@ -74,6 +74,11 @@ namespace Ja2.Vfs
 		/// Path length.
 		/// </summary>
 		public int length => m_Path.Length;
+
+		/// <summary>
+		/// Path value.
+		/// </summary>
+		public string value => m_Path;
 #endregion
 
 #region Methods
