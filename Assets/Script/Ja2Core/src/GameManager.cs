@@ -157,6 +157,17 @@ namespace Ja2
 						0
 					) == 1;
 
+			Ja2Logger.LogInfo("Initializing Input Manager");
+
+			// Initialize the Input Manager
+			if(!InputManager.Init())
+			{
+				// We were unable to initialize the input manager
+				Ja2Logger.LogWarning("FAILED : Initializing Input Manager");
+				
+				return false;
+			}
+
 				}
 			}
 			return true;
