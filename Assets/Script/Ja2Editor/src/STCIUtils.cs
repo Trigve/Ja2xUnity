@@ -147,6 +147,20 @@ namespace Ja2.Editor
 						reader.ReadBytes(stored_size),
 						0
 					);
+
+					// Need to invert pixels
+					var pixels_orig = texture.GetPixels32();
+					var pixels_flipped = new Color32[pixels_orig.Length];
+
+					// Invert the pixels vertically
+					for(var x = 0; x < texture.width; x++)
+					{
+						for(var y = 0; y < texture.height; y++)
+							pixels_flipped[x + y * texture.width] = pixels_orig[x + (texture.height - y - 1) * texture.width];
+					}
+
+					texture.SetPixels32(pixels_flipped);
+
 					texture.Apply();
 
 					ret.m_SubImageData.Add(
