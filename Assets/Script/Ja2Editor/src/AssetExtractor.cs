@@ -15,15 +15,16 @@ namespace Ja2.Editor
 	    /// Extract the asset from the given data.
 	    /// </summary>
 	    /// <param name="Data"></param>
-	    /// <param name="FilePath"></param>
-	    public static void Extract(byte[] Data, string FilePath)
+	    /// <param name="PathInput"></param>
+	    /// <param name="PathDirOutput">Output directory path</param>
+	    public static void Extract(byte[] Data, string PathInput, string PathDirOutput)
 	    {
 		    // Root path
-		    string root_path = Directory.GetParent(FilePath)!.Name;
+		    string root_path = Directory.GetParent(PathInput)!.Name;
 		    // File name
-		    string file_name = Path.GetFileName(FilePath).ToLower();
+		    string file_name = Path.GetFileName(PathInput).ToLower();
 			// File extension
-            string file_ext = Path.GetExtension(FilePath).ToLower();
+            string file_ext = Path.GetExtension(PathInput).ToLower();
 
             // Process file by extension
             if(file_ext == ".sti")
@@ -31,8 +32,8 @@ namespace Ja2.Editor
             	STCIData stci_data = STCIUtils.Load(Data);
 
             	// File name for the asset
-            	string stci_file_path = Path.Combine(SettingsDev.instance.m_DataDir,
-		            FilePath,
+            	string stci_file_path = Path.Combine(PathDirOutput,
+		            PathInput,
 		            file_name
             	);
 
@@ -52,7 +53,7 @@ namespace Ja2.Editor
 
             		// Create the texture description
             		var sprite_so = AssetTexture.Create();
-            		sprite_so.m_NameOrig = Path.GetFileName(FilePath).ToLower();
+            		sprite_so.m_NameOrig = Path.GetFileName(PathInput).ToLower();
             		sprite_so.m_Width = stci_data.m_Width;
             		sprite_so.m_Height = stci_data.m_Height;
 

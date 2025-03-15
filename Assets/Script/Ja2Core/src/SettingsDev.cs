@@ -1,4 +1,5 @@
 using System.IO;
+
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,6 +22,11 @@ namespace Ja2
 		/// Data directory used.
 		/// </summary>
 		public string m_DataDir = string.Empty;
+
+		/// <summary>
+		/// Directory used for extracting the .SLF to.
+		/// </summary>
+		public string m_SlfExtractDir = string.Empty;
 #endregion
 
 #region Fields Static

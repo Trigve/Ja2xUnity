@@ -26,7 +26,8 @@ namespace Ja2.Editor
 				foreach(FileData file_data in SlfManager.ExtractPath(it))
 				{
 					AssetExtractor.Extract(file_data.data,
-						file_data.path
+						file_data.path,
+						SettingsDev.instance.m_SlfExtractDir
 					);
 				}
 			}
