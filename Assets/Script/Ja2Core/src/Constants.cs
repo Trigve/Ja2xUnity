@@ -15,6 +15,11 @@ namespace Ja2
 		/// LF.
 		/// </summary>
 		public const char LineFeed = '\n';
+
+		/// <summary>
+		/// Empty string as constant.
+		/// </summary>
+		public const string StringEmpty = "";
 #endregion
 
 #region File Names
