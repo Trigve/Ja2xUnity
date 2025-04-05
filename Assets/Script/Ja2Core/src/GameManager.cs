@@ -10,10 +10,25 @@ namespace Ja2
 	/// </summary>
 	public sealed class GameManager : MonoBehaviour
 	{
+#region Fields
+		/// <summary>
+		/// Was system initialized.
+		/// </summary>
+		private bool m_WasInit;
+
+		/// <summary>
+		/// Mouse system manager.
+		/// </summary>
+		/// <returns></returns>
+		private MouseSystemManager? m_MouseSystemManager;
+#endregion
+
 #region Messages
 		/// See unity.
 		public void Start()
 		{
+			m_MouseSystemManager = new MouseSystemManager();
+
 			RandomManager.Init();
 
 			ProcessJa2CommandLineBeforeInitialization();
@@ -170,6 +185,11 @@ namespace Ja2
 				return false;
 
 			}
+			
+			m_MouseSystemManager!.Init();
+
+
+			m_WasInit = true;
 
 			return true;
 		}
