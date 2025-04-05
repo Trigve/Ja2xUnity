@@ -156,6 +156,8 @@ namespace Ja2
 						Constants.IniKeyDisableMouseScrolling,
 						0
 					) == 1;
+				}
+			}
 
 			Ja2Logger.LogInfo("Initializing Input Manager");
 
@@ -164,12 +166,11 @@ namespace Ja2
 			{
 				// We were unable to initialize the input manager
 				Ja2Logger.LogWarning("FAILED : Initializing Input Manager");
-				
+
 				return false;
+
 			}
 
-				}
-			}
 			return true;
 		}
 #endregion
