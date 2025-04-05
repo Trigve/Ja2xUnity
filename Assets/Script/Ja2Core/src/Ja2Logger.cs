@@ -52,6 +52,18 @@ namespace Ja2
 		{
 			Debug.LogFormat("VFS: " + Message, Args);
 		}
+
+		/// <summary>
+        /// Sound log.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Args"></param>
+        [Conditional("JA2_VFS_DEBUG")]
+        [StringFormatMethod("Message")]
+        internal static void LogSound(string Message, params object[] Args)
+        {
+        	Debug.LogFormat("Sound: " + Message, Args);
+        }
 #endregion
 	}
 }
