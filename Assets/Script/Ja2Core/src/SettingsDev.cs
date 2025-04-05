@@ -27,6 +27,11 @@ namespace Ja2
 		/// Directory used for extracting the .SLF to.
 		/// </summary>
 		public string m_SlfExtractDir = string.Empty;
+
+		/// <summary>
+		/// Directory with user saved data.
+		/// </summary>
+		public string m_UserDir = string.Empty;
 #endregion
 
 #region Fields Static
