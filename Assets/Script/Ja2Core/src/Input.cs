@@ -1,5 +1,7 @@
 using System;
 
+using UnityEngine;
+
 namespace Ja2
 {
 	/// <summary>
@@ -145,5 +147,188 @@ namespace Ja2
 		/// </summary>
 		[HistoricName("X2_BUTTON_REPEAT")]
 		ButtonX2Repeat = 0x8060,
+	}
+
+	/// <summary>
+	/// Special input keys.
+	/// </summary>
+	public enum InputKeySpecial
+	{
+		[HistoricName("BACKSPACE")]
+		Backspace = KeyCode.Backspace,
+
+		[HistoricName("TAB")]
+		Tab = KeyCode.Tab,
+
+		[HistoricName("ENTER")]
+		Enter = KeyCode.Return,
+
+		[HistoricName("PAUSE")]
+		Pause = KeyCode.Pause,
+
+		[HistoricName("ESC")]
+		Escape = KeyCode.Escape,
+
+		[HistoricName("SPACE")]
+		Space = KeyCode.Space,
+
+		[HistoricName("COMMA")]
+		Comma = KeyCode.Comma,
+
+		[HistoricName("DEL")]
+		Delete = KeyCode.Delete,
+
+		[HistoricName("UPARROW")]
+		UpArrow = KeyCode.UpArrow,
+
+		[HistoricName("DNARROW")]
+		DownArrow = KeyCode.DownArrow,
+
+		[HistoricName("RIGHTARROW")]
+		RightArrow = KeyCode.RightArrow,
+
+		[HistoricName("LEFTARROW")]
+		LeftArrow = KeyCode.LeftArrow,
+
+		[HistoricName("INSERT")]
+		Insert = KeyCode.Insert,
+
+		[HistoricName("HOME")]
+		Home = KeyCode.Home,
+
+		[HistoricName("END")]
+		End = KeyCode.End,
+
+		[HistoricName("PGUP")]
+		PageUp = KeyCode.PageUp,
+
+		[HistoricName("PGDN")]
+		PageDown = KeyCode.PageDown,
+
+		F1 = KeyCode.F1,
+
+		F2 = KeyCode.F2,
+
+		F3 = KeyCode.F3,
+
+		F4 = KeyCode.F4,
+
+		F5 = KeyCode.F5,
+
+		F6 = KeyCode.F6,
+
+		F7 = KeyCode.F7,
+
+		F8 = KeyCode.F8,
+
+		F9 = KeyCode.F9,
+
+		F10 = KeyCode.F10,
+
+		F11 = KeyCode.F11,
+
+		F12 = KeyCode.F12,
+
+		[HistoricName("NUM_LOCK")]
+		NumLock = KeyCode.Numlock,
+
+		[HistoricName("CAPS")]
+		CapsLock = KeyCode.CapsLock,
+
+		[HistoricName("SCRL_LOCK")]
+		ScrollLock = KeyCode.ScrollLock,
+
+		[HistoricName("SHIFT")]
+		ShiftR = KeyCode.RightShift,
+
+		[HistoricName("SHIFT")]
+		ShiftL = KeyCode.LeftShift,
+
+		[HistoricName("CTRL")]
+		ControlR = KeyCode.RightControl,
+
+		[HistoricName("CTRL")]
+		ControlL = KeyCode.LeftControl,
+
+		[HistoricName("ALT")]
+		AltR = KeyCode.RightAlt,
+
+		[HistoricName("ALT")]
+		AltL = KeyCode.LeftAlt,
+
+		[HistoricName("SNAPSHOT")]
+		PrintScreen = KeyCode.Print,
+//x		FULLSTOP = 190,
+	}
+
+	/// <summary>
+	/// Key state.
+	/// </summary>
+	[Flags]
+	public enum InputKeyState
+	{
+		None = 0,
+		/// "CONTROL" was pressed down.
+		Control = 1,
+		/// "ALT" was pressed down.
+		Alt = 1 << 1,
+		/// "SHIFT" was pressed down.
+		Shift = 1 << 2,
+	}
+	/// <summary>
+	/// Input event definition.
+	/// </summary>
+	public readonly struct InputAtom
+	{
+#region Properties
+		/// <summary>
+		/// Event time stmap.
+		/// </summary>
+		[HistoricName("uiTimeStamp")]
+		public double timeStamp { get; }
+
+		/// <summary>
+		/// Key state.
+		/// </summary>
+		[HistoricName("usKeyState")]
+		public InputKeyState keyState { get; }
+
+		/// <summary>
+		/// Event type.
+		/// </summary>
+		[HistoricName("usEvent")]
+		public InputAction eventType { get; }
+
+		/// <summary>
+		/// Custom parameter 1.
+		/// </summary>
+		[HistoricName("usParam")]
+		public object param1 { get; }
+
+		/// <summary>
+		/// Custom parameter 2.
+		/// </summary>
+		[HistoricName("uiParam")]
+		public object param2 { get; }
+#endregion
+
+#region Construction
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="TimeStamp">See <see cref="timeStamp"/></param>
+		/// <param name="KeyState"></param>
+		/// <param name="EventType"></param>
+		/// <param name="Param1"></param>
+		/// <param name="Param2"></param>
+		public InputAtom(double TimeStamp, InputKeyState KeyState, InputAction EventType, object Param1, object Param2)
+		{
+			timeStamp = TimeStamp;
+			keyState = KeyState;
+			eventType = EventType;
+			param1 = Param1;
+			param2 = Param2;
+		}
+#endregion
 	}
 }
