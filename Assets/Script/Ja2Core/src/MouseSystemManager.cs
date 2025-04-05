@@ -338,6 +338,7 @@ namespace Ja2
 		/// <param name="LeftButton"></param>
 		/// <param name="RightButton"></param>
 		[HistoricName("MSYS_SGP_Mouse_Handler_Hook")]
+		[HistoricName("MouseSystemHook")]
 		public void MouseHandlerHook(InputAction Type, ushort Xcoord, ushort Ycoord, bool LeftButton, bool RightButton)
 		{
 			// If we're not using the handler stuff, ignore this call
