@@ -3,7 +3,7 @@ namespace Ja2.Vfs
 	/// <summary>
 	/// Virtual file system manager.
 	/// </summary>
-	internal static class VfsManager
+	internal class VfsManager : ScopedSingleton<VfsManager>
 	{
 #region Methods
 		/// <summary>
@@ -11,7 +11,7 @@ namespace Ja2.Vfs
 		/// </summary>
 		/// <param name="LocalFilePath"></param>
 		/// <returns></returns>
-		public static File OpenFileRegular(in Path LocalFilePath)
+		public File OpenFileRegular(in Path LocalFilePath)
 		{
 			Ja2Logger.LogVfs("Open file: {0}",
 				LocalFilePath

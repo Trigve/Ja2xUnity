@@ -30,6 +30,7 @@ namespace Ja2
 			m_MouseSystemManager = new MouseSystemManager();
 
 			RandomManager.Init();
+			Vfs.VfsManager.Init();
 
 			ProcessJa2CommandLineBeforeInitialization();
 

@@ -9,7 +9,7 @@ namespace Ja2
 	/// <summary>
 	/// Random manager.
 	/// </summary>
-	public static class RandomManager
+	internal class RandomManager : ScopedSingleton<RandomManager>
 	{
 #region Constants
 		/// IMPORTANT: Changing this define will invalidate the JA2 save.
@@ -21,39 +21,25 @@ namespace Ja2
 
 #region Fields
 		/// Pre-generated random numbers.
-		private static readonly int[] guiPreRandomNums = new int[MaxPregeneratedNums];
+		private readonly int[] guiPreRandomNums = new int[MaxPregeneratedNums];
 
 		/// Last generated random vaue;
-		private static int m_Rnd;
+		private int m_Rnd;
 
 		/// Random numbers generated so far.
-		private static uint m_Cnt;
+		private uint m_Cnt;
 
 		/// Pre-generated random number index.
-		private static uint m_PreRandomIndex;
+		private uint m_PreRandomIndex;
 #endregion
 
 #region Methods Static
-		/// <summary>
-		/// Initialize the random manager.
-		/// </summary>
-		public static void Init()
-		{
-			Debug.Log("Initializing Random");
-
-			// Pregenerate all the random numbers.
-			for(var i = 0; i < MaxPregeneratedNums; ++i)
-				guiPreRandomNums[i] = GetRndNum(int.MaxValue);
-
-			m_PreRandomIndex = 0;
-		}
-
 		/// <summary>
 		/// Generate the random number.
 		/// </summary>
 		/// <param name="MaxNum">Maximum number to generate.</param>
 		/// <returns></returns>
-		private static int GetRndNum(int MaxNum)
+		private int GetRndNum(int MaxNum)
 		{
 			// \TODO handle network server/client
 
@@ -79,6 +65,24 @@ namespace Ja2
 			}
 
 			return ret;
+		}
+#endregion
+
+#region Construction
+		/// <summary>
+		/// Initialize the random manager.
+		/// </summary>
+		public static new void Init()
+		{
+			ScopedSingleton<RandomManager>.Init();
+
+			Debug.Log("Initializing Random");
+
+			// Pregenerate all the random numbers.
+			for(var i = 0; i < MaxPregeneratedNums; ++i)
+				instance.guiPreRandomNums[i] = instance.GetRndNum(int.MaxValue);
+
+			instance.m_PreRandomIndex = 0;
 		}
 #endregion
 	}

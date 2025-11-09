@@ -9,7 +9,7 @@ namespace Ja2
 	/// <summary>
 	/// Input manager.
 	/// </summary>
-	internal class InputManager
+	internal class InputManager : ScopedSingleton<InputManager>
 	{
 #region Constants
 		/// <summary>
@@ -38,13 +38,6 @@ namespace Ja2
 		/// Queue max capacity.
 		/// </summary>
 		private const int QueueCapacity = 256;
-#endregion
-
-#region Fields Static
-		/// <summary>
-		/// Singleton instance.
-		/// </summary>
-		private static InputManager? m_Instance;
 #endregion
 
 #region Fields
@@ -107,13 +100,6 @@ namespace Ja2
 		/// </summary>
 		[HistoricName("guiSingleClickTimer")]
 		private double m_SingleClickTimer;
-#endregion
-
-#region Properties Static
-		/// <summary>
-		/// Singletong instance.
-		/// </summary>
-		public static InputManager instance => m_Instance!;
 #endregion
 
 #region Properties
@@ -500,32 +486,31 @@ namespace Ja2
 		/// Initalization.
 		/// </summary>
 		/// <returns></returns>
-		public static bool Init()
+		public static new void Init()
 		{
-			m_Instance ??= new InputManager();
+			ScopedSingleton<InputManager>.Init();
 
 
 			// Initialize the Event Queue
-			m_Instance.m_EventQueue.Clear();
+			instance.m_EventQueue.Clear();
 
 			// Initialize other variables
-			m_Instance.isShiftPressed = false;
-			m_Instance.isAltPressed = false;
-			m_Instance.isCtrlPressed = false;
+			instance.isShiftPressed = false;
+			instance.isAltPressed = false;
+			instance.isCtrlPressed = false;
 
 			// Initialize variables pertaining to DOUBLE CLIK stuff
-			m_Instance.m_SingleClickTimer = 0;
 
 			// Initialize variables pertaining to the button states
-			m_Instance.isMouseButtonLeftDown = false;
-			m_Instance.isMouseButtonRightDown = false;
+			instance.isMouseButtonLeftDown = false;
+			instance.isMouseButtonRightDown = false;
 
-			m_Instance.m_ButtonLeftRepeatTimer = 0;
-			m_Instance.m_ButtonRightRepeatTimer = 0;
+			instance.m_ButtonLeftRepeatTimer = 0;
+			instance.m_ButtonRightRepeatTimer = 0;
+
 
 			// Initialize the string input mechanism
-			m_Instance.m_IsCurrentStringInputState = false;
-			return true;
+			instance.m_IsCurrentStringInputState = false;
 		}
 #endregion
 	}
