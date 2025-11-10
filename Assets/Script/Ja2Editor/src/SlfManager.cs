@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using UnityEngine.Assertions;
 
 namespace Ja2.Editor
@@ -53,7 +54,6 @@ namespace Ja2.Editor
 			// Get library path
 			string lib_path = ReadString(
 				slf_reader.ReadBytes(FilenameSize)
-
 			);
 
 			// Skip the delimiter

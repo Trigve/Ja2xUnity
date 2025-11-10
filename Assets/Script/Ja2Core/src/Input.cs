@@ -275,6 +275,7 @@ namespace Ja2
 		/// "SHIFT" was pressed down.
 		Shift = 1 << 2,
 	}
+
 	/// <summary>
 	/// Input event definition.
 	/// </summary>
