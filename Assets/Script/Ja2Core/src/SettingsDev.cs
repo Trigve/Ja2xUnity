@@ -32,6 +32,11 @@ namespace Ja2
 		/// Directory with user saved data.
 		/// </summary>
 		public string m_UserDir = string.Empty;
+
+		/// <summary>
+		/// Directory for the utilities.
+		/// </summary>
+		public string m_BinDir = string.Empty;
 #endregion
 
 #region Fields Static
