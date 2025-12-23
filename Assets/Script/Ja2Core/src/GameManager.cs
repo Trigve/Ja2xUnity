@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-
 using UnityEngine;
 
 namespace Ja2
@@ -10,189 +7,79 @@ namespace Ja2
 	/// </summary>
 	public sealed class GameManager : MonoBehaviour
 	{
-#region Fields
+#region Fields Component
 		/// <summary>
-		/// Was system initialized.
+		/// Game state singleton.
 		/// </summary>
-		private bool m_WasInit;
-
-		/// <summary>
-		/// Mouse system manager.
-		/// </summary>
-		/// <returns></returns>
-		private MouseSystemManager? m_MouseSystemManager;
+		[SerializeField]
+		private GameState m_GameState = null!;
 #endregion
 
 #region Messages
 		/// See unity.
-		public void Start()
+		public void Update()
 		{
-			m_MouseSystemManager = new MouseSystemManager();
+			Vector3 MousePos = m_GameState.inputManager.mousePosition;
 
-			RandomManager.Init();
-			Vfs.VfsManager.Init();
+			m_GameState.inputManager.Update();
 
-			ProcessJa2CommandLineBeforeInitialization();
 
-			// Inititialize the SGP
-			if(!InitializeStandardGamingPlatform())
-			{
-				// Ffailed to initialize the SGP
-				Application.Quit(-1);
-			}
-		}
-#endregion
 
-#region Methods
-		/// <summary>
-		/// Process JA2 command line before initializtion is done.
-		/// </summary>
-		private void ProcessJa2CommandLineBeforeInitialization()
-		{
-			// Get all arguments
-			foreach(string token_upper in Environment.GetCommandLineArgs().Select(Token => Token.ToUpperInvariant()))
-			{
-				// "NO SOUND" option
-				if(token_upper == "/NOSOUND")
-				{
-					// Disable the sound
-					Ja2Settings.isSoundEnabled = false;
-				}
-				else if(token_upper == "/FULLSCREEN")
-				{
-					// Overwrite Graphic setting from JA2_settings.ini
-					Ja2Settings.windowMode = Ja2Settings.WindowMode.Fullscreen;
-					Ja2Settings.cmdWindowMode = true;
-
-					// no resolution read from Args. Still from INI, but could be added here, too...
-				}
-				else if(token_upper == "/WINDOW")
-				{
-					// Overwrite Graphic setting from JA2_settings.ini
-					Ja2Settings.windowMode = Ja2Settings.WindowMode.Windowed;
-					Ja2Settings.cmdWindowMode = true;
-					// \TODO No resolution read from Args. Still from INI, but could be added here, too...
-				}
-			}
-		}
-		/// <summary>
-		/// Initialize SGP.
-		/// </summary>
-		/// <returns></returns>
-		private bool InitializeStandardGamingPlatform()
-		{
-
-			// Open the game config file
-			Vfs.File file_game_ini = Vfs.VfsManager.OpenFileRegular(
-				new Vfs.Path(Constants.GameIniFile)
+			// Hook into mouse stuff for MOVEMENT MESSAGES
+			m_GameState.mouseSystemManager.MouseHandlerHook(InputAction.MousePos,
+				(ushort)MousePos.x,
+				(ushort)MousePos.y,
+				m_GameState.inputManager.isMouseButtonLeftDown,
+				m_GameState.inputManager.isMouseButtonRightDown
 			);
-			if(file_game_ini.AsReadable(out Vfs.IFileReadable file_game_ini_stream))
+
+
+			while(
+				m_GameState.inputManager.DequeueSpecificEvent(InputAction.ButtonLeftRepeat | InputAction.ButtonRightRepeat | InputAction.ButtonLeftDown | InputAction.ButtonLeftUp | InputAction.ButtonMiddleUp | InputAction.ButtonX1Up | InputAction.ButtonX2Up | InputAction.ButtonRightDown | InputAction.ButtonRightUp | InputAction.ButtonMiddleDown | InputAction.ButtonX1Down | InputAction.ButtonX2Down | InputAction.MouseWheelUp | InputAction.MouseWheelDown,
+						out var input_event
+				)
+			)
 			{
-				using (file_game_ini_stream)
+				// HOOK INTO MOUSE HOOKS
+				m_GameState.mouseSystemManager.MouseHandlerHook(input_event!.Value.eventType,
+					(ushort)MousePos.x,
+					(ushort)MousePos.y,
+					m_GameState.inputManager.isMouseButtonLeftDown,
+					m_GameState.inputManager.isMouseButtonRightDown
+				);
+			}
+
+			{
+
+			}
+
+			{
 				{
-					// Read in settings
-					var oProps = new IniParser(file_game_ini_stream);
 
 
-					string loc = oProps.getStringProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyLocale
-					);
-					if(loc.Length > 0)
 					{
 					}
 
-					long iResolution = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyScreenResolution,
-						-1
-					);
-
-					// Is windowed mdoe
-					if(oProps.getIntProperty(Constants.IniSectionJa2Settings, Constants.IniKeyScreenModeWindowed, -1) == 1)
-						Ja2Settings.windowMode = Ja2Settings.WindowMode.Windowed;
-
-					// Window mode should be maximized
-					Ja2Settings.isWindowedModeMaximized = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyScreenModeWindowedMaximized,
-						-1
-					) == 1;
 
 
-					var res_x = 1920;
-					var res_y = 1080;
-
-					// \TODO Minimal resolution should be 1920x1080?
-					switch(iResolution)
-					{
-					case 25:
-						res_x = Mathf.Max(
-							(int)oProps.getIntProperty(Constants.IniSectionJa2Settings,
-								Constants.IniKeyScreenResolutionX,
-								-1
-							),
-							1920
-						);
-						res_y = Math.Max(
-							(int)oProps.getIntProperty(Constants.IniSectionJa2Settings,
-								Constants.IniKeyScreenResolutionY,
-								-1
-							),
-							1080
-						);
-						break;
-					// 1920x1080
-					default:
-						res_x = 1920;
-						res_y = 1080;
-						break;
-					}
-
-					if(Ja2Settings.windowMode == Ja2Settings.WindowMode.Windowed && Ja2Settings.isWindowedModeMaximized)
-					{
-					}
-
-					Ja2Settings.screenWidth = res_x;
-					Ja2Settings.screenHeight = res_y;
 
 
-					Ja2Settings.playIntro = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyPlayIntro,
-						1
-					) == 1;
 
-					float fTooltipScaleFactor = ((float)oProps.getFloatProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyTooltipScaleFactor,
-						100)
-					) / 100;
-					if(fTooltipScaleFactor < 1)
-						fTooltipScaleFactor = 1;
 
-					Ja2Settings.tooltipScaleFactor = fTooltipScaleFactor;
 
-					Ja2Settings.disableMouseScroll = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyDisableMouseScrolling,
-						0
-					) == 1;
-				}
+
+
+
+
+
 			}
 
-			Ja2Logger.LogInfo("Initializing Input Manager");
-
-			// Initialize the Input Manager
-			if(!InputManager.Init())
-			{
-				// We were unable to initialize the input manager
-				Ja2Logger.LogWarning("FAILED : Initializing Input Manager");
-
-				return false;
-
-			}
-			
-			m_MouseSystemManager!.Init();
 
 
-			m_WasInit = true;
 
-			return true;
+
+
+
 		}
 #endregion
 	}

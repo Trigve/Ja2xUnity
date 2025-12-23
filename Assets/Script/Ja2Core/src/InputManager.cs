@@ -9,7 +9,8 @@ namespace Ja2
 	/// <summary>
 	/// Input manager.
 	/// </summary>
-	internal class InputManager : ScopedSingleton<InputManager>
+	[CreateAssetMenu(menuName = "JA2/Create Input Manager", fileName = "InputManager")]
+	public sealed class InputManager : ScriptableObjectManager<InputManager>
 	{
 #region Constants
 		/// <summary>
@@ -482,35 +483,32 @@ namespace Ja2
 #endregion
 
 #region Construction
-		/// <summary>
-		/// Initalization.
-		/// </summary>
-		/// <returns></returns>
-		public static new void Init()
+		/// <inheritdoc />
+		protected override void DoInitialize(params object[] Params)
 		{
-			ScopedSingleton<InputManager>.Init();
-
+			Ja2Logger.LogInfo("Initializing Input Manager ...");
 
 			// Initialize the Event Queue
-			instance.m_EventQueue.Clear();
+			m_EventQueue.Clear();
+
 
 			// Initialize other variables
-			instance.isShiftPressed = false;
-			instance.isAltPressed = false;
-			instance.isCtrlPressed = false;
+			isShiftPressed = false;
+			isAltPressed = false;
+			isCtrlPressed = false;
 
 			// Initialize variables pertaining to DOUBLE CLIK stuff
 
 			// Initialize variables pertaining to the button states
-			instance.isMouseButtonLeftDown = false;
-			instance.isMouseButtonRightDown = false;
+			isMouseButtonLeftDown = false;
+			isMouseButtonRightDown = false;
 
-			instance.m_ButtonLeftRepeatTimer = 0;
-			instance.m_ButtonRightRepeatTimer = 0;
+			m_ButtonLeftRepeatTimer = 0;
+			m_ButtonRightRepeatTimer = 0;
 
 
 			// Initialize the string input mechanism
-			instance.m_IsCurrentStringInputState = false;
+			m_IsCurrentStringInputState = false;
 		}
 #endregion
 	}

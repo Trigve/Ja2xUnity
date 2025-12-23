@@ -8,7 +8,8 @@ namespace Ja2
 	/// <summary>
 	/// Mouse system manager.
 	/// </summary>
-	public class MouseSystemManager
+	[CreateAssetMenu(menuName = "JA2/Create Mouse Manager", fileName = "MouseManager")]
+	public sealed class MouseSystemManager : ScriptableObjectManager<MouseSystemManager>
 	{
 #region Constants
 		/// <summary>
@@ -212,7 +213,7 @@ namespace Ja2
 		/// All the mouse regions.
 		/// </summary>
 		[HistoricName("MSYS_RegList")]
-		private List<MouseRegion> m_MouseRegions = new List<MouseRegion>();
+		private List<MouseRegion> m_MouseRegions = new ();
 
 		/// <summary>
 		/// Current region ID.
@@ -288,47 +289,6 @@ namespace Ja2
 #endregion
 
 #region Methods
-		/// <summary>
-		/// Initialize the manager.
-		/// </summary>
-		public void Init()
-		{
-			m_MouseRegions.Clear();
-
-			m_CurrentId = IdSystem;
-			m_ScanForId = false;
-
-			m_CurrentMx = 0;
-			m_CurrentMy = 0;
-			m_CurrentButtons = MouseButton.NoButton;
-			m_wheelStatus = 0;
-			m_Action = MouseAction.NoAction;
-			m_UseMouseHandlerHook = true;
-
-			m_IsMouseGrabbed = false;
-			m_GrabRegion = null;
-
-			// Setup the system's background region
-			m_SystemBaseRegion = new MouseRegion(IdSystem,
-				MouseRegion.PrioritySystem,
-				MouseRegion.RegionFlag.BaseRegion,
-				new RectInt(-32767,
-					-32767,
-					32767 * 2,
-					32767 * 2
-				),
-				new Vector2Int(),
-				new Vector2Int(),
-				0,
-				0,
-				0,
-				Array.Empty<int>()
-			);
-
-			// Add the base region to the list
-			m_MouseRegions.Add(m_SystemBaseRegion);
-		}
-
 		/// <summary>
 		/// Hook to the SGP's mouse handler.
 		/// </summary>
@@ -494,6 +454,49 @@ namespace Ja2
 			if(m_Action != MouseAction.NoAction)
 			{
 			}
+		}
+#endregion
+
+#region Construction
+		/// <inheritdoc />
+		protected override void DoInitialize(params object[] Params)
+		{
+			m_MouseRegions.Clear();
+
+			m_CurrentId = IdSystem;
+			m_ScanForId = false;
+
+			m_CurrentMx = 0;
+			m_CurrentMy = 0;
+			m_CurrentButtons = MouseButton.NoButton;
+			m_wheelStatus = 0;
+			m_Action = MouseAction.NoAction;
+
+			m_UseMouseHandlerHook = true;
+
+			m_IsMouseGrabbed = false;
+			m_GrabRegion = null;
+
+			// Setup the system's background region
+			m_SystemBaseRegion = new MouseRegion(IdSystem,
+				MouseRegion.PrioritySystem,
+				MouseRegion.RegionFlag.BaseRegion,
+				new RectInt(-32767,
+					-32767,
+					32767 * 2,
+					32767 * 2
+				),
+				new Vector2Int(),
+				new Vector2Int(),
+				0,
+				0,
+				0,
+				Array.Empty<int>()
+			);
+
+
+			// Add the base region to the list
+			m_MouseRegions.Add(m_SystemBaseRegion);
 		}
 #endregion
 	}

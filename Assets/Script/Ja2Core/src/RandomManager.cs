@@ -9,7 +9,8 @@ namespace Ja2
 	/// <summary>
 	/// Random manager.
 	/// </summary>
-	internal class RandomManager : ScopedSingleton<RandomManager>
+	[CreateAssetMenu(menuName = "JA2/Create Random Manager", fileName = "RandomManager")]
+	public sealed class RandomManager : ScriptableObjectManager<RandomManager>
 	{
 #region Constants
 		/// IMPORTANT: Changing this define will invalidate the JA2 save.
@@ -69,20 +70,19 @@ namespace Ja2
 #endregion
 
 #region Construction
-		/// <summary>
-		/// Initialize the random manager.
-		/// </summary>
-		public static new void Init()
+		/// <inheritdoc />
+		protected override void DoInitialize(params object[] Params)
 		{
-			ScopedSingleton<RandomManager>.Init();
+			Debug.Log("Initializing Random ...");
 
-			Debug.Log("Initializing Random");
+			m_Rnd = 0;
+			m_Cnt = 0;
 
 			// Pregenerate all the random numbers.
 			for(var i = 0; i < MaxPregeneratedNums; ++i)
-				instance.guiPreRandomNums[i] = instance.GetRndNum(int.MaxValue);
+				guiPreRandomNums[i] = GetRndNum(int.MaxValue);
 
-			instance.m_PreRandomIndex = 0;
+			m_PreRandomIndex = 0;
 		}
 #endregion
 	}
