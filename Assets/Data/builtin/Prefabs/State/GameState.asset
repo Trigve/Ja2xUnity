@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d154334ced041b9b8e3a640bc48d34b, type: 3}
+  m_Name: GameState
+  m_EditorClassIdentifier: 
+  m_MouseSystemManager: {fileID: 11400000, guid: f4c524a2431ef4841960c48760ceb8e9, type: 2}
+  m_RandomManager: {fileID: 11400000, guid: c85483c88bc6bde468d44821ec2b9366, type: 2}
+  m_VfsManager: {fileID: 11400000, guid: 6ab7dd04b828fa341b62e9e34dd8681b, type: 2}
+  m_InputManager: {fileID: 11400000, guid: 24ed2d1d81a9ea041aed73934c17f83b, type: 2}
+  m_ScreenManager: {fileID: 11400000, guid: 388c18d3c4645934f9a463323feaac87, type: 2}
