@@ -73,7 +73,7 @@ namespace Ja2
 		/// <inheritdoc />
 		protected override void DoInitialize(params object[] Params)
 		{
-			Debug.Log("Initializing Random ...");
+			Ja2Logger.LogInfo("Initializing Random ...");
 
 			m_Rnd = 0;
 			m_Cnt = 0;

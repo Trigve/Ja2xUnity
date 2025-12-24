@@ -101,7 +101,7 @@ namespace Ja2
 		/// <inheritdoc />
 		protected override void DoInitialize()
 		{
-			Debug.Log("Initializing game state ...");
+			Ja2Logger.LogInfo("Initializing game state ...");
 
 			Assert.IsNotNull(m_MouseSystemManager);
 			Assert.IsNotNull(m_RandomManager);
