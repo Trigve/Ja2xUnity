@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 using JetBrains.Annotations;
 
+using UnityEngine;
 
 using Debug = UnityEngine.Debug;
 
@@ -23,7 +24,10 @@ namespace Ja2
 		[StringFormatMethod("Message")]
 		internal static void LogInfo(string Message, params object[] Args)
 		{
-			Debug.LogFormat(Message,
+			Debug.LogFormat(LogType.Log,
+				LogOption.NoStacktrace,
+				null,
+				Message,
 				Args
 			);
 		}
