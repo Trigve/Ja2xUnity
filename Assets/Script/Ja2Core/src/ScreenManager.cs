@@ -16,10 +16,6 @@ namespace Ja2
 	public sealed class ScreenManager : ScriptableObjectManager<ScreenManager>
 	{
 #region Fields Component
-		/// See <see cref="initScreen"/>.
-		[SerializeField]
-		private GameScreen m_InitScreen = null!;
-
 		/// See <see cref="introScreen"/>.
 		[SerializeField]
 		private GameScreen m_IntroScreen = null!;
@@ -56,11 +52,6 @@ namespace Ja2
 #endregion
 
 #region Properties
-		/// <summary>
-		/// Init screen.
-		/// </summary>
-		public GameScreen initScreen => m_InitScreen;
-
 		/// <summary>
 		/// Intro screen.
 		/// </summary>

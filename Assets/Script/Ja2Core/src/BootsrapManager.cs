@@ -16,6 +16,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameState m_GameState = null!;
+
+		/// <summary>
+		/// Init screen to run.
+		/// </summary>
+		[SerializeField]
+		private GameScreen? m_InitScreen;
 #endregion
 
 #region Messages
@@ -32,6 +38,8 @@ namespace Ja2
 				Application.Quit(-1);
 			}
 
+			if(m_InitScreen != null)
+				m_GameState.screenManager.SetPendingScreen(m_InitScreen);
 		}
 
 		public void Update()
