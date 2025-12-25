@@ -17,3 +17,4 @@ MonoBehaviour:
   m_VfsManager: {fileID: 11400000, guid: 6ab7dd04b828fa341b62e9e34dd8681b, type: 2}
   m_InputManager: {fileID: 11400000, guid: 24ed2d1d81a9ea041aed73934c17f83b, type: 2}
   m_ScreenManager: {fileID: 11400000, guid: 388c18d3c4645934f9a463323feaac87, type: 2}
+  m_AssetManager: {fileID: 11400000, guid: a5f0640c5dfbd8645b2a7e90f6f0a251, type: 2}

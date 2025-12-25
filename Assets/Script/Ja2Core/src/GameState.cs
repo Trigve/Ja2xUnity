@@ -42,6 +42,10 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private ScreenManager? m_ScreenManager;
+
+		/// See <see cref="assetManager"/>.
+		[SerializeField]
+		private AssetManager? m_AssetManager;
 #endregion
 
 #region Fields
@@ -71,6 +75,11 @@ namespace Ja2
 		/// Screen manager.
 		/// </summary>
 		public ScreenManager screenManager => m_ScreenManager!;
+
+		/// <summary>
+		/// Asset manager.
+		/// </summary>
+		public AssetManager assetManager => m_AssetManager!;
 
 		/// <summary>
 		/// Get the new cancelation token.
@@ -108,6 +117,7 @@ namespace Ja2
 			Assert.IsNotNull(m_VfsManager);
 			Assert.IsNotNull(m_InputManager);
 			Assert.IsNotNull(m_ScreenManager);
+			Assert.IsNotNull(m_AssetManager);
 
 			m_CancellationTokenSource = new CancellationTokenSource();
 
@@ -115,6 +125,7 @@ namespace Ja2
 			m_RandomManager!.Initialize();
 			m_VfsManager!.Initialize();
 			m_InputManager!.Initialize();
+			m_AssetManager!.Initialize();
 			m_ScreenManager!.Initialize(cancellationToken);
 		}
 
@@ -128,6 +139,7 @@ namespace Ja2
 			m_VfsManager!.Deinitialize();
 			m_InputManager!.Deinitialize();
 			m_ScreenManager!.Deinitialize();
+			m_AssetManager!.Deinitialize();
 
 			m_CancellationTokenSource?.Dispose();
 			m_CancellationTokenSource = null;
