@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using Cysharp.Threading.Tasks;
+
 using UnityEngine;
 
 using Object = UnityEngine.Object;
@@ -34,7 +36,7 @@ namespace Ja2
 		/// <param name="AssetPath">Asset reference.</param>
 		/// <typeparam name="T">Type of the asset to load.</typeparam>
 		/// <returns>Loaded asset if found. Otherwise, null.</returns>
-		public T? LoadAsset<T>(AssetRef AssetPath) where T : Object
+		public async UniTask<T?> LoadAssetAsync<T>(AssetRef AssetPath) where T : Object
 		{
 			T? ret = null;
 
@@ -73,7 +75,7 @@ namespace Ja2
 						m_LoadedBundles[AssetPath.bundle] = bundle;
 					}
 
-					all_objs_loaded = bundle.LoadAssetWithSubAssets(AssetPath.assetPath);
+					all_objs_loaded = await bundle.LoadAssetWithSubAssetsAsync(AssetPath.assetPath).AwaitForAllAssets();
 				}
 				else
 				{
@@ -83,11 +85,11 @@ namespace Ja2
 						// Bundle already loaded
 						if(!m_LoadedBundles.TryGetValue(bundle_data.m_BundlePath, out AssetBundle? bundle))
 						{
-							bundle = AssetBundle.LoadFromFile(AssetPath.bundle);
+							bundle = await AssetBundle.LoadFromFileAsync(AssetPath.bundle);
 							m_LoadedBundles[AssetPath.bundle] = bundle;
 						}
 
-						all_objs_loaded = bundle.LoadAssetWithSubAssets(AssetPath.assetPath);
+						all_objs_loaded = await bundle.LoadAssetWithSubAssetsAsync(AssetPath.assetPath).AwaitForAllAssets();
 					}
 				}
 			}
