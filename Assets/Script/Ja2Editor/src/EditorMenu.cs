@@ -13,7 +13,7 @@ namespace Ja2.Editor
 		/// <summary>
 		/// Extract SLF.
 		/// </summary>
-		[MenuItem("Ja2/Extract SLF")]
+		[MenuItem("JA2/Extract SLF")]
 		private static void MenuSlfExtract()
 		{
 			// Read all the SLF
