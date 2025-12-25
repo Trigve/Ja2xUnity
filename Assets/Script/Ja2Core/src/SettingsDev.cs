@@ -37,6 +37,26 @@ namespace Ja2
 		/// Directory for the utilities.
 		/// </summary>
 		public string m_BinDir = string.Empty;
+
+		/// See <see cref="bundleExportDir"/>.
+		[SerializeField]
+		private string m_BundleExportDir = string.Empty;
+
+		/// See <see cref="useAssetBundles"/>.
+		[SerializeField]
+		private bool m_UseAssetBundles;
+#endregion
+
+#region Properties
+		/// <summary>
+		/// Asset bundle export directory.
+		/// </summary>
+		public string bundleExportDir => m_BundleExportDir;
+
+		/// <summary>
+		/// Uset asset bundles when loading the assets.
+		/// </summary>
+		public bool useAssetBundles => m_UseAssetBundles;
 #endregion
 
 #region Fields Static
