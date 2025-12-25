@@ -121,6 +121,8 @@ namespace Ja2.Editor
 						),
 						// Standard profile (supported by unity), correct colorspace and pixel format for unity, move metadata to the beginning
 						Arguments = "-loglevel error -f smk -i pipe:0 -c:v libx264 -profile:v baseline -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range pc -movflags +faststart -crf 23 " + Path.Combine(project_path, out_file_path),
+						// \FIXME Editor doesn't support VP9 codec, even if it is more multi-plaform than h.264
+//						Arguments = "-loglevel error -f smk -i pipe:0 -c:v libvpx-vp9 -crf 35 -b:v 0 " + Path.Combine(project_path, out_file_path),
 						RedirectStandardInput = true,
 						RedirectStandardError = true,
 						UseShellExecute = false,
