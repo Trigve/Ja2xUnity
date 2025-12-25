@@ -15,12 +15,6 @@ namespace Ja2
 	[CreateAssetMenu(menuName = "JA2/Create Screen Manager")]
 	public sealed class ScreenManager : ScriptableObjectManager<ScreenManager>
 	{
-#region Fields Component
-		/// See <see cref="introScreen"/>.
-		[SerializeField]
-		private GameScreen m_IntroScreen = null!;
-#endregion
-
 #region Fields
 		/// <summary>
 		/// Set/get current screen.
@@ -49,13 +43,6 @@ namespace Ja2
 		/// Cancelation token.
 		/// </summary>
 		private CancellationToken m_CancellationToken;
-#endregion
-
-#region Properties
-		/// <summary>
-		/// Intro screen.
-		/// </summary>
-		public GameScreen introScreen => m_IntroScreen;
 #endregion
 
 #region Events

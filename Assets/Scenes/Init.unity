@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GameState: {fileID: 11400000, guid: f92ab9efa3d2e7b418acad26b30254d3, type: 2}
+  m_IntroScreen: {fileID: 11400000, guid: 47daa8b7189931c46af3eb00220e53f8, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
