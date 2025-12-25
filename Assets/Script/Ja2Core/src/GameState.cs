@@ -100,6 +100,7 @@ namespace Ja2
 		/// </summary>
 		public void UpdateState()
 		{
+			m_InputManager!.Update();
 			m_ScreenManager!.UpdateManager();
 
 			eventUpdate?.Invoke();
