@@ -55,7 +55,7 @@ namespace Ja2
 		private readonly Queue<InputAtom> m_EventQueue = new Queue<InputAtom>(QueueCapacity);
 
 		/// <summary>
-		/// Was input received in the current frame.
+		/// See <see cref="inputReceived"/>.
 		/// </summary>
 		[HistoricName("gfSGPInputReceived")]
 		private bool m_InputReceived;
@@ -140,6 +140,11 @@ namespace Ja2
 		/// </summary>
 		[HistoricName("gfCtrlState")]
 		public bool isCtrlPressed { get; private set; }
+
+		/// <summary>
+		/// Was input received in the current frame.
+		/// </summary>
+		public bool inputReceived => m_InputReceived;
 #endregion
 
 #region Methods
