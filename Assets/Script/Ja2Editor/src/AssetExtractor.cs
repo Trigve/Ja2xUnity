@@ -72,8 +72,8 @@ namespace Ja2.Editor
             					sub_image_data.width,
             					sub_image_data.height
             				),
-            				new Vector2(sub_image_data.offsetX,
-            					sub_image_data.offsetY
+            				new Vector2(0.5f + ((float)sub_image_data.offsetX / sub_image_data.width),
+								0.5f + ((float)sub_image_data.offsetY / sub_image_data.height)
             				)
             			);
 
