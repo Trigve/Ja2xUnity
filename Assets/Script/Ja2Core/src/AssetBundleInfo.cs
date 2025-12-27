@@ -13,7 +13,7 @@ namespace Ja2
 #region Fields
 		/// See <see cref="bundleId"/>.
 		[SerializeField]
-		private string m_BundleId;
+		private uint m_BundleId;
 
 		/// See <see cref="assetNames"/>
 		[SerializeField]
@@ -28,7 +28,7 @@ namespace Ja2
 		/// <summary>
 		/// Bundle ID.
 		/// </summary>
-		public string bundleId => m_BundleId;
+		public uint bundleId => m_BundleId;
 
 		/// <summary>
 		/// Asset names.
@@ -49,7 +49,7 @@ namespace Ja2
 		/// <param name="AssetNames">All the asset names.</param>
 		/// <param name="AssetGUIDs">All the asset GUIDs.</param>
 		/// <returns></returns>
-		public static AssetBundleInfo Create(string BundleId, string[] AssetNames, string[] AssetGUIDs)
+		public static AssetBundleInfo Create(uint BundleId, string[] AssetNames, string[] AssetGUIDs)
 		{
 			var obj = CreateInstance<AssetBundleInfo>();
 

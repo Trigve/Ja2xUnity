@@ -105,17 +105,18 @@ namespace Ja2.Editor
 					new AssetBundleDef()
 					{
 						directory = it.directory,
+						assetBundleDesc = it.assetBundleDesc,
 						recursive = true
 					}
 				);
 			}
 
-			var asset_mappings = new List<string>();
-			var asset_real_paths = new List<string>();
-			var asset_guids = new List<string>();
-
 			foreach(AssetBundleDef bundle_info in dir_to_search)
 			{
+				var asset_mappings = new List<string>();
+				var asset_real_paths = new List<string>();
+				var asset_guids = new List<string>();
+
 				string it_path = bundle_info.directory;
 
 				var search_options = SearchOption.TopDirectoryOnly;
@@ -125,6 +126,14 @@ namespace Ja2.Editor
 				// Process files with specific extension only
 				foreach(string file in Directory.EnumerateFiles(it_path, "*", search_options))
 				{
+					// Ignore budle descriptor
+					if(AssetDatabase.LoadMainAssetAtPath(file) is AssetBundleDesc)
+						continue;
+
+					// Ignore all .meta files
+					if(Path.GetExtension(file).ToLower() == ".meta")
+						continue;
+
 					// Addressable path
 					asset_mappings.Add(
 						Path.GetRelativePath(it_path,
@@ -147,7 +156,7 @@ namespace Ja2.Editor
 				}
 
 				// Create the manifest
-				var bundle_manifest = AssetBundleInfo.Create(Path.GetFileName(it_path),
+				var bundle_manifest = AssetBundleInfo.Create(bundle_info.assetBundleDesc!.bundleId,
 					asset_mappings.ToArray(),
 					asset_guids.ToArray()
 				);
@@ -164,7 +173,7 @@ namespace Ja2.Editor
 				// Create asset bundle info
 				var bundle_build = new AssetBundleBuild
 				{
-					assetBundleName = bundle_manifest.bundleId + ".bundle",
+					assetBundleName = bundle_info.assetBundleDesc.fileName,
 					addressableNames = asset_mappings.ToArray(),
 					assetNames = asset_real_paths.ToArray()
 				};
@@ -215,11 +224,17 @@ namespace Ja2.Editor
 				// Set the default value
 				m_OutputPath = he_cfg.bundleExportDir;
 
-				// Traverse all the directories
-				foreach(string it in Directory.EnumerateDirectories(he_cfg.m_SlfExtractDir))
+				// Find all the bundle descriptors
+				foreach(AssetBundleDesc it in Resources.FindObjectsOfTypeAll<AssetBundleDesc>())
 				{
+					// Find the path, where is the descriptor located
 					m_AssetBundleInput.Add(
-						new AssetBundleInput(it)
+						new AssetBundleInput(
+							Path.GetDirectoryName(
+								AssetDatabase.GetAssetPath(it)
+							)!,
+							it
+						)
 					);
 				}
 			}
@@ -252,7 +267,7 @@ namespace Ja2.Editor
 					using var _2 = new EditorGUILayout.HorizontalScope();
 
 					// Enable/disable bundle
-					it.isEnabled = EditorGUILayout.Toggle(it.directory,
+					it.isEnabled = EditorGUILayout.Toggle(it.assetBundleDesc.bundleName,
 						it.isEnabled,
 						GUILayout.ExpandWidth(false)
 					);
@@ -356,6 +371,11 @@ namespace Ja2.Editor
 		public string directory { get; set; } = string.Empty;
 
 		/// <summary>
+		/// Asset bundle descriptor.
+		/// </summary>
+		public AssetBundleDesc? assetBundleDesc { get; set; }
+
+		/// <summary>
 		/// Should use recursive travel inside subdirectories.
 		/// </summary>
 		public bool recursive { get; set; }
@@ -374,6 +394,11 @@ namespace Ja2.Editor
 		public string directory { get; set; }
 
 		/// <summary>
+		/// Asset bundle descriptor associated.
+		/// </summary>
+		public AssetBundleDesc assetBundleDesc { get; set; }
+
+		/// <summary>
 		/// Is the bundle enabled.
 		/// </summary>
 		public bool isEnabled { get; set; } = true;
@@ -384,9 +409,11 @@ namespace Ja2.Editor
 		/// Constructor
 		/// </summary>
 		/// <param name="Directory">Directory of the asset bundle desc.</param>
-		public AssetBundleInput(string Directory)
+		/// <param name="BundleDesc">Asset bundle descriptor.</param>
+		public AssetBundleInput(string Directory, AssetBundleDesc BundleDesc)
 		{
 			directory = Directory;
+			assetBundleDesc = BundleDesc;
 		}
 #endregion
 	}
