@@ -27,7 +27,7 @@ namespace Ja2
 #region Messages
 		public void Start()
 		{
-			m_GameState.Initialize();
+			Ja2Logger.LogInfo("BootsrapManager Start");
 
 			ProcessJa2CommandLineBeforeInitialization();
 
@@ -40,16 +40,6 @@ namespace Ja2
 
 			if(m_InitScreen != null)
 				m_GameState.screenManager.SetPendingScreen(m_InitScreen);
-		}
-
-		public void Update()
-		{
-			m_GameState.UpdateState();
-		}
-
-		public void OnDestroy()
-		{
-			m_GameState.Deinitialize();
 		}
 #endregion
 
@@ -186,7 +176,6 @@ namespace Ja2
 					) == 1;
 				}
 			}
-
 
 
 			Ja2Logger.LogInfo("Initializing Game Manager");

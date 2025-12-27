@@ -89,21 +89,19 @@ namespace Ja2
 
 #region Events
 		/// <summary>
-		/// Event called during updates.
+		/// Event called during initialization.
 		/// </summary>
-		public event Action? eventUpdate;
+		public event Action? eventStart;
 #endregion
 
 #region Methods Public
 		/// <summary>
 		/// Update the game state.
 		/// </summary>
-		public void UpdateState()
+		protected override void DoUpdate()
 		{
 			m_InputManager!.Update();
 			m_ScreenManager!.UpdateManager();
-
-			eventUpdate?.Invoke();
 		}
 #endregion
 
@@ -128,6 +126,8 @@ namespace Ja2
 			m_InputManager!.Initialize();
 			m_AssetManager!.Initialize();
 			m_ScreenManager!.Initialize(cancellationToken);
+
+			eventStart?.Invoke();
 		}
 
 		/// <inheritdoc />
@@ -145,7 +145,7 @@ namespace Ja2
 			m_CancellationTokenSource?.Dispose();
 			m_CancellationTokenSource = null;
 
-			eventUpdate = null;
+			eventStart = null;
 		}
 #endregion
 	}
