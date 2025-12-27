@@ -10,6 +10,13 @@ namespace Ja2
 	[Serializable]
 	public sealed class AssetBundleInfo : ScriptableObject
 	{
+#region Constants
+		/// <summary>
+		/// File name used for the AssetBundleInfo asset.
+		/// </summary>
+		public const string FileName = "manifest.asset";
+#endregion
+
 #region Fields
 		/// See <see cref="bundleId"/>.
 		[SerializeField]

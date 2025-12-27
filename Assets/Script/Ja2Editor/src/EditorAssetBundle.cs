@@ -90,7 +90,7 @@ namespace Ja2.Editor
 		private void BuildAssetBundles()
 		{
 			// Path for the temporary asset
-			const string manifest_path = "Assets/manifest.asset";
+			const string manifest_path = "Assets/" + AssetBundleInfo.FileName;
 
 			// Project path
 			string project_path = Directory.GetParent(Application.dataPath)!.FullName;
@@ -167,7 +167,7 @@ namespace Ja2.Editor
 				);
 
 				// Now add the manifest to the bundles
-				asset_mappings.Add("manifest.asset");
+				asset_mappings.Add(AssetBundleInfo.FileName);
 				asset_real_paths.Add(manifest_path);
 
 				// Create asset bundle info

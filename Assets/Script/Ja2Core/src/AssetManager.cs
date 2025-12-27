@@ -138,7 +138,7 @@ namespace Ja2
 				var bundle_data = new BundleData(file_name);
 
 				// Load the bundle info
-				var ab_info = bundle.LoadAsset<AssetBundleInfo>("manifest.asset");
+				var ab_info = bundle.LoadAsset<AssetBundleInfo>(AssetBundleInfo.FileName);
 
 				// Fill the content
 				for(var i = 0; i < ab_info.assetNames.Length; ++i)
