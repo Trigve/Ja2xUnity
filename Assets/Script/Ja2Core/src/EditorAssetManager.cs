@@ -25,13 +25,7 @@ namespace Ja2
 #region Messages
 		public void OnEnable()
 		{
-			// Read all the asset bundle descriptors
-			foreach(AssetBundleDesc? it in UnityEditor.AssetDatabase.FindAssets(string.Format("t:{0}", nameof(AssetBundleDesc))).Select(UnityEditor.AssetDatabase.GUIDToAssetPath).Select(UnityEditor.AssetDatabase.LoadAssetAtPath<AssetBundleDesc>))
-			{
-				m_AssetsBundleDesc.Add(
-					(UtilsPath.NormalizePath(Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(it))!), it)
-				);
-			}
+			Reload();
 		}
 #endregion
 
@@ -107,6 +101,22 @@ namespace Ja2
 			}
 
 			return ret;
+		}
+
+		/// <summary>
+		/// Reload the data.
+		/// </summary>
+		public void Reload()
+		{
+			m_AssetsBundleDesc.Clear();
+
+			// Read all the asset bundle descriptors
+			foreach(AssetBundleDesc? it in UnityEditor.AssetDatabase.FindAssets(string.Format("t:{0}", nameof(AssetBundleDesc))).Select(UnityEditor.AssetDatabase.GUIDToAssetPath).Select(UnityEditor.AssetDatabase.LoadAssetAtPath<AssetBundleDesc>))
+			{
+				m_AssetsBundleDesc.Add(
+					(UtilsPath.NormalizePath(Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(it))!), it)
+				);
+			}
 		}
 #endregion
 	}
