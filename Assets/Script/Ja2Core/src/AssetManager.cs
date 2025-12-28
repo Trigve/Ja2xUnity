@@ -50,14 +50,10 @@ namespace Ja2
 			// Not using asset bundles, load the one found
 			if(he_cfg != null && !he_cfg.useAssetBundles)
 			{
-				string asset_path = Path.Combine(he_cfg.m_SlfExtractDir,
-					AssetPath.bundle,
-					AssetPath.assetPath
-				);
-
-				// Only if exists
-				if(UnityEditor.AssetDatabase.AssetPathExists(asset_path))
-					all_objs_loaded = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(asset_path);
+				// Use editor asset manager so there is no code duplication
+				var asset_loaded = EditorAssetManager.instance.LoadAsset<T>(AssetPath);
+				if(asset_loaded != null)
+					all_objs_loaded = new Object[] { asset_loaded };
 
 				use_asset_bundles = false;
 			}
