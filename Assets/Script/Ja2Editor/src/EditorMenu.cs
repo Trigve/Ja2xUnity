@@ -57,6 +57,9 @@ namespace Ja2.Editor
 					);
 				}
 			}
+
+			// Need to reload so the new bundle descriptors are loaded
+			EditorAssetManager.instance.Reload();
 		}
 #endregion
 	}
