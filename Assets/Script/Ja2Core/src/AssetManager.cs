@@ -128,6 +128,10 @@ namespace Ja2
 
 			foreach(string file_name in files)
 			{
+				Ja2Logger.LogInfo("  Parsing asset bundle '{0}' ...",
+					file_name
+				);
+
 				// Load the bundle
 				AssetBundle bundle = AssetBundle.LoadFromFile(file_name);
 
