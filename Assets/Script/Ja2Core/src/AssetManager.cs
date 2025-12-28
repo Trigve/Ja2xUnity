@@ -67,7 +67,7 @@ namespace Ja2
 					// Not loaded yet
 					if(!m_LoadedBundles.TryGetValue(AssetPath.bundle, out AssetBundle? bundle))
 					{
-						bundle = AssetBundle.LoadFromFile(m_Bundles[AssetPath.bundle.ToLower()].m_BundlePath);
+						bundle = await AssetBundle.LoadFromFileAsync(m_Bundles[AssetPath.bundle.ToLower()].m_BundlePath);
 						m_LoadedBundles[AssetPath.bundle] = bundle;
 					}
 
