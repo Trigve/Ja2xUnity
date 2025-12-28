@@ -26,7 +26,7 @@ namespace Ja2
 		public void OnEnable()
 		{
 			// Read all the asset bundle descriptors
-			foreach(AssetBundleDesc? it in Resources.FindObjectsOfTypeAll<AssetBundleDesc>())
+			foreach(AssetBundleDesc? it in UnityEditor.AssetDatabase.FindAssets(string.Format("t:{0}", nameof(AssetBundleDesc))).Select(UnityEditor.AssetDatabase.GUIDToAssetPath).Select(UnityEditor.AssetDatabase.LoadAssetAtPath<AssetBundleDesc>))
 			{
 				m_AssetsBundleDesc.Add(
 					(UtilsPath.NormalizePath(Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(it))!), it)
