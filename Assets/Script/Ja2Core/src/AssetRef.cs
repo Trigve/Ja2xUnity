@@ -12,7 +12,8 @@ namespace Ja2
 	{
 #region Fields
 		/// <summary>
-		/// Bundle.
+		/// If it is a simple string, then it denotes a bundle name. If it is in format "[x]", then
+		/// it means a bundle with the ID of "x".
 		/// </summary>
 		[SerializeField]
 		private string m_Bundle;
@@ -40,6 +41,28 @@ namespace Ja2
 		/// </summary>
 		public string assetPath => m_AssetPath;
 
+		/// <summary>
+		/// Get the bundle ID, if it contains one. Otherwise, null.
+		/// </summary>
+		public uint? bundleId
+		{
+			get
+			{
+				uint? ret = null;
+
+				// Must have at least 3 characters ([, <number>, ])
+				if(m_Bundle.Length >= 3 && m_Bundle[0] == '[' && m_Bundle[^1] == ']')
+				{
+					ret = uint.Parse(
+						m_Bundle.Substring(1,
+							m_Bundle.Length - 2
+						)
+					);
+				}
+
+				return ret;
+			}
+		}
 		/// <summary>
 		/// As combined path.
 		/// </summary>
@@ -80,6 +103,18 @@ namespace Ja2
 		public AssetRef(string AssetPath, string Bundle = Constants.StringEmpty)
 		{
 			m_Bundle = Bundle;
+			m_AssetPath = AssetPath;
+		}
+
+		/// <summary>
+		/// Constructor using the bundle ID.
+		/// </summary>
+		/// <param name="AssetPath">Asset path.</param>
+		/// <param name="BundleId">Bundle ID.</param>
+		public AssetRef(string AssetPath, uint BundleId)
+		{
+			// Store as ID
+			m_Bundle = "[" + BundleId + "]";
 			m_AssetPath = AssetPath;
 		}
 #endregion
