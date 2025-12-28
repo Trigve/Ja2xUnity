@@ -136,9 +136,11 @@ namespace Ja2.Editor
 
 					// Addressable path
 					asset_mappings.Add(
-						Path.GetRelativePath(it_path,
-							file
-						).Replace('\\', '/')
+						UtilsPath.NormalizePath(
+							Path.GetRelativePath(it_path,
+								file
+							)
+						)
 					);
 
 					// "Real" path

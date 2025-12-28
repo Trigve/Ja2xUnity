@@ -29,7 +29,7 @@ namespace Ja2
 			foreach(AssetBundleDesc? it in Resources.FindObjectsOfTypeAll<AssetBundleDesc>())
 			{
 				m_AssetsBundleDesc.Add(
-					(Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(it))!.Replace('\\', '/').ToLower(), it)
+					(UtilsPath.NormalizePath(Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(it))!), it)
 				);
 			}
 		}
@@ -95,10 +95,10 @@ namespace Ja2
 			foreach((string path, AssetBundleDesc bundleDesc) it in m_AssetsBundleDesc.Where(Value => asset_path.Contains(Value.path)))
 			{
 				ret = new AssetRef(
-					Path.GetRelativePath(it.path,
-						asset_path
-					).Replace('\\',
-						'/'
+					UtilsPath.NormalizePath(
+						Path.GetRelativePath(it.path,
+							asset_path
+						)
 					),
 					it.bundleDesc.bundleId
 				);
