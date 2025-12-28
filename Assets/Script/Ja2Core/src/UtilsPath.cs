@@ -18,6 +18,18 @@ namespace Ja2
 		{
 			return Path.ToLower().Replace('\\', '/');
 		}
+
+		/// <summary>
+		/// Combine the paths with forward slash ("/"),
+		/// </summary>
+		/// <param name="Paths">Paths arguments.</param>
+		/// <returns>Combined paths string.</returns>
+		public static string Combine(params string[] Paths)
+		{
+			return string.Join('/',
+				Paths
+			);
+		}
 #endregion
 	}
 }
