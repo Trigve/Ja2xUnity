@@ -21,12 +21,12 @@ namespace Ja2
 		/// <summary>
 		/// All the present asset bundles.
 		/// </summary>
-		private readonly Dictionary<string, BundleData> m_Bundles = new ();
+		private BundleData[] m_Bundles = Array.Empty<BundleData>();
 
 		/// <summary>
 		/// All the loaded bundles.
 		/// </summary>
-		private readonly Dictionary<string, AssetBundle> m_LoadedBundles = new ();
+		private readonly List<BundleState> m_LoadedBundles = new ();
 #endregion
 
 #region Methods
@@ -53,7 +53,10 @@ namespace Ja2
 				// Use editor asset manager so there is no code duplication
 				var asset_loaded = EditorAssetManager.instance.LoadAsset<T>(AssetPath);
 				if(asset_loaded != null)
-					all_objs_loaded = new Object[] { asset_loaded };
+					all_objs_loaded = new Object[]
+					{
+						asset_loaded
+					};
 
 				use_asset_bundles = false;
 			}
@@ -61,32 +64,62 @@ namespace Ja2
 
 			if(use_asset_bundles)
 			{
+				BundleData? bundle_data = null;
+
 				// Bundle is explicit
 				if(!string.IsNullOrEmpty(AssetPath.bundle))
 				{
-					// Not loaded yet
-					if(!m_LoadedBundles.TryGetValue(AssetPath.bundle, out AssetBundle? bundle))
-					{
-						bundle = await AssetBundle.LoadFromFileAsync(m_Bundles[AssetPath.bundle.ToLower()].m_BundlePath);
-						m_LoadedBundles[AssetPath.bundle] = bundle;
-					}
+					// Bundle ID to load
+					uint? bundle_id = AssetPath.bundleId;
 
-					all_objs_loaded = await bundle.LoadAssetWithSubAssetsAsync(AssetPath.assetPath).AwaitForAllAssets();
+					// Try to find the bundle
+					foreach(BundleData it in m_Bundles)
+					{
+						// Using bundle ID
+						if(bundle_id.HasValue)
+						{
+							if(it.m_BundleInfo.bundleId == bundle_id.Value)
+							{
+								bundle_data = it;
+								break;
+							}
+						}
+						// Using bundle name
+						else
+						{
+							if(it.m_BundleName == AssetPath.bundle)
+							{
+								bundle_data = it;
+								break;
+							}
+						}
+					}
 				}
 				else
 				{
-					// If bundle exists
-					if(m_Bundles.TryGetValue(AssetPath.assetPath, out BundleData? bundle_data))
-					{
-						// Bundle already loaded
-						if(!m_LoadedBundles.TryGetValue(bundle_data.m_BundlePath, out AssetBundle? bundle))
-						{
-							bundle = await AssetBundle.LoadFromFileAsync(AssetPath.bundle);
-							m_LoadedBundles[AssetPath.bundle] = bundle;
-						}
+					// Traverse all the loaded bundles and find by path
+					bundle_data = m_Bundles.Where(It => It.m_Paths.ContainsKey(AssetPath.assetPath)).Cast<BundleData?>().FirstOrDefault();
+				}
 
-						all_objs_loaded = await bundle.LoadAssetWithSubAssetsAsync(AssetPath.assetPath).AwaitForAllAssets();
+				// Bundle found
+				if(bundle_data.HasValue)
+				{
+					// Find if the bundle is loaded already
+					AssetBundle? bundle = m_LoadedBundles.Where(It => It.m_BundleId == bundle_data.Value.m_BundleInfo.bundleId).Cast<BundleState?>().FirstOrDefault()?.m_Bundle;
+
+
+					// Not loaded yet
+					if(bundle == null)
+					{
+						bundle = await AssetBundle.LoadFromFileAsync(bundle_data.Value.m_BundlePath);
+						m_LoadedBundles.Add(
+							new BundleState(bundle_data.Value.m_BundleInfo.bundleId,
+								bundle
+							)
+						);
 					}
+
+					all_objs_loaded = await bundle.LoadAssetWithSubAssetsAsync(AssetPath.assetPath).AwaitForAllAssets();
 				}
 			}
 
@@ -126,6 +159,8 @@ namespace Ja2
 				"*.bundle"
 			);
 
+			var bundle_data_list = new List<BundleData>();
+
 			foreach(string file_name in files)
 			{
 				Ja2Logger.LogInfo("  Parsing asset bundle '{0}' ...",
@@ -134,11 +169,16 @@ namespace Ja2
 
 				// Load the bundle
 				AssetBundle bundle = AssetBundle.LoadFromFile(file_name);
-
-				var bundle_data = new BundleData(file_name);
-
 				// Load the bundle info
 				var ab_info = bundle.LoadAsset<AssetBundleInfo>(AssetBundleInfo.FileName);
+
+				var bundle_data = new BundleData(
+					UtilsPath.NormalizePath(
+						Path.GetFileNameWithoutExtension(file_name)
+					),
+					file_name,
+					ab_info
+				);
 
 				// Fill the content
 				for(var i = 0; i < ab_info.assetNames.Length; ++i)
@@ -148,8 +188,10 @@ namespace Ja2
 					bundle_data.m_Paths[asset_name] = ab_info.assetGUIDs[i];
 				}
 
-				m_Bundles[Path.GetFileNameWithoutExtension(file_name).ToLower()] = bundle_data;
+				bundle_data_list.Add(bundle_data);
 			}
+
+			m_Bundles = bundle_data_list.ToArray();
 
 			// Free the loaded bundles
 			AssetBundle.UnloadAllAssetBundles(true);
@@ -158,7 +200,7 @@ namespace Ja2
 		/// <inheritdoc />
 		protected override void DoDeinitialize()
 		{
-			m_Bundles.Clear();
+			m_Bundles = Array.Empty<BundleData>();
 			m_LoadedBundles.Clear();
 
 #if UNITY_EDITOR
@@ -172,28 +214,74 @@ namespace Ja2
 	/// <summary>
 	/// Bundle data.
 	/// </summary>
-	internal sealed class BundleData
+	internal readonly struct BundleData
 	{
 #region Fields
+		/// <summary>
+		/// Aseet bundle name.
+		/// </summary>
+		public readonly string m_BundleName;
+
 		/// <summary>
 		/// Asset bundle path.
 		/// </summary>
 		public readonly string m_BundlePath;
 
 		/// <summary>
+		/// Asset bundle info.
+		/// </summary>
+		public readonly AssetBundleInfo m_BundleInfo;
+
+		/// <summary>
 		/// Mapping from path -> GUI.
 		/// </summary>
-		public readonly Dictionary<string, string> m_Paths = new();
+		public readonly Dictionary<string, string> m_Paths;
 #endregion
 
 #region Construction
 		/// <summary>
 		/// Constructor.
 		/// </summary>
+		/// <param name="BundleName">Bundle name.</param>
 		/// <param name="BundlePath">Bundle path.</param>
-		public BundleData(string BundlePath)
+		/// <param name="BundleInfo">Asset bundle info.</param>
+		public BundleData(string BundleName, string BundlePath, AssetBundleInfo BundleInfo)
 		{
+			m_BundleName = BundleName;
 			m_BundlePath = BundlePath;
+			m_BundleInfo = BundleInfo;
+			m_Paths = new Dictionary<string, string>();
+		}
+#endregion
+	}
+
+	/// <summary>
+	/// State of the bundles.
+	/// </summary>
+	internal readonly struct BundleState
+	{
+#region Fields
+		/// <summary>
+		/// Asset bundle ID.
+		/// </summary>
+		public readonly uint m_BundleId;
+
+		/// <summary>
+		/// Loaded asset bundle.
+		/// </summary>
+		public readonly AssetBundle m_Bundle;
+#endregion
+
+#region Construction
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="BundleId">Asset bundle Id.</param>
+		/// <param name="Bundle">Asset bundle instance.</param>
+		public BundleState(uint BundleId, AssetBundle Bundle)
+		{
+			m_BundleId = BundleId;
+			m_Bundle = Bundle;
 		}
 #endregion
 	}
