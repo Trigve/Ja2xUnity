@@ -53,5 +53,26 @@ namespace Ja2
 		/// </summary>
 		public string fileName => m_FileName;
 #endregion
+
+#region Construction
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="Version">Version.</param>
+		/// <param name="BundleId">Bundle ID.</param>
+		/// <param name="BundleName">Bundle name.</param>
+		/// <param name="FileName">Bundle file name.</param>
+		/// <returns>New instance.</returns>
+		public static AssetBundleDesc Create(uint Version, uint BundleId, string BundleName, string FileName)
+		{
+			var ret = CreateInstance<AssetBundleDesc>();
+			ret.m_Version = Version;
+			ret.m_BundleId = BundleId;
+			ret.m_BundleName = BundleName;
+			ret.m_FileName = FileName;
+
+			return ret;
+		}
+#endregion
 	}
 }
