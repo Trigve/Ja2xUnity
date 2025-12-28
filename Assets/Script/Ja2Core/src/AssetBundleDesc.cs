@@ -5,9 +5,16 @@ namespace Ja2
 	/// <summary>
 	/// Asset bundle descriptor.
 	/// </summary>
-	[CreateAssetMenu(menuName = "JA2/Create AssetBunde Descriptor", fileName = "BundleDesc.asset")]
+	[CreateAssetMenu(menuName = "JA2/Create AssetBunde Descriptor", fileName = FileName)]
 	public sealed class AssetBundleDesc : ScriptableObject
 	{
+#region Constants
+		/// <summary>
+		/// File name used for the asset.
+		/// </summary>
+		public const string FileName = "BundleDesc.asset";
+#endregion
+
 #region Fields
 		/// <summary>
 		/// Version of the bundle.
