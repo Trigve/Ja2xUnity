@@ -34,11 +34,11 @@ namespace Ja2
 		/// Load asset from the AssetRef.
 		/// </summary>
 		/// <param name="AssetPath">Asset reference.</param>
-		/// <typeparam name="T">Type of the asset to load.</typeparam>
+		/// <param name="AssetType">Type of the asset to load.</param>
 		/// <returns>Loaded asset if found. Otherwise, null.</returns>
-		public async UniTask<T?> LoadAssetAsync<T>(AssetRef AssetPath) where T : Object
+		public async UniTask<Object?> LoadAssetAsync(AssetRef AssetPath, Type AssetType)
 		{
-			T? ret = null;
+			Object? ret = null;
 
 			var all_objs_loaded = Array.Empty<Object>();
 
@@ -51,9 +51,12 @@ namespace Ja2
 			if(he_cfg != null && !he_cfg.useAssetBundles)
 			{
 				// Use editor asset manager so there is no code duplication
-				var asset_loaded = EditorAssetManager.instance.LoadAsset<T>(AssetPath);
+				Object? asset_loaded = EditorAssetManager.instance.LoadAsset(AssetPath,
+					AssetType
+				);
+
 				if(asset_loaded != null)
-					all_objs_loaded = new Object[]
+					all_objs_loaded = new []
 					{
 						asset_loaded
 					};
@@ -126,14 +129,27 @@ namespace Ja2
 			// Try to cast to the right type
 			foreach(Object it_obj in all_objs_loaded.Where(Obj => Obj != null))
 			{
-				if(it_obj is T casted)
+				if(it_obj.GetType() == AssetType)
 				{
-					ret = casted;
+					ret = it_obj;
 					break;
 				}
 			}
 
 			return ret;
+		}
+
+		/// <summary>
+		/// Load asset from the AssetRef.
+		/// </summary>
+		/// <param name="AssetPath">Asset reference.</param>
+		/// <typeparam name="T">Type of the asset to load.</typeparam>
+		/// <returns>Loaded asset if found. Otherwise, null.</returns>
+		public async UniTask<T?> LoadAssetAsync<T>(AssetRef AssetPath) where T : Object
+		{
+			return await LoadAssetAsync(AssetPath,
+				typeof(T)
+			) as T;
 		}
 #endregion
 

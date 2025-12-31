@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 using UnityEngine;
+
+using Object = UnityEngine.Object;
 
 #if UNITY_EDITOR
 namespace Ja2
@@ -34,11 +37,11 @@ namespace Ja2
 		/// Load asset from the AssetRef.
 		/// </summary>
 		/// <param name="AssetPath">Asset ref.</param>
-		/// <typeparam name="T">Type of object to load.</typeparam>
+		/// <param name="AssetType">Type of object to load.</param>
 		/// <returns>Object instance loaded, if found. Otherwise, null.</returns>
-		public T? LoadAsset<T>(AssetRef AssetPath) where T : Object
+		public Object? LoadAsset(AssetRef AssetPath, Type AssetType)
 		{
-			T? ret = null;
+			Object? ret = null;
 
 			// Load the config
 			var he_cfg = SettingsDev.instance;
@@ -57,7 +60,9 @@ namespace Ja2
 					// Fin by the bundle ID
 					foreach((string path, AssetBundleDesc bundleDesc) it in m_AssetsBundleDesc.Where(It => It.bundleDesc.bundleId == bundle_id.Value))
 					{
-						ret = UnityEditor.AssetDatabase.LoadMainAssetAtPath(it.path + "/" + AssetPath.assetPath) as T;
+						ret = UnityEditor.AssetDatabase.LoadAssetAtPath(it.path + "/" + AssetPath.assetPath,
+							AssetType
+						);
 						break;
 					}
 				}
@@ -66,13 +71,28 @@ namespace Ja2
 				{
 					foreach((string path, AssetBundleDesc bundleDesc) it in m_AssetsBundleDesc.Where(It => It.bundleDesc.fileName == AssetPath.bundle))
 					{
-						ret = UnityEditor.AssetDatabase.LoadMainAssetAtPath(it.path + "/" + AssetPath.assetPath) as T;
+						ret = UnityEditor.AssetDatabase.LoadAssetAtPath(it.path + "/" + AssetPath.assetPath,
+							AssetType
+						);
 						break;
 					}
 				}
 			}
 
 			return ret;
+		}
+
+		/// <summary>
+		/// Load asset from the AssetRef.
+		/// </summary>
+		/// <param name="AssetPath">Asset ref.</param>
+		/// <typeparam name="T">Type of object to load.</typeparam>
+		/// <returns>Object instance loaded, if found. Otherwise, null.</returns>
+		public T? LoadAsset<T>(AssetRef AssetPath) where T : Object
+		{
+			return LoadAsset(AssetPath,
+				typeof(T)
+			) as T;
 		}
 
 		/// <summary>
