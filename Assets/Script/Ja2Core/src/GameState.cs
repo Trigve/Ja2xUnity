@@ -53,6 +53,11 @@ namespace Ja2
 		/// Global cancellation token.
 		/// </summary>
 		private CancellationTokenSource? m_CancellationTokenSource;
+
+		/// <summary>
+		/// Active camera backing field.
+		/// </summary>
+		private Camera? m_ActiveCamera;
 #endregion
 
 #region Properties
@@ -85,6 +90,22 @@ namespace Ja2
 		/// Get the new cancelation token.
 		/// </summary>
 		public CancellationToken cancellationToken => m_CancellationTokenSource?.Token ?? CancellationToken.None;
+
+		/// <summary>
+		/// Currently active camera.
+		/// </summary>
+		public Camera? activeCamera
+		{
+			get => m_ActiveCamera;
+			set
+			{
+				// Deactivate the old camera's GO
+				if(m_ActiveCamera != null)
+					m_ActiveCamera.gameObject.SetActive(false);
+
+				m_ActiveCamera = value;
+			}
+		}
 #endregion
 
 #region Events
@@ -146,6 +167,7 @@ namespace Ja2
 			m_CancellationTokenSource = null;
 
 			eventStart = null;
+			m_ActiveCamera = null;
 		}
 #endregion
 	}
