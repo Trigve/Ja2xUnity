@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+
 using UnityEngine;
 
 namespace Ja2
@@ -28,12 +30,12 @@ namespace Ja2
 #endregion
 
 #region Messages
-		public void Start()
+		public async UniTaskVoid Start()
 		{
 			// Disable old camera and set the active on
 			m_GameState.activeCamera = m_Camera;
 
-			m_AssetRefMocker?.LoadAssets(m_GameState.assetManager);
+			await m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
 		}
 #endregion
 	}
