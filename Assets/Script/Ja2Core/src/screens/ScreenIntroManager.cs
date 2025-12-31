@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 
 using Cysharp.Threading.Tasks;
@@ -6,6 +7,8 @@ using UnityEngine;
 using UnityEngine.Video;
 
 using Ja2.Extensions.UnityComponentAsync;
+
+using UnityEngine.Assertions;
 
 namespace Ja2
 {
@@ -23,16 +26,29 @@ namespace Ja2
 		private GameState m_GameState = null!;
 
 		/// <summary>
+		/// Mock manager.
+		/// </summary>
+		[SerializeField]
+		private UI.AssetRefMockerManager? m_MockManager;
+
+		/// <summary>
 		/// Video player component.
 		/// </summary>
 		[SerializeField]
 		private VideoPlayer m_VideoPlayer = null!;
 
 		/// <summary>
-		/// Splash video asset.
+		/// See <see cref="videoClips"/>.
 		/// </summary>
 		[SerializeField]
-		private AssetRef m_VideoSplash;
+		private VideoClip?[] m_VideoClips = Array.Empty<VideoClip>();
+#endregion
+
+#region Properties
+		/// <summary>
+		/// All the video clips to play.
+		/// </summary>
+		public VideoClip?[] videoClips => m_VideoClips;
 #endregion
 
 #region Messages
@@ -40,54 +56,34 @@ namespace Ja2
 		{
 			var cts = new CancellationTokenSource();
 
-			// Load the clip
-			m_VideoPlayer.clip = await m_GameState.assetManager.LoadAssetAsync<VideoClip>(m_VideoSplash)!.AttachExternalCancellation<VideoClip>(cts.Token);
+			// As first, load all the needed assets
+			await m_MockManager!.LoadAssets(m_GameState.assetManager);
 
-			await m_VideoPlayer.PrepareAsync(cts.Token);
-
-			UniTask task = m_VideoPlayer.PlayAsync(cts.Token);
-			while(task.Status == UniTaskStatus.Pending)
+			// Play all the clips
+			foreach(VideoClip? it in m_VideoClips)
 			{
-				// Wait to be able to check for any input
-				await UniTask.Yield();
+				Assert.IsNotNull(it);
+				
+				// Load the clip
+				m_VideoPlayer.clip = it;
 
-				if(m_GameState.inputManager.inputReceived)
+				await m_VideoPlayer.PrepareAsync(cts.Token);
+
+				UniTask task = m_VideoPlayer.PlayAsync(cts.Token);
+				while(task.Status == UniTaskStatus.Pending)
 				{
-					m_VideoPlayer.Stop();
+					// Wait to be able to check for any input
+					await UniTask.Yield();
 
-					cts.Cancel();
-					break;
+					if(m_GameState.inputManager.inputReceived)
+					{
+						m_VideoPlayer.Stop();
+
+						cts.Cancel();
+						break;
+					}
 				}
 			}
-
-/*
-			if( gfIntroScreenEntry )
-			{
-				EnterIntroScreen();
-				gfIntroScreenEntry = FALSE;
-				gfIntroScreenExit = FALSE;
-
-				InvalidateRegion( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT );
-			}
-
-
-			GetIntroScreenUserInput();
-
-			HandleIntroScreen();
-
-			ExecuteBaseDirtyRectQueue();
-			EndFrameBufferRender();
-
-
-			if( gfIntroScreenExit )
-			{
-				ExitIntroScreen();
-				gfIntroScreenExit = FALSE;
-				gfIntroScreenEntry = TRUE;
-			}
-
-			return( guiIntroExitScreen );
-*/
 		}
 #endregion
 	}

@@ -195,6 +195,8 @@ GameObject:
   m_Component:
   - component: {fileID: 574964788}
   - component: {fileID: 574964787}
+  - component: {fileID: 574964790}
+  - component: {fileID: 574964789}
   m_Layer: 0
   m_Name: IntroManager
   m_TagString: Untagged
@@ -215,10 +217,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GameState: {fileID: 11400000, guid: f92ab9efa3d2e7b418acad26b30254d3, type: 2}
+  m_MockManager: {fileID: 574964790}
   m_VideoPlayer: {fileID: 557628145}
-  m_VideoSplash:
-    m_Bundle: Intro
-    m_AssetPath: splashscreen.mp4
+  m_VideoClips:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &574964788
 Transform:
   m_ObjectHideFlags: 0
@@ -234,6 +237,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &574964789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574964786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cc3ed0161f4d44ad693ca95b602b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Component: {fileID: 574964787}
+--- !u!114 &574964790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574964786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c933314e5de443538c0d318ea212559c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetMocks:
+  - m_Version: 1
+    m_Component: {fileID: 574964789}
+    m_AssetRefs:
+    - m_Bundle: '[1507694452]'
+      m_AssetPath: splashscreen.mp4
+    - m_Bundle: '[1507694452]'
+      m_AssetPath: talonsoftid_endhold.mp4
 --- !u!1 &939736317
 GameObject:
   m_ObjectHideFlags: 0
