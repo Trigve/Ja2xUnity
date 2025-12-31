@@ -77,8 +77,11 @@ namespace Ja2
 			// Play all the clips
 			foreach(VideoClip? it in m_VideoClips)
 			{
+				if(cts.IsCancellationRequested)
+					break;
+
 				Assert.IsNotNull(it);
-				
+
 				// Load the clip
 				m_VideoPlayer.clip = it;
 
