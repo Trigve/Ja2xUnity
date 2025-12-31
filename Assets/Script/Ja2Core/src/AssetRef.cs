@@ -27,6 +27,11 @@ namespace Ja2
 
 #region Properties
 		/// <summary>
+		/// Is instance valid. At least, asset should be valid.
+		/// </summary>
+		public bool isValid => !string.IsNullOrEmpty(m_AssetPath);
+
+		/// <summary>
 		/// Bundle.
 		/// </summary>
 		public string bundle => m_Bundle;
