@@ -26,7 +26,7 @@ namespace Ja2
 		public void Start()
 		{
 			// Start intro
-			m_GameState.screenManager.SetPendingScreen(m_IntroScreen,
+			m_GameState.screenManager.SetPendingScreen(m_IntroScreen!,
 				new GameScreenOptions()
 				{
 					destroyActiveSceen = true
