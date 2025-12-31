@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 583389351}
   - component: {fileID: 583389354}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1358,6 +1358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GameState: {fileID: 11400000, guid: f92ab9efa3d2e7b418acad26b30254d3, type: 2}
   m_AssetRefMocker: {fileID: 1832165898}
+  m_Camera: {fileID: 583389352}
 --- !u!4 &1832165900
 Transform:
   m_ObjectHideFlags: 0

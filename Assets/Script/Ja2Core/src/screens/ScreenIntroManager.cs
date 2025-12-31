@@ -32,6 +32,12 @@ namespace Ja2
 		private UI.AssetRefMockerManager? m_MockManager;
 
 		/// <summary>
+		/// Camera used.
+		/// </summary>
+		[SerializeField]
+		private Camera? m_Camera;
+
+		/// <summary>
 		/// Video player component.
 		/// </summary>
 		[SerializeField]
@@ -42,6 +48,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private VideoClip?[] m_VideoClips = Array.Empty<VideoClip>();
+
+		/// <summary>
+		/// Next screen to run.
+		/// </summary>
+		[SerializeField]
+		private GameScreen? m_NextScreen;
 #endregion
 
 #region Properties
@@ -55,6 +67,9 @@ namespace Ja2
 		public async UniTaskVoid Start()
 		{
 			var cts = new CancellationTokenSource();
+
+			// Set the active camera
+			m_GameState.activeCamera = m_Camera;
 
 			// As first, load all the needed assets
 			await m_MockManager!.LoadAssets(m_GameState.assetManager);
@@ -83,6 +98,16 @@ namespace Ja2
 						break;
 					}
 				}
+			}
+
+			if(m_NextScreen != null)
+			{
+				m_GameState.screenManager.SetPendingScreen(m_NextScreen,
+					new GameScreenOptions()
+					{
+						destroyActiveSceen = true
+					}
+				);
 			}
 		}
 #endregion
