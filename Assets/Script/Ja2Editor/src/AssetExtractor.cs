@@ -155,8 +155,25 @@ namespace Ja2.Editor
 
 				AssetDatabase.ImportAsset(out_file_path);
 			}
-            else
-            	Debug.LogWarning(string.Format("Unsupported file type '{0}'", file_ext));
+			// All other files extract as is
+			else
+			{
+				// File name for the asset
+				string out_file_path = Path.Combine(PathDirOutput,
+					root_path,
+					Path.GetFileName(file_name)
+				);
+
+				// Be sure directory exist
+				if(!Directory.Exists(Path.GetDirectoryName(out_file_path)))
+					Directory.CreateDirectory(Path.GetDirectoryName(out_file_path)!);
+
+				// Write the data
+				using var file_stream = new FileStream(out_file_path, FileMode.Create);
+				file_stream.Write(Data);
+
+				AssetDatabase.ImportAsset(out_file_path);
+			}
 	    }
 #endregion
     }
