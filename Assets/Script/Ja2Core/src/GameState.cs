@@ -113,6 +113,11 @@ namespace Ja2
 		/// Event called during initialization.
 		/// </summary>
 		public event Action? eventStart;
+
+		/// <summary>
+		/// Event called during update on each frame.
+		/// </summary>
+		public event Action? eventUpdate;
 #endregion
 
 #region Methods Public
@@ -123,6 +128,8 @@ namespace Ja2
 		{
 			m_InputManager!.Update();
 			m_ScreenManager!.UpdateManager();
+
+			eventUpdate?.Invoke();
 		}
 #endregion
 
