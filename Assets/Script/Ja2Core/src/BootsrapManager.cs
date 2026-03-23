@@ -82,7 +82,6 @@ namespace Ja2
 		/// <returns></returns>
 		private bool InitializeStandardGamingPlatform()
 		{
-
 			// Open the game config file
 			Vfs.File file_game_ini = m_GameState.vfsManager.OpenFileRegular(
 				new Vfs.Path(Constants.GameIniFile)
@@ -93,7 +92,6 @@ namespace Ja2
 				{
 					// Read in settings
 					var oProps = new IniParser(file_game_ini_stream);
-
 
 					string loc = oProps.getStringProperty(Constants.IniSectionJa2Settings,
 						Constants.IniKeyLocale
@@ -116,8 +114,6 @@ namespace Ja2
 						Constants.IniKeyScreenModeWindowedMaximized,
 						-1
 					) == 1;
-
-
 
 					var res_x = 1920;
 					var res_y = 1080;
@@ -155,7 +151,6 @@ namespace Ja2
 					Ja2Settings.screenWidth = res_x;
 					Ja2Settings.screenHeight = res_y;
 
-
 					Ja2Settings.playIntro = oProps.getIntProperty(Constants.IniSectionJa2Settings,
 						Constants.IniKeyPlayIntro,
 						1
@@ -177,7 +172,6 @@ namespace Ja2
 				}
 			}
 
-
 			Ja2Logger.LogInfo("Initializing Game Manager");
 
 			// Initialize the Game
@@ -188,7 +182,6 @@ namespace Ja2
 
 				return false;
 			}
-
 
 			return true;
 		}

@@ -23,8 +23,6 @@ namespace Ja2
 
 			m_GameState.inputManager.Update();
 
-
-
 			// Hook into mouse stuff for MOVEMENT MESSAGES
 			m_GameState.mouseSystemManager.MouseHandlerHook(InputAction.MousePos,
 				(ushort)MousePos.x,
@@ -32,7 +30,6 @@ namespace Ja2
 				m_GameState.inputManager.isMouseButtonLeftDown,
 				m_GameState.inputManager.isMouseButtonRightDown
 			);
-
 
 			while(
 				m_GameState.inputManager.DequeueSpecificEvent(InputAction.ButtonLeftRepeat | InputAction.ButtonRightRepeat | InputAction.ButtonLeftDown | InputAction.ButtonLeftUp | InputAction.ButtonMiddleUp | InputAction.ButtonX1Up | InputAction.ButtonX2Up | InputAction.ButtonRightDown | InputAction.ButtonRightUp | InputAction.ButtonMiddleDown | InputAction.ButtonX1Down | InputAction.ButtonX2Down | InputAction.MouseWheelUp | InputAction.MouseWheelDown,
@@ -48,38 +45,18 @@ namespace Ja2
 					m_GameState.inputManager.isMouseButtonRightDown
 				);
 			}
+		}
 
-			{
+		/// See unity.
+		public void OnDestroy()
+		{
+			ShutdownStandardGamingPlatform();
+		}
+#endregion
 
-			}
-
-			{
-				{
-
-
-					{
-					}
-
-
-
-
-
-
-
-
-
-
-
-
-
-			}
-
-
-
-
-
-
-
+#region Methods
+		private void ShutdownStandardGamingPlatform()
+		{
 		}
 #endregion
 	}

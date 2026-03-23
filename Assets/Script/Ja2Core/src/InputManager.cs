@@ -377,14 +377,6 @@ namespace Ja2
 						uiTmpLParam
 					);
 				}
-				//else if the alt tab key was pressed
-//x				else if(ubChar == TAB && gfAltState)
-//x				{
-//x					// therefore minimize the application
-//x					ShowWindow(ghWindow, SW_MINIMIZE);
-//x					m_KeyState[ALT] = FALSE;
-//x					gfAltState = FALSE;
-//x				}
 			}
 		}
 
@@ -496,13 +488,10 @@ namespace Ja2
 			// Initialize the Event Queue
 			m_EventQueue.Clear();
 
-
 			// Initialize other variables
 			isShiftPressed = false;
 			isAltPressed = false;
 			isCtrlPressed = false;
-
-			// Initialize variables pertaining to DOUBLE CLIK stuff
 
 			// Initialize variables pertaining to the button states
 			isMouseButtonLeftDown = false;
@@ -510,7 +499,6 @@ namespace Ja2
 
 			m_ButtonLeftRepeatTimer = 0;
 			m_ButtonRightRepeatTimer = 0;
-
 
 			// Initialize the string input mechanism
 			m_IsCurrentStringInputState = false;

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Ja2.Vfs
 {
 	/// <summary>
