@@ -169,8 +169,10 @@ namespace Ja2.Editor
 					Directory.CreateDirectory(Path.GetDirectoryName(out_file_path)!);
 
 				// Write the data
-				using var file_stream = new FileStream(out_file_path, FileMode.Create);
-				file_stream.Write(Data);
+				{
+					using var file_stream = new FileStream(out_file_path, FileMode.Create);
+					file_stream.Write(Data);
+				}
 
 				AssetDatabase.ImportAsset(out_file_path);
 			}
