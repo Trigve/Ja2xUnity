@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 
 using UnityEditor;
+using UnityEditor.UIElements;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace Ja2.Editor
 {
@@ -29,125 +31,161 @@ namespace Ja2.Editor
 
 #region Methods Public
 		/// <inheritdoc />
-		public override void OnInspectorGUI()
+		public override VisualElement CreateInspectorGUI()
+		{
+			var root = new VisualElement();
+
+			// Draw the default inspector
+			InspectorElement.FillDefaultInspector(root,
+				serializedObject,
+				this
+			);
+
+			// Spacer
+			root.Add(
+				new VisualElement
+				{
+					style =
+					{
+						height = 8
+					}
+				}
+			);
+
+			var gather_button = new Button(OnGatherAllAssets);
+			gather_button.text = "Gather all assets";
+
+			root.Add(gather_button);
+
+			var load_button = new Button(OnLoadAllAssets);
+			load_button.text = "Load all assets";
+
+			root.Add(load_button);
+
+			return root;
+		}
+#endregion
+
+#region Slots
+		/// <summary>
+		/// "Gather all asset" button handler.
+		/// </summary>
+		private void OnGatherAllAssets()
 		{
 			serializedObject.Update();
 
-			DrawDefaultInspector();
+			// Clear the data
+			m_AssetMocks.ClearArray();
 
-			EditorGUILayout.Space();
+			var root_objects = new Queue<GameObject>(
+				SceneManager.GetActiveScene().GetRootGameObjects()
+			);
 
-			if(GUILayout.Button("Gather all assets"))
+			while(root_objects.Count > 0)
 			{
-				// Clear the data
-				m_AssetMocks.ClearArray();
+				GameObject top_go = root_objects.Dequeue();
 
-				var root_objects = new Queue<GameObject>(
-					SceneManager.GetActiveScene().GetRootGameObjects()
+				// Get all the children
+				foreach(Transform it in top_go.transform)
+					root_objects.Enqueue(it.gameObject);
+
+				// Process all the components in the current GO
+				foreach(Component it in top_go.GetComponents<Component>())
+				{
+					if(it is UI.IAssetRefMocker mocker_component)
+					{
+						Undo.RecordObject(mocker_component.componentsModified,
+							"Clear component data "
+						);
+
+						var asset_mock = mocker_component.GatherAssets();
+
+						if(asset_mock == null)
+						{
+							Debug.LogWarningFormat("{0}: Component not set for the '{1}'",
+								nameof(AssetRefMockerEditor),
+								it.gameObject
+							);
+
+							continue;
+						}
+
+						var asset_refs = new List<AssetRef>();
+
+						// Load all the asset refs
+						foreach(Object? it_asset in asset_mock.Value.m_Assets)
+						{
+							var asset_ref = new AssetRef();
+
+							// Only if there is some valid asset
+							if(it_asset != null)
+							{
+								var asset_ref_found = EditorAssetManager.instance.GetAssetRefFromAsset(it_asset);
+
+								// \FIXME Asset ref may not be valid when???
+								if(asset_ref_found.HasValue)
+									asset_ref = asset_ref_found.Value;
+							}
+
+							asset_refs.Add(asset_ref);
+						}
+
+						// Need to mark it as modified, otherwise, it wouldn't be saved to scene, see
+						// https://discussions.unity.com/t/updating-prefab-variable-via-script-doesnt-save-override/727795/5
+						PrefabUtility.RecordPrefabInstancePropertyModifications(mocker_component.componentsModified);
+
+						// Add new item
+						++m_AssetMocks.arraySize;
+						SerializedProperty element_last = m_AssetMocks.GetArrayElementAtIndex(m_AssetMocks.arraySize - 1);
+						element_last.boxedValue = new UI.AssetRefMockerInstance(mocker_component,
+							asset_refs.ToArray()
+						);
+					}
+				}
+			}
+
+			serializedObject.ApplyModifiedProperties();
+		}
+
+		/// <summary>
+		/// "Load all assets" button handler.
+		/// </summary>
+		private void OnLoadAllAssets()
+		{
+			for(var i = 0; i < m_AssetMocks.arraySize; ++i)
+			{
+				SerializedProperty asset_mock = m_AssetMocks.GetArrayElementAtIndex(i);
+
+				var mocker_component = (UI.IAssetRefMocker)asset_mock.FindPropertyRelative(
+					nameof(UI.AssetRefMockerInstance.m_Component)
+				).boxedValue;
+
+				SerializedProperty asset_refs = asset_mock.FindPropertyRelative(
+					nameof(UI.AssetRefMockerInstance.m_AssetRefs)
 				);
 
-				while(root_objects.Count > 0)
+				var asset_list = new List<Object?>();
+
+				for(var j = 0; j < asset_refs.arraySize; ++j)
 				{
-					GameObject top_go = root_objects.Dequeue();
+					Object? asset_loaded = null;
 
-					// Get all the children
-					foreach(Transform it in top_go.transform)
-						root_objects.Enqueue(it.gameObject);
-
-					// Process all the components in the current GO
-					foreach(Component it in top_go.GetComponents<Component>())
+					var asset_ref = (AssetRef)asset_refs.GetArrayElementAtIndex(j).boxedValue;
+					if(asset_ref.isValid)
 					{
-						if(it is UI.IAssetRefMocker mocker_component)
-						{
-							Undo.RecordObject(mocker_component.componentsModified,
-								"Clear component data "
-							);
-
-							var asset_mock = mocker_component.GatherAssets();
-
-							if(asset_mock == null)
-							{
-								Debug.LogWarningFormat("{0}: Component not set for the '{1}'",
-									nameof(AssetRefMockerEditor),
-									it.gameObject
-								);
-
-								continue;
-							}
-
-							var asset_refs = new List<AssetRef>();
-
-							// Load all the asset refs
-							foreach(Object? it_asset in asset_mock.Value.m_Assets)
-							{
-								var asset_ref = new AssetRef();
-
-								// Only if there is some valid asset
-								if(it_asset != null)
-								{
-									var asset_ref_found = EditorAssetManager.instance.GetAssetRefFromAsset(it_asset);
-
-									// \FIXME Asset ref may not be valid when???
-									if(asset_ref_found.HasValue)
-										asset_ref = asset_ref_found.Value;
-								}
-
-								asset_refs.Add(asset_ref);
-							}
-
-							// Need to mark it as modified, otherwise, it wouldn't be saved to scene, see
-							// https://discussions.unity.com/t/updating-prefab-variable-via-script-doesnt-save-override/727795/5
-							PrefabUtility.RecordPrefabInstancePropertyModifications(mocker_component.componentsModified);
-
-							// Add new item
-							++m_AssetMocks.arraySize;
-							SerializedProperty element_last = m_AssetMocks.GetArrayElementAtIndex(m_AssetMocks.arraySize - 1);
-							element_last.boxedValue = new UI.AssetRefMockerInstance(mocker_component,
-								asset_refs.ToArray()
-							);
-						}
-					}
-				}
-
-				serializedObject.ApplyModifiedProperties();
-			}
-			if(GUILayout.Button("Load all assets"))
-			{
-				for(var i = 0; i < m_AssetMocks.arraySize; ++i)
-				{
-					SerializedProperty asset_mock = m_AssetMocks.GetArrayElementAtIndex(i);
-
-					var mocker_component = (UI.IAssetRefMocker)asset_mock.FindPropertyRelative(
-						nameof(UI.AssetRefMockerInstance.m_Component)
-					).boxedValue;
-
-					SerializedProperty asset_refs = asset_mock.FindPropertyRelative(
-						nameof(UI.AssetRefMockerInstance.m_AssetRefs)
-					);
-
-					var asset_list = new List<Object?>();
-
-					for(var j = 0; j < asset_refs.arraySize; ++j)
-					{
-						Object? asset_loaded = null;
-
-						var asset_ref = (AssetRef)asset_refs.GetArrayElementAtIndex(j).boxedValue;
-						if(asset_ref.isValid)
-						{
-							asset_loaded = EditorAssetManager.instance.LoadAsset(asset_ref,
-								mocker_component.assetType[0]
-							);
-						}
-
-						asset_list.Add(asset_loaded);
+						asset_loaded = EditorAssetManager.instance.LoadAsset(asset_ref,
+							mocker_component.assetType[0]
+						);
 					}
 
-					mocker_component.LoadAssets(
-						new UI.AssetMockData(
-							asset_list.ToArray()
-						)
-					);
+					asset_list.Add(asset_loaded);
 				}
+
+				mocker_component.LoadAssets(
+					new UI.AssetMockData(
+						asset_list.ToArray()
+					)
+				);
 			}
 		}
 #endregion
