@@ -13,7 +13,7 @@ namespace Ja2.Editor
 	/// <see cref="UI.AssetRefMockerManager"/> editor.
 	/// </summary>
 	[CustomEditor(typeof(UI.AssetRefMockerManager))]
-	public sealed class AssetRefMockerEditor : UnityEditor.Editor
+	public sealed class AssetRefMockerManagerEditor : UnityEditor.Editor
 	{
 #region Fields
 		/// <summary>
@@ -103,7 +103,7 @@ namespace Ja2.Editor
 						if(asset_mock == null)
 						{
 							Debug.LogWarningFormat("{0}: Component not set for the '{1}'",
-								nameof(AssetRefMockerEditor),
+								nameof(AssetRefMockerManagerEditor),
 								it.gameObject
 							);
 
