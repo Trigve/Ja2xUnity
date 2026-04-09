@@ -76,6 +76,7 @@ namespace Ja2.Editor
 
 			// Clear the data
 			m_AssetMocks.ClearArray();
+			serializedObject.ApplyModifiedProperties();
 
 			var root_objects = new Queue<GameObject>(
 				SceneManager.GetActiveScene().GetRootGameObjects()
@@ -93,58 +94,11 @@ namespace Ja2.Editor
 				foreach(Component it in top_go.GetComponents<Component>())
 				{
 					if(it is UI.IAssetRefMocker mocker_component)
-					{
-						Undo.RecordObject(mocker_component.componentsModified,
-							"Clear component data "
-						);
-
-						var asset_mock = mocker_component.GatherAssets();
-
-						if(asset_mock == null)
-						{
-							Debug.LogWarningFormat("{0}: Component not set for the '{1}'",
-								nameof(AssetRefMockerManagerEditor),
-								it.gameObject
-							);
-
-							continue;
-						}
-
-						var asset_refs = new List<AssetRef>();
-
-						// Load all the asset refs
-						foreach(Object? it_asset in asset_mock.Value.m_Assets)
-						{
-							var asset_ref = new AssetRef();
-
-							// Only if there is some valid asset
-							if(it_asset != null)
-							{
-								var asset_ref_found = EditorAssetManager.instance.GetAssetRefFromAsset(it_asset);
-
-								// \FIXME Asset ref may not be valid when???
-								if(asset_ref_found.HasValue)
-									asset_ref = asset_ref_found.Value;
-							}
-
-							asset_refs.Add(asset_ref);
-						}
-
-						// Need to mark it as modified, otherwise, it wouldn't be saved to scene, see
-						// https://discussions.unity.com/t/updating-prefab-variable-via-script-doesnt-save-override/727795/5
-						PrefabUtility.RecordPrefabInstancePropertyModifications(mocker_component.componentsModified);
-
-						// Add new item
-						++m_AssetMocks.arraySize;
-						SerializedProperty element_last = m_AssetMocks.GetArrayElementAtIndex(m_AssetMocks.arraySize - 1);
-						element_last.boxedValue = new UI.AssetRefMockerInstance(mocker_component,
-							asset_refs.ToArray()
-						);
-					}
+						((UI.AssetRefMockerManager)serializedObject.targetObject).AddRefMocker(mocker_component);
 				}
-			}
 
-			serializedObject.ApplyModifiedProperties();
+				serializedObject.Update();
+			}
 		}
 
 		/// <summary>

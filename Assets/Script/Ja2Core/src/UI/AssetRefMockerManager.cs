@@ -19,10 +19,66 @@ namespace Ja2.UI
 		/// All the mock data.
 		/// </summary>
 		[SerializeField]
-		private AssetRefMockerInstance[] m_AssetMocks = Array.Empty<AssetRefMockerInstance>();
+		private List<AssetRefMockerInstance> m_AssetMocks = new();
 #endregion
 
 #region Methods Public
+#if UNITY_EDITOR
+		/// <summary>
+		/// Add new ref mocker to the manager. Only used in the editor.
+		/// </summary>
+		/// <param name="MockerComponent">Component to add to the asset list.</param>
+		public void AddRefMocker(IAssetRefMocker MockerComponent)
+		{
+			UnityEditor.Undo.RecordObject(MockerComponent.componentsModified,
+				"Clear component data "
+			);
+
+			var asset_mock = MockerComponent.GatherAssets();
+
+			if(asset_mock == null)
+			{
+				Debug.LogWarningFormat("{0}: Component not set for the '{1}'",
+					nameof(AssetRefMockerManager),
+					((Component)MockerComponent).gameObject
+				);
+
+				return;
+			}
+
+			var asset_refs = new List<AssetRef>();
+
+			// Load all the asset refs
+			foreach(Object? it_asset in asset_mock.Value.m_Assets)
+			{
+				var asset_ref = new AssetRef();
+
+				// Only if there is some valid asset
+				if(it_asset != null)
+				{
+					var asset_ref_found = EditorAssetManager.instance.GetAssetRefFromAsset(it_asset);
+
+					// \FIXME Asset ref may not be valid when???
+					if(asset_ref_found.HasValue)
+						asset_ref = asset_ref_found.Value;
+				}
+
+				asset_refs.Add(asset_ref);
+			}
+
+			// Need to mark it as modified, otherwise, it wouldn't be saved to scene, see
+			// https://discussions.unity.com/t/updating-prefab-variable-via-script-doesnt-save-override/727795/5
+			UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(MockerComponent.componentsModified);
+
+			// Add new item
+			m_AssetMocks.Add(
+				new AssetRefMockerInstance(MockerComponent,
+					asset_refs.ToArray()
+				)
+			);
+		}
+#endif
+
 		/// <summary>
 		/// Load all the assets from the AssetRefs.
 		/// </summary>
