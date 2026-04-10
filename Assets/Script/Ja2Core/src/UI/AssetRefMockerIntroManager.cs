@@ -47,6 +47,13 @@ namespace Ja2.UI
 
 			return asset_mock;
 		}
+
+		/// <inheritdoc />
+		protected override void DoResetAssets()
+		{
+			for(var i = 0; i < m_Component!.videoClips.Length; ++i)
+				m_Component!.videoClips[i] = null;
+		}
 #endif
 
 #endregion

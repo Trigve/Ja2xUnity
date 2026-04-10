@@ -51,6 +51,12 @@ namespace Ja2.UI
 
 			return asset_mock;
 		}
+
+		/// <inheritdoc />
+		protected override void DoResetAssets()
+		{
+			m_Component!.sprite = null;
+		}
 #endif
 
 #endregion

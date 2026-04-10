@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
 
 using UnityEngine;
@@ -61,6 +62,11 @@ namespace Ja2.Editor
 			load_button.text = "Load all assets";
 
 			root.Add(load_button);
+
+			var clear_button = new Button(OnResetAllAssets);
+			clear_button.text = "Reset all assets";
+
+			root.Add(clear_button);
 
 			return root;
 		}
@@ -141,6 +147,26 @@ namespace Ja2.Editor
 					)
 				);
 			}
+		}
+
+		/// <summary>
+		/// Reset all the assets in the referenced components.
+		/// </summary>
+		private void OnResetAllAssets()
+		{
+			for(var i = 0; i < m_AssetMocks.arraySize; ++i)
+			{
+				SerializedProperty asset_mock = m_AssetMocks.GetArrayElementAtIndex(i);
+
+				var mocker_component = (UI.IAssetRefMocker)asset_mock.FindPropertyRelative(
+					nameof(UI.AssetRefMockerInstance.m_Component)
+				).boxedValue;
+
+				mocker_component.ResetAssets();
+			}
+
+			// Mark the scene dirty, so it is saved if needed
+			EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
 		}
 #endregion
 	}

@@ -37,6 +37,11 @@ namespace Ja2.UI
 		/// </summary>
 		/// <returns>Data for the current component. Null, if some error occured.</returns>
 		public AssetMockData? GatherAssets();
+
+		/// <summary>
+		/// Reset the asset from the component.
+		/// </summary>
+		public void ResetAssets();
 #endif
 
 #endregion

@@ -70,6 +70,21 @@ namespace Ja2.UI
 
 			return DoGatherAssets();
 		}
+
+		/// <inheritdoc />
+		public void ResetAssets()
+		{
+			if(m_Component == null)
+			{
+				Debug.LogErrorFormat("{0}: Component is Null",
+					nameof(AssetRefMockerImage)
+				);
+
+				return;
+			}
+
+			DoResetAssets();
+		}
 #endif
 
 #endregion
@@ -86,6 +101,11 @@ namespace Ja2.UI
 		/// </summary>
 		/// <returns></returns>
 		protected abstract AssetMockData DoGatherAssets();
+
+		/// <summary>
+		/// Implementation.
+		/// </summary>
+		protected abstract void DoResetAssets();
 #endif
 
 #endregion

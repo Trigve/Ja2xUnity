@@ -62,6 +62,17 @@ namespace Ja2.UI
 
 			return asset_mock;
 		}
+
+		/// <inheritdoc />
+		protected override void DoResetAssets()
+		{
+			m_Component!.spriteNormal = null;
+			m_Component!.spriteHighlighted = null;
+			m_Component!.spritePressed = null;
+			m_Component!.spriteDisabled = null;
+
+			m_Component.Clear();
+		}
 #endif
 
 #endregion
