@@ -72,7 +72,7 @@ namespace Ja2
 			m_GameState.activeCamera = m_Camera;
 
 			// As first, load all the needed assets
-			await m_MockManager!.LoadAssets(m_GameState.assetManager);
+			await m_MockManager!.LoadAssetsAsync(m_GameState.assetManager);
 
 			// Play all the clips
 			foreach(VideoClip? it in m_VideoClips)

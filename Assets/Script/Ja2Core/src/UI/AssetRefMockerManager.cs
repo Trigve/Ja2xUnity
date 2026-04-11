@@ -83,7 +83,7 @@ namespace Ja2.UI
 		/// Load all the assets from the AssetRefs.
 		/// </summary>
 		/// <param name="Manager"></param>
-		public async UniTask LoadAssets(AssetManager Manager)
+		public async UniTask LoadAssetsAsync(AssetManager Manager)
 		{
 			var asset_list = new List<Object?>();
 

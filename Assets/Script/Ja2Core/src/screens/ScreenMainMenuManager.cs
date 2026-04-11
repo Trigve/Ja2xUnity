@@ -35,7 +35,7 @@ namespace Ja2
 			// Disable old camera and set the active on
 			m_GameState.activeCamera = m_Camera;
 
-			await m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
+			await m_AssetRefMocker!.LoadAssetsAsync(m_GameState.assetManager);
 		}
 #endregion
 	}
