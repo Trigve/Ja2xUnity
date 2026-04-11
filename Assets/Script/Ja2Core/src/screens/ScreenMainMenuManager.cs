@@ -25,6 +25,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private Camera? m_Camera;
+
+		/// <summary>
+		/// Main menu music component.
+		/// </summary>
+		[SerializeField]
+		private AudioSource? m_Music;
 #endregion
 
 #region Messages
@@ -34,6 +40,7 @@ namespace Ja2
 			m_GameState.activeCamera = m_Camera;
 
 			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
+			m_Music!.Play();
 		}
 #endregion
 	}
