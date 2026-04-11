@@ -78,6 +78,41 @@ namespace Ja2.UI
 			);
 		}
 #endif
+		/// <summary>
+		/// Load all the assets from the AssetRefs.
+		/// </summary>
+		/// <param name="Manager"></param>
+		public void LoadAssets(AssetManager Manager)
+		{
+			var asset_list = new List<Object?>();
+
+			// Process all the components
+			foreach(AssetRefMockerInstance it in m_AssetMocks)
+			{
+				asset_list.Clear();
+
+				// Process all the assets
+				foreach(AssetRef it_ref in it.m_AssetRefs)
+				{
+					Object? asset_loaded = null;
+
+					if(it_ref.isValid)
+					{
+						asset_loaded = Manager.LoadAsset(it_ref,
+							it.component.assetType[0]
+						);
+					}
+
+					asset_list.Add(asset_loaded);
+				}
+
+				it.component.LoadAssets(
+					new AssetMockData(
+						asset_list.ToArray()
+					)
+				);
+			}
+		}
 
 		/// <summary>
 		/// Load all the assets from the AssetRefs.
