@@ -25,4 +25,12 @@ namespace Ja2.Editor
 	public class AssetRefMockerMainMenuButtonEditor : AssetRefMockerBaseEditor
 	{
 	}
+
+	/// <summary>
+	/// Editor for <see cref="UI.AssetRefMockerAudioSource"/>.
+	/// </summary>
+	[CustomEditor(typeof(UI.AssetRefMockerAudioSource))]
+	public class AssetRefMockerAudioSourceEditor : AssetRefMockerBaseEditor
+	{
+	}
 }
