@@ -36,6 +36,115 @@ namespace Ja2
 		/// <param name="AssetPath">Asset reference.</param>
 		/// <param name="AssetType">Type of the asset to load.</param>
 		/// <returns>Loaded asset if found. Otherwise, null.</returns>
+		public Object? LoadAsset(AssetRef AssetPath, Type AssetType)
+		{
+			Object? ret = null;
+
+			var all_objs_loaded = Array.Empty<Object>();
+
+			var use_asset_bundles = true;
+#if UNITY_EDITOR
+			// Load the config.
+			var he_cfg = SettingsDev.instance;
+
+			// Not using asset bundles, load the one found
+			if(he_cfg != null && !he_cfg.useAssetBundles)
+			{
+				// Use editor asset manager so there is no code duplication
+				Object? asset_loaded = EditorAssetManager.instance.LoadAsset(AssetPath,
+					AssetType
+				);
+
+				if(asset_loaded != null)
+					all_objs_loaded = new []
+					{
+						asset_loaded
+					};
+
+				use_asset_bundles = false;
+			}
+#endif
+
+			if(use_asset_bundles)
+			{
+				BundleData? bundle_data = null;
+
+				// Bundle is explicit
+				if(!string.IsNullOrEmpty(AssetPath.bundle))
+				{
+					// Bundle ID to load
+					uint? bundle_id = AssetPath.bundleId;
+
+					// Try to find the bundle
+					foreach(BundleData it in m_Bundles)
+					{
+						// Using bundle ID
+						if(bundle_id.HasValue)
+						{
+							if(it.m_BundleInfo.bundleId == bundle_id.Value)
+							{
+								bundle_data = it;
+								break;
+							}
+						}
+						// Using bundle name
+						else
+						{
+							if(it.m_BundleName == AssetPath.bundle)
+							{
+								bundle_data = it;
+								break;
+							}
+						}
+					}
+				}
+				else
+				{
+					// Traverse all the loaded bundles and find by path
+					bundle_data = m_Bundles.Where(It => It.m_Paths.ContainsKey(AssetPath.assetPath)).Cast<BundleData?>().FirstOrDefault();
+				}
+
+				// Bundle found
+				if(bundle_data.HasValue)
+				{
+					// Find if the bundle is loaded already
+					AssetBundle? bundle = m_LoadedBundles.Where(It => It.m_BundleId == bundle_data.Value.m_BundleInfo.bundleId).Cast<BundleState?>().FirstOrDefault()?.m_Bundle;
+
+
+					// Not loaded yet
+					if(bundle == null)
+					{
+						bundle = AssetBundle.LoadFromFile(bundle_data.Value.m_BundlePath);
+						m_LoadedBundles.Add(
+							new BundleState(bundle_data.Value.m_BundleInfo.bundleId,
+								bundle
+							)
+						);
+					}
+
+					all_objs_loaded = bundle.LoadAssetWithSubAssets(AssetPath.assetPath);
+				}
+			}
+
+			// Try to cast to the right type
+			foreach(Object it_obj in all_objs_loaded.Where(Obj => Obj != null))
+			{
+				if(it_obj.GetType() == AssetType)
+				{
+					ret = it_obj;
+					break;
+				}
+			}
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Load asset from the AssetRef.
+		/// </summary>
+		/// <param name="AssetPath">Asset reference.</param>
+		/// <param name="AssetType">Type of the asset to load.</param>
+		/// <returns>Loaded asset if found. Otherwise, null.</returns>
 		public async UniTask<Object?> LoadAssetAsync(AssetRef AssetPath, Type AssetType)
 		{
 			Object? ret = null;
