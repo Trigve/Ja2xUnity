@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 
 using Cysharp.Threading.Tasks;
@@ -50,6 +51,29 @@ namespace Ja2
 		/// Event called after the screen has been loaded.
 		/// </summary>
 		public event Action? eventScreenLoaded;
+#endregion
+
+#region Methods Public Static
+#if UNITY_EDITOR
+		/// <summary>
+		/// Find the game screen by scene name.
+		/// </summary>
+		/// <param name="SceneName">Scene name.</param>
+		/// <returns>GameScreen instance if found. Otherwise, null.</returns>
+		internal static GameScreen? FindScreenBySceneName(string SceneName)
+		{
+			// Get all GameScreen objects
+			return UnityEditor.AssetDatabase.FindAssetGUIDs(
+				string.Format("t:{0}",
+					nameof(GameScreen)
+				)
+			)
+			.Select(Guid => UnityEditor.AssetDatabase.LoadAssetByGUID<GameScreen>(Guid))
+			// Only find the one with the given name
+			.FirstOrDefault(Asset => Asset != null && Asset.name == SceneName)
+			;
+		}
+#endif
 #endregion
 
 #region Methods Public

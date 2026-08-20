@@ -38,8 +38,19 @@ namespace Ja2
 				Application.Quit(-1);
 			}
 
-			if(m_InitScreen != null)
-				m_GameState.screenManager.SetPendingScreen(m_InitScreen);
+			// Next screen to run
+			GameScreen? next_screen = m_InitScreen;
+
+#if UNITY_EDITOR
+			// Load the active scene before playback started. This is for situation when another
+			// scene is being tested but bootstrap scene need to be run first (check against loading the bootstrap scene
+			// if it is the active scene)
+			if(m_GameState.originalScene is not null && m_GameState.originalScene.name != UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name)
+				next_screen = m_GameState.originalScene;
+#endif
+
+			if(next_screen != null)
+				m_GameState.screenManager.SetPendingScreen(next_screen);
 		}
 #endregion
 

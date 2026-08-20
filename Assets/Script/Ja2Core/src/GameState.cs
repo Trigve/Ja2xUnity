@@ -52,6 +52,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameObject? m_CameraPrefab;
+
+		/// <summary>
+		/// Bootstrapping scene.
+		/// </summary>
+		[SerializeField]
+		private string m_BootstrapScene = string.Empty;
 #endregion
 
 #region Fields
@@ -101,6 +107,17 @@ namespace Ja2
 		/// Currently active camera.
 		/// </summary>
 		public Camera? activeCamera => m_ActiveCamera;
+
+#if UNITY_EDITOR
+		/// <summary>
+		/// Original scene, that was loaded when the playback was started.
+		/// </summary>
+		public GameScreen? originalScene
+		{
+			get;
+			private set;
+		}
+#endif
 #endregion
 
 #region Events
@@ -113,6 +130,17 @@ namespace Ja2
 		/// Event called during update on each frame.
 		/// </summary>
 		public event Action? eventUpdate;
+#endregion
+
+#region Messages Editor
+#if UNITY_EDITOR
+		private void OnValidate()
+		{
+			// Set the bootstrapping scene, if specified
+			if(!string.IsNullOrEmpty(m_BootstrapScene))
+				UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEditor.SceneAsset>(m_BootstrapScene);
+		}
+#endif
 #endregion
 
 #region Methods Public
@@ -175,6 +203,19 @@ namespace Ja2
 			eventStart = null;
 			m_ActiveCamera = null;
 		}
+#endregion
+
+#region Methods Private Editor
+#if UNITY_EDITOR
+		/// <inheritdoc />
+		protected override void DoExitEditorMode()
+		{
+			// Find the game screen by the scene name
+			originalScene = ScreenManager.FindScreenBySceneName(
+				UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name
+			);
+		}
+#endif
 #endregion
 	}
 
