@@ -21,12 +21,6 @@ namespace Ja2
 		private UI.AssetRefMockerManager? m_AssetRefMocker;
 
 		/// <summary>
-		/// Camera used.
-		/// </summary>
-		[SerializeField]
-		private Camera? m_Camera;
-
-		/// <summary>
 		/// Main menu music component.
 		/// </summary>
 		[SerializeField]
@@ -36,11 +30,26 @@ namespace Ja2
 #region Messages
 		public void Start()
 		{
-			// Disable old camera and set the active on
-			m_GameState.activeCamera = m_Camera;
+			m_GameState.eventUpdate += OnUpdate;
 
 			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
+
 			m_Music!.Play();
+		}
+
+		public void OnDestroy()
+		{
+			m_GameState.eventUpdate -= OnUpdate;
+		}
+#endregion
+
+#region Slots
+		/// <summary>
+		/// Update is called on each frame.
+		/// </summary>
+		private void OnUpdate()
+		{
+
 		}
 #endregion
 	}

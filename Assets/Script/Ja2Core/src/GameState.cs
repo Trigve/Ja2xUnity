@@ -46,6 +46,12 @@ namespace Ja2
 		/// See <see cref="assetManager"/>.
 		[SerializeField]
 		private AssetManager? m_AssetManager;
+
+		/// <summary>
+		/// Camera prefab.
+		/// </summary>
+		[SerializeField]
+		private GameObject? m_CameraPrefab;
 #endregion
 
 #region Fields
@@ -94,18 +100,7 @@ namespace Ja2
 		/// <summary>
 		/// Currently active camera.
 		/// </summary>
-		public Camera? activeCamera
-		{
-			get => m_ActiveCamera;
-			set
-			{
-				// Deactivate the old camera's GO
-				if(m_ActiveCamera != null)
-					m_ActiveCamera.gameObject.SetActive(false);
-
-				m_ActiveCamera = value;
-			}
-		}
+		public Camera? activeCamera => m_ActiveCamera;
 #endregion
 
 #region Events
@@ -145,6 +140,10 @@ namespace Ja2
 			Assert.IsNotNull(m_InputManager);
 			Assert.IsNotNull(m_ScreenManager);
 			Assert.IsNotNull(m_AssetManager);
+
+			// Instantiate the camera
+			Assert.IsNotNull(m_CameraPrefab);
+			m_ActiveCamera = Instantiate(m_CameraPrefab!).GetComponent<Camera>();
 
 			m_CancellationTokenSource = new CancellationTokenSource();
 

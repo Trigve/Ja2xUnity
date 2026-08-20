@@ -32,12 +32,6 @@ namespace Ja2
 		private UI.AssetRefMockerManager? m_MockManager;
 
 		/// <summary>
-		/// Camera used.
-		/// </summary>
-		[SerializeField]
-		private Camera? m_Camera;
-
-		/// <summary>
 		/// Video player component.
 		/// </summary>
 		[SerializeField]
@@ -68,8 +62,7 @@ namespace Ja2
 		{
 			var cts = new CancellationTokenSource();
 
-			// Set the active camera
-			m_GameState.activeCamera = m_Camera;
+			m_VideoPlayer.targetCamera = m_GameState.activeCamera;
 
 			// As first, load all the needed assets
 			await m_MockManager!.LoadAssetsAsync(m_GameState.assetManager);
