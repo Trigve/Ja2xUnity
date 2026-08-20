@@ -44,6 +44,10 @@ namespace Ja2
 			// Only initialize in the playmode
 			if(m_IsPlayMode)
 				Initialize();
+#if UNITY_EDITOR
+			else
+				InitializeEditor();
+#endif
 		}
 
 		private void OnDisable()
@@ -73,6 +77,15 @@ namespace Ja2
 		protected virtual void DoInitialize()
 		{
 		}
+
+#if UNITY_EDITOR
+		/// <summary>
+		/// Override in derived class to do some editor initialization.
+		/// </summary>
+		protected virtual void DoInitializeEditor()
+		{
+		}
+#endif
 
 		/// <summary>
 		/// Override in derived class to do some deinitialization.
@@ -141,6 +154,21 @@ namespace Ja2
 			);
 #endif
 		}
+
+#if UNITY_EDITOR
+		/// <summary>
+		/// Called when initialized in editor ("static constructor" - when SO is first loaded). Should be called only
+		/// once per domain reload.
+		/// </summary>
+		private void InitializeEditor()
+		{
+			Ja2Logger.LogInfo("{0} Editor initialization",
+				typeof(T)
+			);
+
+			DoInitializeEditor();
+		}
+#endif
 
 		/// <summary>
 		/// Do some deinitialization stuff.
