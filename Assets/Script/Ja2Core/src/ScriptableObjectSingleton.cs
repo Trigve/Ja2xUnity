@@ -94,6 +94,15 @@ namespace Ja2
 		{
 		}
 
+#if UNITY_EDITOR
+		/// <summary>
+		/// Override in derived class, to do some stuff, before the scene is loaded.
+		/// </summary>
+		protected virtual void DoExitEditorMode()
+		{
+		}
+#endif
+
 		/// <summary>
 		/// Override to implement Update() functionality
 		/// </summary>
@@ -200,7 +209,9 @@ namespace Ja2
 #if UNITY_EDITOR
 		private void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange StateChange)
 		{
-			if(StateChange == UnityEditor.PlayModeStateChange.ExitingPlayMode)
+			if(StateChange == UnityEditor.PlayModeStateChange.ExitingEditMode)
+				DoExitEditorMode();
+			else if(StateChange == UnityEditor.PlayModeStateChange.ExitingPlayMode)
 			{
 				Deinitialize();
 				m_IsPlayMode = false;
