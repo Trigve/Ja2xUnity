@@ -11,8 +11,8 @@ namespace Ja2
 	/// <summary>
 	/// Base class for the scriptable object (SO) singletons.
 	///
-	/// SO singleton is defined as an asset and is used as dependency (as in DI)
-	/// in other SO/GameObjects. Losly based on  https://unity.com/how-to/architect-game-code-scriptable-objects?ref=manuel-rauber.com#architect-events
+	/// SO singleton is defined as an asset and is used as dependency (as in DI) in other SO/GameObjects.
+	/// Losly based on  https://unity.com/how-to/architect-game-code-scriptable-objects?ref=manuel-rauber.com#architect-events
 	/// and https://github.com/SimonNordon4/unity-architecture-patterns
 	/// </summary>
 	/// <typeparam name="T">Derived class type.</typeparam>
@@ -64,12 +64,14 @@ namespace Ja2
 
 
 #region Methods Private
+#if UNITY_EDITOR
 		/// <inheritdoc />.
 		protected override void OnEditorPlayModeEnable()
 		{
 			m_IsPlayMode = true;
 			Initialize();
 		}
+#endif
 
 		protected override void OnSceneLoaded()
 		{
