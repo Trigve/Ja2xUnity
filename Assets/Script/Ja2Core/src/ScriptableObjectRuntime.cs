@@ -10,17 +10,14 @@ namespace Ja2
 	public abstract class ScriptableObjectRuntime : ScriptableObject
 	{
 #region Fields Static
-#if UNITY_EDITOR
 		/// <summary>
 		/// Instance of the singleton, only used in editor mode (see below).
 		/// </summary>
 		private static ScriptableObjectRuntime? m_Instance;
-#endif
 #endregion
 
 #region Methods Private Static
 #if UNITY_EDITOR
-
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void InitializeOnLoad()
 		{
@@ -28,20 +25,31 @@ namespace Ja2
 			m_Instance!.OnEditorPlayModeEnable();
 		}
 #endif
+
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+		private static void InitializeSceneLoad()
+		{
+			Assert.IsNotNull(m_Instance);
+			m_Instance!.OnSceneLoaded();
+		}
 #endregion
 
 #region Methods Private
 		protected virtual void OnEnable()
 		{
-#if UNITY_EDITOR
 			m_Instance = this;
-#endif
 		}
 
 		/// <summary>
 		/// This is emulation of OnEnable() in editor, so it behave same in editor and in the standalone player.
 		/// </summary>
 		protected virtual void OnEditorPlayModeEnable()
+		{}
+
+		/// <summary>
+		/// Called when scene is loaded. Operations that needs the scene present should be done here.
+		/// </summary>
+		protected virtual void OnSceneLoaded()
 		{}
 #endregion
 	}

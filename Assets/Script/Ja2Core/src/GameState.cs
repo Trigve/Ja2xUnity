@@ -169,10 +169,6 @@ namespace Ja2
 			Assert.IsNotNull(m_ScreenManager);
 			Assert.IsNotNull(m_AssetManager);
 
-			// Instantiate the camera
-			Assert.IsNotNull(m_CameraPrefab);
-			m_ActiveCamera = Instantiate(m_CameraPrefab!).GetComponent<Camera>();
-
 			m_CancellationTokenSource = new CancellationTokenSource();
 
 			m_MouseSystemManager!.Initialize();
@@ -183,6 +179,16 @@ namespace Ja2
 			m_ScreenManager!.Initialize(cancellationToken);
 
 			eventStart?.Invoke();
+		}
+
+		/// <inheritdoc />
+		protected override void DoOnSceneLoaded()
+		{
+			Ja2Logger.LogInfo("Initializing game state scene objects");
+
+			// Create the objects that needs the scene be present already.
+			Assert.IsNotNull(m_CameraPrefab);
+			m_ActiveCamera = Instantiate(m_CameraPrefab!).GetComponent<Camera>();
 		}
 
 		/// <inheritdoc />

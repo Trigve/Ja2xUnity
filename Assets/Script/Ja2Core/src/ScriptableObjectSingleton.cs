@@ -71,12 +71,23 @@ namespace Ja2
 			Initialize();
 		}
 
+		protected override void OnSceneLoaded()
+		{
+			Assert.IsTrue(m_IsPlayMode);
+			DoOnSceneLoaded();
+		}
+
 		/// <summary>
 		/// Override in derived class to do some initialization.
 		/// </summary>
 		protected virtual void DoInitialize()
-		{
-		}
+		{}
+
+		/// <summary>
+		/// Override in derived class if needed.
+		/// </summary>
+		protected virtual void DoOnSceneLoaded()
+		{}
 
 #if UNITY_EDITOR
 		/// <summary>
