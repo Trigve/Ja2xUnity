@@ -275,7 +275,9 @@ namespace Ja2
 			if(cfg != null)
 				asset_bundle_dir = cfg.bundleExportDir;
 #else
-				asset_bundle_dir = Application.streamingAssetsPath;
+				asset_bundle_dir = Path.Combine(Application.streamingAssetsPath,
+					"bundles"
+				);
 #endif
 
 			// \TODO Maybe use some path from game config?
