@@ -31,74 +31,8 @@ namespace Ja2.Editor
 			// File extension
             string file_ext = Path.GetExtension(PathInput).ToLower();
 
-            // Process file by extension
-            if(file_ext == ".sti")
-            {
-            	STCIData stci_data = STCIUtils.Load(Data);
-
-            	// File name for the asset
-            	string stci_file_path = Path.Combine(PathDirOutput,
-		            PathInput,
-		            file_name
-            	);
-
-            	// Need to create any directories, that doesn't exist
-            	Directory.CreateDirectory(
-            		Directory.GetParent(stci_file_path)!.FullName
-            	);
-
-            	// Font
-            	if(root_path == "font")
-            	{
-            	}
-            	// Textures, sprites
-            	else
-            	{
-            		var j = 0;
-
-            		// Create the texture description
-            		var sprite_so = AssetTexture.Create();
-            		sprite_so.m_NameOrig = Path.GetFileName(PathInput).ToLower();
-            		sprite_so.m_Width = stci_data.m_Width;
-            		sprite_so.m_Height = stci_data.m_Height;
-
-            		// Process all the images
-            		foreach(STCIData.SubImage sub_image_data in stci_data.m_SubImageData)
-            		{
-            			// Create the sprite
-            			var sprite_stci = Sprite.Create(sub_image_data.texture,
-            				new Rect(0,
-            					0,
-            					sub_image_data.width,
-            					sub_image_data.height
-            				),
-            				new Vector2(0.5f + ((float)sub_image_data.offsetX / sub_image_data.width),
-								0.5f + ((float)sub_image_data.offsetY / sub_image_data.height)
-            				)
-            			);
-
-            			// Save the texture as first
-            			AssetDatabase.CreateAsset(sprite_stci.texture,
-            				stci_file_path + ".tex." + j + ".asset"
-            			);
-
-            			// Save the sprite
-            			AssetDatabase.CreateAsset(sprite_stci,
-            				stci_file_path + "." + j + ".asset"
-            			);
-
-            			sprite_so.m_Sprites.Add(sprite_stci);
-
-            			++j;
-            		}
-
-            		AssetDatabase.CreateAsset(sprite_so,
-            			stci_file_path + ".data.asset"
-            		);
-            	}
-            }
 			// Smacker video
-			else if(file_ext == ".smk")
+			if(file_ext == ".smk")
 			{
 				// File name for the asset
 				string out_file_path = Path.Combine(PathDirOutput,

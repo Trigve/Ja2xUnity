@@ -138,45 +138,47 @@ namespace Ja2.Editor
 			{
 			case FormatType.Rgb:
 			{
-					var texture = new Texture2D(ret.m_Width,
-						ret.m_Height,
-						TextureFormat.RGB565,
-						false
-					);
-					texture.SetPixelData(
-						reader.ReadBytes(stored_size),
-						0
-					);
+				ret.m_ImageFormat = TextureFormat.RGB565;
 
-					// Need to invert pixels
-					var pixels_orig = texture.GetPixels32();
-					var pixels_flipped = new Color32[pixels_orig.Length];
+				var texture = new Texture2D(ret.m_Width,
+					ret.m_Height,
+					ret.m_ImageFormat,
+					false
+				);
+				texture.SetPixelData(
+					reader.ReadBytes(stored_size),
+					0
+				);
 
-					// Invert the pixels vertically
-					for(var x = 0; x < texture.width; x++)
-					{
-						for(var y = 0; y < texture.height; y++)
-							pixels_flipped[x + y * texture.width] = pixels_orig[x + (texture.height - y - 1) * texture.width];
-					}
+				// Need to invert pixels
+				var pixels_orig = texture.GetPixels32();
+				var pixels_flipped = new Color32[pixels_orig.Length];
 
-					texture.SetPixels32(pixels_flipped);
-
-					texture.Apply();
-
-					ret.m_SubImageData.Add(
-						new STCIData.SubImage()
-						{
-							height = ret.m_Height,
-							width = ret.m_Width,
-							offsetX = 0,
-							offsetY = 0,
-							texture = texture
-						}
-					);
+				// Invert the pixels vertically
+				for(var x = 0; x < texture.width; x++)
+				{
+					for(var y = 0; y < texture.height; y++)
+						pixels_flipped[x + y * texture.width] = pixels_orig[x + (texture.height - y - 1) * texture.width];
 				}
+
+				ret.m_SubImageData.Add(
+					new STCIData.SubImage()
+					{
+						height = ret.m_Height,
+						width = ret.m_Width,
+						offsetX = 0,
+						offsetY = 0,
+						texture = pixels_flipped
+					}
+				);
+
+				Texture.DestroyImmediate(texture);
+			}
 				break;
 			case FormatType.Indexed:
 				{
+					ret.m_ImageFormat = TextureFormat.RGBA32;
+
 					// Union data reader
 					using var union_reader = new BinaryReader(
 						new MemoryStream(union_buffer)
@@ -352,21 +354,6 @@ namespace Ja2.Editor
                         	}
                         }
 
-                        // Create the textures
-						var texture = new Texture2D(sub_img_width,
-							sub_img_height,
-							TextureFormat.RGBA32,
-							false
-						);
-						texture.filterMode = FilterMode.Point;
-						texture.SetPixels32(p_new_px_buffer);
-
-						var texture_alt = new Texture2D(sub_img_width,
-							sub_img_height,
-							TextureFormat.RGBA32,
-							false
-						);
-						texture_alt.SetPixels32(p_new_px_buffer_alt);
 
 						// Add all the data to the subimage data
 						ret.m_SubImageData.Add(
@@ -376,8 +363,8 @@ namespace Ja2.Editor
 								width = sub_img_width,
 								offsetX = offset_x,
 								offsetY = offset_y,
-								texture = texture,
-								textureAlt = texture_alt
+								texture = p_new_px_buffer,
+								textureAlt = p_new_px_buffer_alt
 							}
 						);
 					}

@@ -1329,66 +1329,66 @@ MonoBehaviour:
   - m_Version: 1
     m_Component: {fileID: 1191360600}
     m_AssetRefs:
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: mainmenubackground.sti/mainmenubackground.sti.0.asset
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: mainmenubackground.sti@sprite_0
   - m_Version: 1
     m_Component: {fileID: 653392414}
     m_AssetRefs:
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: ja2logo.sti/ja2logo.sti.0.asset
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: ja2logo.sti@sprite_0
   - m_Version: 1
     m_Component: {fileID: 1877140741}
     m_AssetRefs:
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.0.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.1.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.2.asset
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_0
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_1
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_2
     - m_Bundle: 
       m_AssetPath: 
   - m_Version: 1
     m_Component: {fileID: 1976092086}
     m_AssetRefs:
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.3.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.4.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.5.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.6.asset
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_3
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_4
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_5
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_6
   - m_Version: 1
     m_Component: {fileID: 1317479526}
     m_AssetRefs:
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.7.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.8.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.9.asset
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_7
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_8
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_9
     - m_Bundle: 
       m_AssetPath: 
   - m_Version: 1
     m_Component: {fileID: 1303289781}
     m_AssetRefs:
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.10.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.11.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.12.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.13.asset
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_10
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_11
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_12
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_13
   - m_Version: 1
     m_Component: {fileID: 1156483831}
     m_AssetRefs:
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.14.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.15.asset
-    - m_Bundle: '[1712961949]'
-      m_AssetPath: titletext.sti/titletext.sti.16.asset
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_14
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_15
+    - m_Bundle: '[1702164613]'
+      m_AssetPath: titletext.sti@sprite_16
     - m_Bundle: 
       m_AssetPath: 
 --- !u!114 &1832165899
@@ -1690,6 +1690,10 @@ PrefabInstance:
     - target: {fileID: 248230768491329790, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323870950003576398, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
+      propertyPath: m_Sprite
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5780754860927641074, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
       propertyPath: m_Name

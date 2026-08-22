@@ -38,12 +38,12 @@ namespace Ja2.Editor
 			/// <summary>
 			/// Main texture.
 			/// </summary>
-			public Texture2D texture { get; set; }
+			public Color32[] texture { get; set; }
 
 			/// <summary>
 			/// Alternative texture.
 			/// </summary>
-			public Texture2D? textureAlt { get; set; }
+			public Color32[] textureAlt { get; set; }
 #endregion
 		}
 #endregion
@@ -58,6 +58,11 @@ namespace Ja2.Editor
 		/// Image height.
 		/// </summary>
 		public int m_Height;
+
+		/// <summary>
+		/// Image format.
+		/// </summary>
+		public TextureFormat m_ImageFormat;
 
 		/// <summary>
 		/// Subimage data.
