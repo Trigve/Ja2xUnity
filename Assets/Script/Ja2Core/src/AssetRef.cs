@@ -5,12 +5,14 @@ using UnityEngine;
 namespace Ja2
 {
 	/// <summary>
-	/// Asset reference.
+	/// Asset reference stores the asset path (with optional sub-asset if it references on) and optional bundle, from
+	/// which it came from. When the AssetRef is acutally a sub-asset, the sub-asset name is stored as "@name".
+	/// For instance "texture.sti@sprite_0".
 	/// </summary>
 	[Serializable]
-	public struct AssetRef
+	public struct AssetRef : ISerializationCallbackReceiver
 	{
-#region Fields
+#region Fields Component
 		/// <summary>
 		/// If it is a simple string, then it denotes a bundle name. If it is in format "[x]", then
 		/// it means a bundle with the ID of "x".
@@ -23,6 +25,18 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private string m_AssetPath;
+#endregion
+
+#region Fields
+		/// <summary>
+		/// Main asset path.
+		/// </summary>
+		private string m_MainAssetPath;
+
+		/// <summary>
+		/// Sub-asset namr, if any.
+		/// </summary>
+		private string m_SubAssetName;
 #endregion
 
 #region Properties
@@ -42,9 +56,14 @@ namespace Ja2
 		public string bundleFull => m_Bundle + ".bundle";
 
 		/// <summary>
-		/// Asset path.
+		/// Main asset path.
 		/// </summary>
-		public string assetPath => m_AssetPath;
+		public string assetPathMain => m_MainAssetPath;
+
+		/// <summary>
+		/// Sub-asset name, if any.
+		/// </summary>
+		public string subAssetName => m_SubAssetName;
 
 		/// <summary>
 		/// Get the bundle ID, if it contains one. Otherwise, null.
@@ -68,10 +87,38 @@ namespace Ja2
 				return ret;
 			}
 		}
+
 		/// <summary>
 		/// As combined path.
 		/// </summary>
 		public string combinedPath => m_Bundle + ":" + m_AssetPath;
+
+		/// <summary>
+		/// Has the asset path sub-asset?
+		/// </summary>
+		public bool hasSubAsset => !string.IsNullOrEmpty(m_SubAssetName);
+#endregion
+
+#region Methods Public
+		/// <inheritdoc/>
+		public void OnBeforeSerialize()
+		{
+		}
+
+		/// <inheritdoc/>
+		public void OnAfterDeserialize()
+		{
+			m_MainAssetPath = m_AssetPath;
+			m_SubAssetName = string.Empty;
+
+			// Find if the asset is sub-asset
+			int idx_sub_asset = m_AssetPath.IndexOf('@');
+			if(idx_sub_asset >= 0)
+			{
+				m_MainAssetPath = m_AssetPath[..(idx_sub_asset)];
+				m_SubAssetName = m_AssetPath[(idx_sub_asset + 1)..];
+			}
+		}
 #endregion
 
 #region Methods Static
@@ -93,7 +140,16 @@ namespace Ja2
 			else
 				bundle = path = string.Empty;
 
+			var sub_asset_name = string.Empty;
+			idx = AssetPathCombined.IndexOf('@');
+			if(idx >= 0)
+			{
+				path = AssetPathCombined[..(idx)];
+				sub_asset_name = AssetPathCombined[(idx + 1)..];
+			}
+
 			return new AssetRef(path,
+				sub_asset_name,
 				bundle
 			);
 		}
@@ -104,23 +160,29 @@ namespace Ja2
 		/// Constructor.
 		/// </summary>
 		/// <param name="AssetPath">Asset Path</param>
+		/// <param name="SubAsset">Sub-asset name, if any.</param>
 		/// <param name="Bundle">Bundle</param>
-		public AssetRef(string AssetPath, string Bundle = Constants.StringEmpty)
+		public AssetRef(string AssetPath, string SubAsset, string Bundle = Constants.StringEmpty)
 		{
 			m_Bundle = Bundle;
-			m_AssetPath = AssetPath;
+			m_AssetPath = AssetPath + (string.IsNullOrEmpty(SubAsset) ? string.Empty : "@" + SubAsset);
+			m_MainAssetPath = AssetPath;
+			m_SubAssetName = SubAsset;
 		}
 
 		/// <summary>
 		/// Constructor using the bundle ID.
 		/// </summary>
 		/// <param name="AssetPath">Asset path.</param>
+		/// <param name="SubAsset">Sub-asset name, if any.</param>
 		/// <param name="BundleId">Bundle ID.</param>
-		public AssetRef(string AssetPath, uint BundleId)
+		public AssetRef(string AssetPath, string SubAsset, uint BundleId)
 		{
 			// Store as ID
 			m_Bundle = "[" + BundleId + "]";
-			m_AssetPath = AssetPath;
+			m_AssetPath = AssetPath + (string.IsNullOrEmpty(SubAsset) ? string.Empty : "@" + SubAsset);
+			m_MainAssetPath = AssetPath;
+			m_SubAssetName = SubAsset;
 		}
 #endregion
 	}

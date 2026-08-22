@@ -101,7 +101,7 @@ namespace Ja2
 				else
 				{
 					// Traverse all the loaded bundles and find by path
-					bundle_data = m_Bundles.Where(It => It.m_Paths.ContainsKey(AssetPath.assetPath)).Cast<BundleData?>().FirstOrDefault();
+					bundle_data = m_Bundles.Where(It => It.m_Paths.ContainsKey(AssetPath.assetPathMain)).Cast<BundleData?>().FirstOrDefault();
 				}
 
 				// Bundle found
@@ -122,17 +122,29 @@ namespace Ja2
 						);
 					}
 
-					all_objs_loaded = bundle.LoadAssetWithSubAssets(AssetPath.assetPath);
+					all_objs_loaded = bundle.LoadAssetWithSubAssets(AssetPath.assetPathMain);
 				}
 			}
 
 			// Try to cast to the right type
 			foreach(Object it_obj in all_objs_loaded.Where(Obj => Obj != null))
 			{
-				if(it_obj.GetType() == AssetType)
+				// Sub-asset
+				if(AssetPath.hasSubAsset)
 				{
-					ret = it_obj;
-					break;
+					if(it_obj.GetType() == AssetType && it_obj.name == AssetPath.subAssetName)
+					{
+						ret = it_obj;
+						break;
+					}
+				}
+				else
+				{
+					if(it_obj.GetType() == AssetType)
+					{
+						ret = it_obj;
+						break;
+					}
 				}
 			}
 
@@ -210,7 +222,7 @@ namespace Ja2
 				else
 				{
 					// Traverse all the loaded bundles and find by path
-					bundle_data = m_Bundles.Where(It => It.m_Paths.ContainsKey(AssetPath.assetPath)).Cast<BundleData?>().FirstOrDefault();
+					bundle_data = m_Bundles.Where(It => It.m_Paths.ContainsKey(AssetPath.assetPathMain)).Cast<BundleData?>().FirstOrDefault();
 				}
 
 				// Bundle found
@@ -231,17 +243,29 @@ namespace Ja2
 						);
 					}
 
-					all_objs_loaded = await bundle.LoadAssetWithSubAssetsAsync(AssetPath.assetPath).AwaitForAllAssets();
+					all_objs_loaded = await bundle.LoadAssetWithSubAssetsAsync(AssetPath.assetPathMain).AwaitForAllAssets();
 				}
 			}
 
 			// Try to cast to the right type
 			foreach(Object it_obj in all_objs_loaded.Where(Obj => Obj != null))
 			{
-				if(it_obj.GetType() == AssetType)
+				// Sub-asset
+				if(AssetPath.hasSubAsset)
 				{
-					ret = it_obj;
-					break;
+					if(it_obj.GetType() == AssetType && it_obj.name == AssetPath.subAssetName)
+					{
+						ret = it_obj;
+						break;
+					}
+				}
+				else
+				{
+					if(it_obj.GetType() == AssetType)
+					{
+						ret = it_obj;
+						break;
+					}
 				}
 			}
 

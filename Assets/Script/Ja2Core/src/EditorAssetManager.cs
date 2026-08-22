@@ -55,27 +55,27 @@ namespace Ja2
 			{
 				// Has a bundle ID
 				uint? bundle_id = AssetPath.bundleId;
-				if(bundle_id.HasValue)
+
+				// Find by the bundle ID
+				var bundles_found = bundle_id.HasValue ?
+					m_AssetsBundleDesc.Where(It => It.bundleDesc.bundleId == bundle_id.Value) :
+					// Otherwise, use bundle name
+					m_AssetsBundleDesc.Where(It => It.bundleDesc.fileName == AssetPath.bundle)
+				;
+
+				foreach((string path, AssetBundleDesc bundleDesc) it in bundles_found)
 				{
-					// Fin by the bundle ID
-					foreach((string path, AssetBundleDesc bundleDesc) it in m_AssetsBundleDesc.Where(It => It.bundleDesc.bundleId == bundle_id.Value))
+					// Is the sub-asset
+					if(AssetPath.hasSubAsset)
+						ret = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(it.path + "/" + AssetPath.assetPathMain).First(Item => Item.GetType() == AssetType && Item.name == AssetPath.subAssetName)!;
+					// Main asset
+					else
 					{
-						ret = UnityEditor.AssetDatabase.LoadAssetAtPath(it.path + "/" + AssetPath.assetPath,
+						ret = UnityEditor.AssetDatabase.LoadAssetAtPath(it.path + "/" + AssetPath.assetPathMain,
 							AssetType
 						);
-						break;
 					}
-				}
-				// Otherwise, use bundle name
-				else
-				{
-					foreach((string path, AssetBundleDesc bundleDesc) it in m_AssetsBundleDesc.Where(It => It.bundleDesc.fileName == AssetPath.bundle))
-					{
-						ret = UnityEditor.AssetDatabase.LoadAssetAtPath(it.path + "/" + AssetPath.assetPath,
-							AssetType
-						);
-						break;
-					}
+					break;
 				}
 			}
 
@@ -104,7 +104,14 @@ namespace Ja2
 		{
 			AssetRef? ret = null;
 
+			// Get the main asset path
 			string asset_path = UnityEditor.AssetDatabase.GetAssetPath(Asset).ToLower();
+
+			var sub_asset = string.Empty;
+			// Is it sub-asset, store the name
+			if(UnityEditor.AssetDatabase.IsSubAsset(Asset))
+				sub_asset = Asset.name;
+
 			// Traverse all the bundle desc
 			foreach((string path, AssetBundleDesc bundleDesc) it in m_AssetsBundleDesc.Where(Value => asset_path.Contains(Value.path)))
 			{
@@ -114,6 +121,7 @@ namespace Ja2
 							asset_path
 						)
 					),
+					sub_asset,
 					it.bundleDesc.bundleId
 				);
 
