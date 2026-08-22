@@ -25,11 +25,31 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private AudioSource? m_Music;
+
+		/// <summary>
+		/// Main menu view.
+		/// </summary>
+		[SerializeField]
+		private UI.View.ViewMainMenu? m_MainMenuView;
+#endregion
+
+#region Fields
+		/// <summary>
+		/// Main menu model.
+		/// </summary>
+		private ModelMainMenu? m_MainMenuModel;
 #endregion
 
 #region Messages
 		public void Start()
 		{
+			m_MainMenuModel = new ModelMainMenu();
+
+			// UI initalization
+			m_MainMenuView?.Initialize(
+				new UI.ViewModel.ViewModelMainMenu(m_MainMenuModel)
+			);
+
 			m_GameState.eventUpdate += OnUpdate;
 
 			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
@@ -40,6 +60,8 @@ namespace Ja2
 		public void OnDestroy()
 		{
 			m_GameState.eventUpdate -= OnUpdate;
+
+			m_MainMenuView?.Deinitialize();
 		}
 #endregion
 

@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 3737818814165861147}
   - component: {fileID: 7643548790505367906}
   - component: {fileID: 320804099211099295}
+  - component: {fileID: 1432583104214730154}
   m_Layer: 5
   m_Name: MainMenuButton
   m_TagString: Untagged
@@ -161,7 +162,7 @@ MonoBehaviour:
   m_Highlighted: {fileID: 0}
   m_Pressed: {fileID: 0}
   m_Disabled: {fileID: 0}
-  m_VisualRoot: {fileID: 0}
+  m_VisualRoot: {fileID: 4027998444729599961}
 --- !u!114 &320804099211099295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,3 +176,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Component: {fileID: 7643548790505367906}
+--- !u!114 &1432583104214730154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6827905609856962487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1031e6094e49b18ad59645c320d692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  __view: {fileID: 0}
+  __id: 
+  _mode: 1
+  _component: {fileID: 7643548790505367906}
+  _interactableMode: 2
+  _customInteractable:
+    rid: -2
+  _isDebug: 0
+  _log: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
