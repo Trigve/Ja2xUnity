@@ -31,9 +31,14 @@ namespace Ja2.Editor
 			// File extension
             string file_ext = Path.GetExtension(PathInput).ToLower();
 
+			// Extract file as is without any processing
+			var extract_as_is = true;
+
 			// Smacker video
 			if(file_ext == ".smk")
 			{
+				extract_as_is = false;
+
 				// File name for the asset
 				string out_file_path = Path.Combine(PathDirOutput,
 					root_path,
@@ -90,7 +95,7 @@ namespace Ja2.Editor
 				AssetDatabase.ImportAsset(out_file_path);
 			}
 			// All other files extract as is
-			else
+			if(extract_as_is)
 			{
 				// File name for the asset
 				string out_file_path = Path.Combine(PathDirOutput,
