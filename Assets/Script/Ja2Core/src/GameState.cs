@@ -207,6 +207,7 @@ namespace Ja2
 			m_CancellationTokenSource = null;
 
 			eventStart = null;
+			eventUpdate = null;
 			m_ActiveCamera = null;
 		}
 #endregion
