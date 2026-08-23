@@ -42,7 +42,7 @@ namespace Ja2.UI.ViewModel
 		/// Cosntructor.
 		/// </summary>
 		/// <param name="MainMenuModel">Main menu model instance.</param>
-		public ViewModelMainMenu(ModelMainMenu MainMenuModel)
+		public ViewModelMainMenu(IModelMainMenu MainMenuModel)
 		{
 			m_CommandStartNewGame = new RelayCommand(MainMenuModel.StartNewGame);
 			m_CommandContinueSavedGame = new RelayCommand(MainMenuModel.ContinueSaveGame);

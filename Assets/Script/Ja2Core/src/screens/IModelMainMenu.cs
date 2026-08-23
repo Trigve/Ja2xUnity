@@ -1,48 +1,35 @@
-using UnityEngine;
-
 namespace Ja2
 {
 	/// <summary>
-	/// Main menu model
+	/// Main menu model interface.
 	/// </summary>
-	public sealed class ModelMainMenu
+	public interface IModelMainMenu
 	{
-#region Methods
+#region Methods Public
 		/// <summary>
 		/// Start new game.
 		/// </summary>
-		public void StartNewGame()
-		{
-		}
+		public void StartNewGame();
 
 		/// <summary>
 		/// Continue the saved game
 		/// </summary>
-		public void ContinueSaveGame()
-		{
-		}
+		public void ContinueSaveGame();
 
 		/// <summary>
 		/// Show the preferences window.
 		/// </summary>
-		public void ShowPreferences()
-		{
-		}
+		public void ShowPreferences();
 
 		/// <summary>
 		/// Show the credits.
 		/// </summary>
-		public void ShowCredits()
-		{
-		}
+		public void ShowCredits();
 
 		/// <summary>
 		/// Quit the game.
 		/// </summary>
-		public void Quit()
-		{
-			Application.Quit();
-		}
+		public void Quit();
 #endregion
 	}
 }

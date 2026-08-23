@@ -5,7 +5,7 @@ namespace Ja2
 	/// <summary>
 	/// Main menu screen manager.
 	/// </summary>
-	public sealed class ScreenMainMenuManager :  MonoBehaviour
+	public sealed class ScreenMainMenuManager :  MonoBehaviour, IModelMainMenu
 	{
 #region Fields Component
 		/// <summary>
@@ -33,21 +33,12 @@ namespace Ja2
 		private UI.View.ViewMainMenu? m_MainMenuView;
 #endregion
 
-#region Fields
-		/// <summary>
-		/// Main menu model.
-		/// </summary>
-		private ModelMainMenu? m_MainMenuModel;
-#endregion
-
 #region Messages
 		public void Start()
 		{
-			m_MainMenuModel = new ModelMainMenu();
-
 			// UI initalization
 			m_MainMenuView?.Initialize(
-				new UI.ViewModel.ViewModelMainMenu(m_MainMenuModel)
+				new UI.ViewModel.ViewModelMainMenu(this)
 			);
 
 			m_GameState.eventUpdate += OnUpdate;
@@ -62,6 +53,34 @@ namespace Ja2
 			m_GameState.eventUpdate -= OnUpdate;
 
 			m_MainMenuView?.Deinitialize();
+		}
+#endregion
+
+#region Methods Public
+		/// <inheritdoc/>
+		public void StartNewGame()
+		{
+		}
+
+		/// <inheritdoc/>
+		public void ContinueSaveGame()
+		{
+		}
+
+		/// <inheritdoc/>
+		public void ShowPreferences()
+		{
+		}
+
+		/// <inheritdoc/>
+		public void ShowCredits()
+		{
+		}
+
+		/// <inheritdoc/>
+		public void Quit()
+		{
+			Application.Quit();
 		}
 #endregion
 
