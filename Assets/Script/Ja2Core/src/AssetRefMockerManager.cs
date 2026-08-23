@@ -7,7 +7,7 @@ using UnityEngine;
 
 using Object = UnityEngine.Object;
 
-namespace Ja2.UI
+namespace Ja2
 {
 	/// <summary>
 	/// Helper class for managing the <see cref="AssetRefMocker{T}"/>.

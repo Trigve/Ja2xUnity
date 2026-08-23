@@ -18,7 +18,7 @@ namespace Ja2
 		/// Asset ref mocker.
 		/// </summary>
 		[SerializeField]
-		private UI.AssetRefMockerManager? m_AssetRefMocker;
+		private AssetRefMockerManager? m_AssetRefMocker;
 
 		/// <summary>
 		/// Main menu music component.

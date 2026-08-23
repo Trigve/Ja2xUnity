@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-namespace Ja2.UI
+namespace Ja2
 {
 	/// <summary>
 	/// Interface for AssetRef mockers.

@@ -29,7 +29,7 @@ namespace Ja2
 		/// Mock manager.
 		/// </summary>
 		[SerializeField]
-		private UI.AssetRefMockerManager? m_MockManager;
+		private AssetRefMockerManager? m_MockManager;
 
 		/// <summary>
 		/// Video player component.

@@ -11,9 +11,9 @@ using UnityEngine.UIElements;
 namespace Ja2.Editor
 {
 	/// <summary>
-	/// <see cref="UI.AssetRefMockerManager"/> editor.
+	/// <see cref="AssetRefMockerManager"/> editor.
 	/// </summary>
-	[CustomEditor(typeof(UI.AssetRefMockerManager))]
+	[CustomEditor(typeof(AssetRefMockerManager))]
 	public sealed class AssetRefMockerManagerEditor : UnityEditor.Editor
 	{
 #region Fields
@@ -99,8 +99,8 @@ namespace Ja2.Editor
 				// Process all the components in the current GO
 				foreach(Component it in top_go.GetComponents<Component>())
 				{
-					if(it is UI.IAssetRefMocker mocker_component)
-						((UI.AssetRefMockerManager)serializedObject.targetObject).AddRefMocker(mocker_component);
+					if(it is IAssetRefMocker mocker_component)
+						((AssetRefMockerManager)serializedObject.targetObject).AddRefMocker(mocker_component);
 				}
 
 				serializedObject.Update();
@@ -116,12 +116,12 @@ namespace Ja2.Editor
 			{
 				SerializedProperty asset_mock = m_AssetMocks.GetArrayElementAtIndex(i);
 
-				var mocker_component = (UI.IAssetRefMocker)asset_mock.FindPropertyRelative(
-					nameof(UI.AssetRefMockerInstance.m_Component)
+				var mocker_component = (IAssetRefMocker)asset_mock.FindPropertyRelative(
+					nameof(AssetRefMockerInstance.m_Component)
 				).boxedValue;
 
 				SerializedProperty asset_refs = asset_mock.FindPropertyRelative(
-					nameof(UI.AssetRefMockerInstance.m_AssetRefs)
+					nameof(AssetRefMockerInstance.m_AssetRefs)
 				);
 
 				var asset_list = new List<Object?>();
@@ -142,7 +142,7 @@ namespace Ja2.Editor
 				}
 
 				mocker_component.LoadAssets(
-					new UI.AssetMockData(
+					new AssetMockData(
 						asset_list.ToArray()
 					)
 				);
@@ -158,8 +158,8 @@ namespace Ja2.Editor
 			{
 				SerializedProperty asset_mock = m_AssetMocks.GetArrayElementAtIndex(i);
 
-				var mocker_component = (UI.IAssetRefMocker)asset_mock.FindPropertyRelative(
-					nameof(UI.AssetRefMockerInstance.m_Component)
+				var mocker_component = (IAssetRefMocker)asset_mock.FindPropertyRelative(
+					nameof(AssetRefMockerInstance.m_Component)
 				).boxedValue;
 
 				mocker_component.ResetAssets();

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 namespace Ja2.Editor
 {
 	/// <summary>
-	/// Base editor class for <see cref="UI.AssetRefMocker{T}"/>
+	/// Base editor class for <see cref="AssetRefMocker{T}"/>
 	/// </summary>
 	public abstract class AssetRefMockerBaseEditor : UnityEditor.Editor
 	{
@@ -38,9 +38,9 @@ namespace Ja2.Editor
 		private void OnAddTomanager()
 		{
 			// Find the manager GO
-			var mocker_manager = FindAnyObjectByType<UI.AssetRefMockerManager>();
+			var mocker_manager = FindAnyObjectByType<AssetRefMockerManager>();
 
-			mocker_manager.AddRefMocker((UI.IAssetRefMocker)serializedObject.targetObject);
+			mocker_manager.AddRefMocker((IAssetRefMocker)serializedObject.targetObject);
 		}
 #endregion
 	}

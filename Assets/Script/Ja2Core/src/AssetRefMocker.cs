@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-namespace Ja2.UI
+namespace Ja2
 {
 	/// <summary>
 	/// Helper component for mananing the assets during editor/playmode as <see cref="AssetRef"/>. During edit time,
@@ -46,7 +46,7 @@ namespace Ja2.UI
 			if(m_Component == null)
 			{
 				Debug.LogErrorFormat("{0}: Component is Null",
-					nameof(AssetRefMockerImage)
+					nameof(AssetRefMocker<T>)
 				);
 
 				return;
@@ -62,7 +62,7 @@ namespace Ja2.UI
 			if(m_Component == null)
 			{
 				Debug.LogErrorFormat("{0}: Component is Null",
-					nameof(AssetRefMockerImage)
+					nameof(AssetRefMocker<T>)
 				);
 
 				return null;
@@ -77,7 +77,7 @@ namespace Ja2.UI
 			if(m_Component == null)
 			{
 				Debug.LogErrorFormat("{0}: Component is Null",
-					nameof(AssetRefMockerImage)
+					nameof(AssetRefMocker<T>)
 				);
 
 				return;

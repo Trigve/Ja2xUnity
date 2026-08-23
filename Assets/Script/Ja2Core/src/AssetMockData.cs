@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Object = UnityEngine.Object;
 
-namespace Ja2.UI
+namespace Ja2
 {
 	/// <summary>
 	/// Data for the asset mock.
