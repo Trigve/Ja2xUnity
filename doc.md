@@ -1,6 +1,7 @@
 ## Prefixes for GIT
 
 - *`doc`* - Documentation
+- *`importer`* - Custom importers
 - *`ja2`* - Global one
 - *`main_menu`* - Main menu
 - *`prefab`* - Things that hat to do something with prefabs

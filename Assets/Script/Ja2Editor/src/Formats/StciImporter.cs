@@ -120,11 +120,17 @@ namespace Ja2.Editor
 			// Register everything as sub-assets of this single import
 			for(var i = 0; i < sprites.Length; ++i)
 			{
-				Context.AddObjectToAsset($"texture_{i}",
+				Context.AddObjectToAsset(
+					string.Format("texture_{0}",
+						i
+					),
 					textures[i],
 					textures[i]
 				);
-				Context.AddObjectToAsset($"sprite_{i}",
+				Context.AddObjectToAsset(
+					string.Format("sprite_{0}",
+						i
+					),
 					sprites[i],
 					sprites[i].texture
 				);
