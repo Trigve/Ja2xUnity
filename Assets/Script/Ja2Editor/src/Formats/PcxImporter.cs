@@ -1,6 +1,5 @@
 using System.IO;
 
-using UnityEditor;
 using UnityEditor.AssetImporters;
 
 using UnityEngine;
@@ -229,6 +228,23 @@ namespace Ja2.Editor
 				Path.GetFileName(Ctx.assetPath),
 				texture
 			);
+
+			// Create the sprite also
+			var sprite = Sprite.Create(texture,
+				new Rect(0,
+					0,
+					texture.width,
+					texture.height
+				),
+				new Vector2(0.5f, 0.5f),
+				100.0f
+			);
+			sprite.name = Path.GetFileNameWithoutExtension(Ctx.assetPath) + ".sprite";
+
+			Ctx.AddObjectToAsset(sprite.name,
+				sprite
+			);
+
 			Ctx.SetMainObject(texture);
 
 		}
@@ -267,53 +283,6 @@ namespace Ja2.Editor
 				// Raw value
 				else
 					Scanline[scanline_index++] = value;
-			}
-		}
-#endregion
-	}
-
-	/// <summary>
-	/// Post processor for the .pcx files.
-	/// </summary>
-	public class PcxPostProcess : AssetPostprocessor
-	{
-#region Methods Public
-		/// <summary>
-		/// Using this message, because sprite asset need to be created, and it can't be done in
-		/// OnPostprocessTexture() at all.
-		/// </summary>
-		public static void OnPostprocessAllAssets(string[] ImportedAssets, string[] DeletedAssets, string[] MovedAssets, string[] MovedFromAssetPaths)
-		{
-			var cfg = SettingsDev.instance;
-			if(cfg != null)
-			{
-				// Only interested in imported asset.
-				foreach(string it in ImportedAssets)
-				{
-					// Only from .pcx importer
-					if(AssetImporter.GetAtPath(it) is PcxImporter)
-					{
-						var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(it);
-
-						// Create the sprite from the texture
-						var sprite = Sprite.Create(texture,
-							new Rect(0,
-								0,
-								texture.width,
-								texture.height
-							),
-							new Vector2(0.5f, 0.5f),
-							100.0f
-						);
-
-						AssetDatabase.CreateAsset(sprite,
-							Path.ChangeExtension(it,
-								Path.GetExtension(it) + ".asset"
-							)
-						);
-					}
-
-				}
 			}
 		}
 #endregion
