@@ -39,11 +39,6 @@ namespace Ja2.Editor
 			/// Main texture.
 			/// </summary>
 			public Color32[] texture { get; set; }
-
-			/// <summary>
-			/// Alternative texture.
-			/// </summary>
-			public Color32[] textureAlt { get; set; }
 #endregion
 		}
 #endregion

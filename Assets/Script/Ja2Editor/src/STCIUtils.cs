@@ -235,8 +235,6 @@ namespace Ja2.Editor
 
 						// Buffer of new pixels
 						var p_new_px_buffer = new Color32[sub_img_width * sub_img_height];
-						// Buffer for alternative texture
-						var p_new_px_buffer_alt = new Color32[sub_img_width * sub_img_height];
 
 						// Need to uncompress data
 						if(is_etrle)
@@ -260,16 +258,6 @@ namespace Ja2.Editor
 
 									// Set pixels and move forward
 									p_new_px_buffer.AsSpan(etrle_offset,
-										no_pixels
-									).Fill(
-										new Color32(255,
-											255,
-											255,
-											0
-										)
-									);
-
-									p_new_px_buffer_alt.AsSpan(etrle_offset,
 										no_pixels
 									).Fill(
 										new Color32(255,
@@ -304,19 +292,12 @@ namespace Ja2.Editor
 												pallete_entries[2],
 												255
 											);
-
-											// For alternative texture
-											p_new_px_buffer_alt[etrle_offset] = new Color32(255,
-												255,
-												255,
-												0
-											);
 										}
 										// We want font with shadow or loading texture
 										else
 										{
 											// Set color from pallete
-											p_new_px_buffer[etrle_offset] = p_new_px_buffer_alt[etrle_offset] = new Color32(pallete_entries[0],
+											p_new_px_buffer[etrle_offset] = new Color32(pallete_entries[0],
 												pallete_entries[1],
 												pallete_entries[2],
 												255
@@ -341,20 +322,6 @@ namespace Ja2.Editor
 							}
 						}
 
-						Array.Reverse(p_new_px_buffer_alt,
-							0,
-							p_new_px_buffer_alt.Length
-						);
-                        for(var j = 0; j < sub_img_width / 2; ++j)
-                        {
-                        	for(var k = 0; k < sub_img_height; ++k)
-                        	{
-                        		// Swap pixels
-                        		(p_new_px_buffer_alt[sub_img_width * k + j], p_new_px_buffer_alt[sub_img_width * k + sub_img_width - 1 - j]) = (p_new_px_buffer_alt[sub_img_width * k + sub_img_width - 1 - j], p_new_px_buffer_alt[sub_img_width * k + j]);
-                        	}
-                        }
-
-
 						// Add all the data to the subimage data
 						ret.m_SubImageData.Add(
 							new STCIData.SubImage()
@@ -364,7 +331,6 @@ namespace Ja2.Editor
 								offsetX = offset_x,
 								offsetY = offset_y,
 								texture = p_new_px_buffer,
-								textureAlt = p_new_px_buffer_alt
 							}
 						);
 					}
