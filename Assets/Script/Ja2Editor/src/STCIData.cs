@@ -68,6 +68,11 @@ namespace Ja2.Editor
 		/// Application data.
 		/// </summary>
 		public byte[]? m_AppData;
+
+		/// <summary>
+		/// Palette.
+		/// </summary>
+		public AssetStciPalette? m_Palette;
 #endregion
 	}
 }

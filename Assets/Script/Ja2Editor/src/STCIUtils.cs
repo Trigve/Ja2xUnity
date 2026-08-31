@@ -34,6 +34,24 @@ namespace Ja2.Editor
 
 #region Enums
 		/// <summary>
+		/// Flags representing additional things to extract/process.
+		/// </summary>
+		[Flags]
+		public enum ExtractionFlags
+		{
+			None = 0,
+
+			/// <summary>
+			/// Handle font shadows
+			/// </summary>
+			FontShadow = 1 << 0,
+
+			/// <summary>
+			/// Extract palette.
+			/// </summary>
+			Palette = 1 << 1,
+		}
+		/// <summary>
 		/// STCI flags.
 		/// </summary>
 		[Flags]
@@ -71,9 +89,10 @@ namespace Ja2.Editor
 		/// Load the STCI from buffer.
 		/// </summary>
 		/// <param name="Data">Buffer.</param>
+		/// <param name="ExtractionFlags">Extraction flags.</param>
 		/// <returns></returns>
 		/// <exception cref="InvalidDataException"></exception>
-		internal static STCIData Load(byte[] Data)
+		internal static STCIData Load(byte[] Data, ExtractionFlags ExtractionFlags)
 		{
 			var ret = new STCIData();
 
@@ -203,6 +222,24 @@ namespace Ja2.Editor
 					// Read pallete
 					byte[] pallete = reader.ReadBytes(file_section_size);
 
+					// Need to extract the palette
+					if((ExtractionFlags & ExtractionFlags.Palette) != 0)
+					{
+						var colors = new Color32[pallete.Length / 3];
+
+						// Fill the colors from the palette
+						for(var i = 0; i < pallete.Length; i += 3)
+						{
+							colors[i / 3] = new Color32(pallete[i + 0],
+								pallete[i + 1],
+								pallete[i + 2],
+								255
+							);
+						}
+
+						ret.m_Palette = AssetStciPalette.Create(colors);
+					}
+
 					int sub_image_size = sub_img_count * SubimageSize;
 
 					// Read sub image data
@@ -256,16 +293,30 @@ namespace Ja2.Editor
 									// Number of pixel
 									no_pixels = (ushort)(etrle_data[j++] & (byte)EtrleFlags.STCI_RUN_LIMIT);
 
-									// Set pixels and move forward
-									p_new_px_buffer.AsSpan(etrle_offset,
-										no_pixels
-									).Fill(
-										new Color32(255,
+									Color32 color_set;
+
+									// Font loading
+									if((ExtractionFlags & ExtractionFlags.FontShadow) != 0)
+									{
+										color_set = new Color32(0,
+											0,
+											0,
+											0
+										);
+									}
+									else
+									{
+										color_set = new Color32(255,
 											255,
 											255,
 											0
-										)
-									);
+										);
+									}
+
+									// Set pixels and move forward
+									p_new_px_buffer.AsSpan(etrle_offset,
+										no_pixels
+									).Fill(color_set);
 
 									etrle_offset += no_pixels;
 
@@ -284,16 +335,39 @@ namespace Ja2.Editor
 
 										byte[] pallete_entries = pallete[(palette_index * 3)..(palette_index * 3 + 3)];
 
-										// If we don't want to have shadow font
-										if(palette_index == 1)
+										// Font loading
+										if(ExtractionFlags.HasFlag(ExtractionFlags.FontShadow))
 										{
-											p_new_px_buffer[etrle_offset] = new Color32(pallete_entries[0],
-												pallete_entries[1],
-												pallete_entries[2],
-												255
-											);
+											// Background color
+											if(palette_index == 0)
+											{
+												p_new_px_buffer[etrle_offset] = new Color32(0,
+													255,
+													0,
+													0
+												);
+											}
+											// Shadow is in the blue channel
+											else if(palette_index == 1)
+											{
+												p_new_px_buffer[etrle_offset] = new Color32(0,
+													0,
+													255,
+													0
+												);
+											}
+											// Font is in the red channel
+											else
+											{
+												// Set color from pallete
+												p_new_px_buffer[etrle_offset] = new Color32(255,
+													0,
+													0,
+													0
+												);
+											}
 										}
-										// We want font with shadow or loading texture
+										// Normal images
 										else
 										{
 											// Set color from pallete
