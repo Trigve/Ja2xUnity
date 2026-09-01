@@ -134,7 +134,7 @@ namespace Ja2.Editor
 					if(asset_ref.isValid)
 					{
 						asset_loaded = EditorAssetManager.instance.LoadAsset(asset_ref,
-							mocker_component.assetType[0]
+							mocker_component.assetType[j]
 						);
 					}
 

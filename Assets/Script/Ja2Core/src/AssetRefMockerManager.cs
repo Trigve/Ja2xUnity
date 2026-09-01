@@ -92,14 +92,15 @@ namespace Ja2
 				asset_list.Clear();
 
 				// Process all the assets
-				foreach(AssetRef it_ref in it.m_AssetRefs)
+				for(var i = 0; i < it.m_AssetRefs.Length; ++i)
 				{
+					AssetRef it_ref = it.m_AssetRefs[i];
 					Object? asset_loaded = null;
 
 					if(it_ref.isValid)
 					{
 						asset_loaded = Manager.LoadAsset(it_ref,
-							it.component.assetType[0]
+							it.component.assetType[i]
 						);
 					}
 
@@ -128,14 +129,15 @@ namespace Ja2
 				asset_list.Clear();
 
 				// Process all the assets
-				foreach(AssetRef it_ref in it.m_AssetRefs)
+				for(var i = 0; i < it.m_AssetRefs.Length; ++i)
 				{
+					AssetRef it_ref = it.m_AssetRefs[i];
 					Object? asset_loaded = null;
 
 					if(it_ref.isValid)
 					{
 						asset_loaded = await Manager.LoadAssetAsync(it_ref,
-							it.component.assetType[0]
+							it.component.assetType[i]
 						);
 					}
 
