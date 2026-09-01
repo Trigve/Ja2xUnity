@@ -116,7 +116,7 @@ namespace Ja2.Editor
 				);
 				texture_atlas.filterMode = m_FilterMode;
 				texture_atlas.wrapMode = TextureWrapMode.Clamp;
-				texture_atlas.name = "Font Texture";
+				texture_atlas.name = asset_file_name + " Font Atlas";
 
 				// Clear the texture
 				texture_atlas.SetPixels32(
@@ -147,7 +147,7 @@ namespace Ja2.Editor
 				);
 				palette_asset.filterMode = FilterMode.Point;
 				palette_asset.wrapMode = TextureWrapMode.Clamp;
-				palette_asset.name = "Palette";
+				palette_asset.name = asset_file_name + " Palette";
 
 				// Fill the colors
 				for(var i = 0; i < palette_asset.depth; ++i)
@@ -164,7 +164,7 @@ namespace Ja2.Editor
 					"m_Version",
 					"1.1.0"
 				);
-				font_asset.name = "Font";
+				font_asset.name = asset_file_name + " Font";
 				font_asset.atlasTextures = new[]
 				{
 					texture_atlas
@@ -210,7 +210,7 @@ namespace Ja2.Editor
 				Shader shader = Shader.Find("Ja2/FontShadow");
 				var material = new Material(shader)
 				{
-					name = "Font Material"
+					name = asset_file_name + " Font Material"
 				};
 				material.SetTexture(ShaderUtilities.ID_MainTex,
 					texture_atlas
