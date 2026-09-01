@@ -480,7 +480,7 @@ Material:
     - _CullMode: 0
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
-    - _ShadowColorIndex: 131
+    - _ShadowColorIndex: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -1385,6 +1385,11 @@ MonoBehaviour:
       m_AssetPath: titletext.sti@sprite_16
     - m_Bundle: 
       m_AssetPath: 
+  - m_Version: 1
+    m_Component: {fileID: 2141719248}
+    m_AssetRefs:
+    - m_Bundle: '[3618217556]'
+      m_AssetPath: font10arial.sti
 --- !u!114 &1832165899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,8 +1476,9 @@ GameObject:
   - component: {fileID: 2141719244}
   - component: {fileID: 2141719246}
   - component: {fileID: 2141719247}
+  - component: {fileID: 2141719248}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Copyright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1527,8 +1533,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Copyright (C) 1999 Sir-tech Canada Ltd.  All rights reserved.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 913751575213456102, guid: 037d43224bb2a8b4e8b339751c820dcb, type: 3}
-  m_sharedMaterial: {fileID: 679638135}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 679638135}
   m_fontMaterials: []
@@ -1560,7 +1566,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -1597,9 +1603,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-  m_FontAsset: {fileID: -4795959279821556948, guid: 037d43224bb2a8b4e8b339751c820dcb, type: 3}
+  m_FontAsset: {fileID: 0}
   m_UseShadow: 0
-  m_ShadowColorIndex: 131
+  m_ShadowColorIndex: 0
+--- !u!114 &2141719248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141719243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ff0d7a3b74d432ab62bdc43b745e52f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Component: {fileID: 2141719247}
 --- !u!1001 &730514236753386314
 PrefabInstance:
   m_ObjectHideFlags: 0
