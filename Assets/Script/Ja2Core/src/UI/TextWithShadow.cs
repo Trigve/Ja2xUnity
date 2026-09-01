@@ -87,6 +87,7 @@ namespace Ja2.UI
 			ApplyChanges();
 		}
 
+#if UNITY_EDITOR
 		/// <inheritdoc/>
 		protected override void OnValidate()
 		{
@@ -96,6 +97,7 @@ namespace Ja2.UI
 			if(m_FontAsset != null)
 				font = m_FontAsset.font;
 		}
+#endif
 #endregion
 
 #region Methods Public
