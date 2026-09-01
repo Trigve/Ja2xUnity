@@ -33,4 +33,12 @@ namespace Ja2.Editor
 	public class AssetRefMockerAudioSourceEditor : AssetRefMockerBaseEditor
 	{
 	}
+
+	/// <summary>
+	/// Editor for <see cref="UI.AssetRefMockerText"/>.
+	/// </summary>
+	[CustomEditor(typeof(UI.AssetRefMockerText))]
+	public class AssetRefMockerTextEditor : AssetRefMockerBaseEditor
+	{
+	}
 }

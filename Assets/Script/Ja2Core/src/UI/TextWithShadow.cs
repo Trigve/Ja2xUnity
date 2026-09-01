@@ -24,7 +24,7 @@ namespace Ja2.UI
 
 #region Fields Component
 		/// <summary>
-		/// Font asset to use.
+		/// See <see cref="fontAsset"/>.
 		/// </summary>
 		[SerializeField]
 		private AssetJa2Font? m_FontAsset;
@@ -46,7 +46,36 @@ namespace Ja2.UI
 		/// <summary>
 		/// Cloned material, that will be usde.
 		/// </summary>
-		private Material m_FontMaterial = null!;
+		private Material? m_FontMaterial;
+#endregion
+
+#region Properties
+		/// <summary>
+		/// Font asset to use.
+		/// </summary>
+		public AssetJa2Font? fontAsset
+		{
+			get => m_FontAsset;
+			set
+			{
+				m_FontAsset = value;
+				// Clear the material, so it is reloaded when needed
+				m_FontMaterial = null;
+
+				// New font asset assignment
+				if(m_FontAsset != null)
+				{
+					font = m_FontAsset.font;
+
+					ApplyChanges();
+				}
+				// Reset
+				else
+				{
+					font = null;
+				}
+			}
+		}
 #endregion
 
 #region Messages
@@ -54,9 +83,6 @@ namespace Ja2.UI
 		protected override void Awake()
 		{
 			base.Awake();
-
-			// Clone the material to set custom properties
-			m_FontMaterial = fontMaterial;
 
 			ApplyChanges();
 		}
@@ -81,6 +107,10 @@ namespace Ja2.UI
 			// Only for bitmap fonts
 			if(m_FontAsset?.isBitampFont ?? false)
 			{
+				// Clone the material (if needed) to set custom properties
+				if(m_FontMaterial == null)
+					m_FontMaterial = fontMaterial;
+
 				m_FontMaterial.SetFloat(ShadowUsePropertyId,
 					m_UseShadow ? 1f : 0f
 				);
