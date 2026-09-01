@@ -77,3 +77,6 @@ crashlytics-build.properties
 GitExtensions.settings
 
 /Assets/Plugins/Aspid
+/Assets/Data/Ja2/
+/Assets/StreamingAssets/
+/Assets/Settings/Ja2SettingsDev.asset*
