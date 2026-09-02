@@ -45,7 +45,8 @@ namespace Ja2
 
 			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
 
-			m_Music!.Play();
+			// Start the main menu music, if not already started
+			m_GameState.soundManager.AddMusicSource(m_Music!);
 		}
 
 		public void OnDestroy()
