@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cee812ecb864262abbb27d35dcabeb5, type: 3}
   m_Name: SoundManager
   m_EditorClassIdentifier: 
-  m_AudioMixer: {fileID: 0}
-  m_MusicAudioGroup: {fileID: 0}
+  m_AudioMixer: {fileID: 24100000, guid: 4759621312285e44a96d898f7125ff37, type: 2}
+  m_MusicAudioGroup: {fileID: 1977674130651868848, guid: 4759621312285e44a96d898f7125ff37, type: 2}
