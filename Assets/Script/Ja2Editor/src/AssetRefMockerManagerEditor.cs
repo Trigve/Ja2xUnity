@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEditor;
@@ -7,6 +8,8 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+
+using Object = UnityEngine.Object;
 
 namespace Ja2.Editor
 {
@@ -128,13 +131,16 @@ namespace Ja2.Editor
 
 				for(var j = 0; j < asset_refs.arraySize; ++j)
 				{
+					// Find the right type
+					Type asset_type = mocker_component.assetType.Length == 1 ? mocker_component.assetType[0] : mocker_component.assetType[j];
+
 					Object? asset_loaded = null;
 
 					var asset_ref = (AssetRef)asset_refs.GetArrayElementAtIndex(j).boxedValue;
 					if(asset_ref.isValid)
 					{
 						asset_loaded = EditorAssetManager.instance.LoadAsset(asset_ref,
-							mocker_component.assetType[j]
+							asset_type
 						);
 					}
 

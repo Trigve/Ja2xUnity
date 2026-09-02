@@ -100,12 +100,15 @@ namespace Ja2
 				for(var i = 0; i < it.m_AssetRefs.Length; ++i)
 				{
 					AssetRef it_ref = it.m_AssetRefs[i];
+					// Find the right type
+					Type asset_type = it.component.assetType.Length == 1 ? it.component.assetType[0] : it.component.assetType[i];
+
 					Object? asset_loaded = null;
 
 					if(it_ref.isValid)
 					{
 						asset_loaded = Manager.LoadAsset(it_ref,
-							it.component.assetType[i]
+							asset_type
 						);
 					}
 
@@ -137,12 +140,15 @@ namespace Ja2
 				for(var i = 0; i < it.m_AssetRefs.Length; ++i)
 				{
 					AssetRef it_ref = it.m_AssetRefs[i];
+					// Find the right type
+					Type asset_type = it.component.assetType.Length == 1 ? it.component.assetType[0] : it.component.assetType[i];
+
 					Object? asset_loaded = null;
 
 					if(it_ref.isValid)
 					{
 						asset_loaded = await Manager.LoadAssetAsync(it_ref,
-							it.component.assetType[i]
+							asset_type
 						);
 					}
 

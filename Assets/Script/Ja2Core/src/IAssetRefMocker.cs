@@ -11,7 +11,8 @@ namespace Ja2
 	{
 #region Properties
 		/// <summary>
-		/// Asset types used.
+		/// Asset types used. If array contains only 1 type, it is used for all the assets. Otherwise, fore each asset
+		/// different type is used.
 		/// </summary>
 		public Type[] assetType { get; }
 
