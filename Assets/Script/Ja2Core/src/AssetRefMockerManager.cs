@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Cysharp.Threading.Tasks;
 
@@ -45,6 +46,10 @@ namespace Ja2
 
 				return;
 			}
+
+			// Be sure it isn't already present
+			if(m_AssetMocks.Any(Value => Value.m_Component == (Component)MockerComponent))
+				return;
 
 			var asset_refs = new List<AssetRef>();
 
