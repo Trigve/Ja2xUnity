@@ -48,6 +48,12 @@ namespace Ja2.Editor
 		/// </summary>
 		[SerializeField]
 		private int m_FontPointSize;
+
+		/// <summary>
+		/// Descent line position.
+		/// </summary>
+		[SerializeField]
+		private int m_DescentLine;
 #endregion
 
 #region Methods Public
@@ -183,7 +189,7 @@ namespace Ja2.Editor
 
 				ClassUtils.PropertySet(font_asset,
 					"atlasPadding",
-					1
+					0
 				);
 
 				// Face metrics
@@ -191,12 +197,13 @@ namespace Ja2.Editor
 				face_info.familyName = font_asset.name;
 				face_info.styleName = "Regular";
 				face_info.pointSize = m_FontPointSize;
-				face_info.baseline = 0f;
-				face_info.ascentLine = max_height;
-				face_info.descentLine = -max_height;
+				face_info.baseline = 0;
+				face_info.ascentLine = max_height + m_DescentLine;
+				face_info.capLine = max_height + m_DescentLine;
+				face_info.descentLine = m_DescentLine;
 				face_info.scale = 1f;
 				// \FIXME What number to use?
-				face_info.lineHeight = 11;
+				face_info.lineHeight = m_FontPointSize + 1;
 				face_info.underlineOffset = face_info.descentLine * 0.5f;
 				face_info.underlineThickness = 1f;
 				face_info.strikethroughOffset = face_info.ascentLine * 0.4f;
@@ -253,7 +260,7 @@ namespace Ja2.Editor
 					var metrics = new GlyphMetrics(letter_rect.width,
 						letter_rect.height,
 						0,
-						0,
+						face_info.ascentLine,
 						// \FIXME What value to use?
 						letter_rect.width
 					);
