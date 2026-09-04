@@ -33,6 +33,8 @@ from the original content. Next are the steps for setting up the enviroment and 
 already to be able to use this option)
 ![](doc/Ja2DevSettings.png)
 
+![](doc/Ja2DevSettingsPanel.png)
+
 1. In the menu click the `JA2` -> `Extract SLF`. The Unity will extract the files from all the `.slf` in the specified
 paths. After the extraction is done, you can review the assets if everything was extracted correctly. The extracted
 asset are located in the `Slf extract dir` of the devel settings.  
@@ -46,3 +48,5 @@ created and various other options. You must also set the player options in proje
 
 1. Copy the generated `*.bundle` files to the `StreamingAssets` dir of the player and game now should run with the
 assets from the asset bundles. You could download the current version of the player from the releases.
+
+Dev blog: [https://ja2-3d.blogspot.com/](https://ja2-3d.blogspot.com/)
