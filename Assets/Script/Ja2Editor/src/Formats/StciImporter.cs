@@ -147,24 +147,28 @@ namespace Ja2.Editor
 					DestroyImmediate(it);
 
 				// Create the palette as texture array
-				var palette_asset = new Texture2DArray(1,
+				var palette_texture_asset = new Texture2DArray(1,
 					1,
 					stci_data.m_Palette!.count,
 					TextureFormat.ARGB32,
 					0,
 					false
 				);
-				palette_asset.filterMode = FilterMode.Point;
-				palette_asset.wrapMode = TextureWrapMode.Clamp;
-				palette_asset.name = asset_file_name + " Palette";
+				palette_texture_asset.filterMode = FilterMode.Point;
+				palette_texture_asset.wrapMode = TextureWrapMode.Clamp;
+				palette_texture_asset.name = asset_file_name + " Palette Texture";
 
 				// Fill the colors
-				for(var i = 0; i < palette_asset.depth; ++i)
+				for(var i = 0; i < palette_texture_asset.depth; ++i)
 				{
-					palette_asset.SetPixels32(new [] {stci_data.m_Palette![i]},
+					palette_texture_asset.SetPixels32(new [] {stci_data.m_Palette![i]},
 						i
 					);
 				}
+
+				// Also store palette asset as is
+				AssetStciPalette palette_asset = stci_data.m_Palette;
+				palette_asset.name = asset_file_name + " Palette";
 
 				// Create the font and fill the data
 				var font_asset = ScriptableObject.CreateInstance<TMP_FontAsset>();
@@ -232,7 +236,7 @@ namespace Ja2.Editor
 				// Assign the palette texture to the font material
 				material.SetTexture(
 					Shader.PropertyToID("_FontPaletteTex"),
-					palette_asset
+					palette_texture_asset
 				);
 
 				font_asset.material = material;
@@ -314,8 +318,8 @@ namespace Ja2.Editor
 				);
 
 				// Palette
-				Context.AddObjectToAsset(palette_asset.name,
-					palette_asset
+				Context.AddObjectToAsset(palette_texture_asset.name,
+					palette_texture_asset
 				);
 
 				// Font asset
@@ -331,6 +335,11 @@ namespace Ja2.Editor
 				// Font material asset
 				Context.AddObjectToAsset(material.name,
 					material
+				);
+
+				// Paletter asset
+				Context.AddObjectToAsset(palette_asset.name,
+					palette_asset
 				);
 
 				// Main object is the font asset
