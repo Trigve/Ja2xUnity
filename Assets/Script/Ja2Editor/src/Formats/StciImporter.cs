@@ -68,6 +68,9 @@ namespace Ja2.Editor
 				// All the letters inside the font
 				const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=|\\{}[]:;\"'<>,.?/ ÄÖÜäöüßабвгдеёжзийклмнопрстуфхцчшщыьэюяÀÁÂÇËÈÉÊÏÒÓÔÙÚÛàáâçëèéêïòóôùúûÌìĄĆĘŁŃŚŻŹąćęłńśżź";
 
+				// No need to have texture readable
+				m_KeepTextureReadable = false;
+
 				// Parse the STCI as font
 				STCIData stci_data = STCIUtils.Load(
 					File.ReadAllBytes(Context.assetPath),
