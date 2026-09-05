@@ -219,15 +219,14 @@ namespace Ja2
 				LoadSceneMode.Additive
 			).WithCancellation(m_CancellationToken);
 
-			// \FIXME
-			// This is necessary so the Start() method would be called on the new scene
-			await UniTask.NextFrame(m_CancellationToken);
-			await UniTask.NextFrame(m_CancellationToken);
-
 			// Activate the new scene
 			SceneManager.SetActiveScene(
 				SceneManager.GetSceneByName(NewScreen.gameScreen.name)
 			);
+
+			// \FIXME
+			// This is necessary so the Start() method would be called on the new scene
+			await UniTask.NextFrame(m_CancellationToken);
 
 			// Need to destroy the old scene
 			if(NewScreen.options.destroyActiveSceen)
