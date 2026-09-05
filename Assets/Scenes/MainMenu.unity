@@ -345,61 +345,6 @@ MonoBehaviour:
   - {fileID: 1303289782}
   m_CommandQuit:
   - {fileID: 1156483834}
---- !u!21 &472873974
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: font10arial Font Material (Instance)
-  m_Shader: {fileID: 4800000, guid: 97b3f58d4e0ea9f4b9cfc23a5f97f5ad, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _FaceTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _FontPaletteTex:
-        m_Texture: {fileID: -4638693513003840389, guid: 037d43224bb2a8b4e8b339751c820dcb, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: -8392143091984583114, guid: 037d43224bb2a8b4e8b339751c820dcb, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _CullMode: 0
-    - _MaskSoftnessX: 0
-    - _MaskSoftnessY: 0
-    - _ShadowColorIndex: 0
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseFontShadow: 0
-    - _VertexOffsetX: 0
-    - _VertexOffsetY: 0
-    m_Colors:
-    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
-    - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &653392410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,7 +1327,7 @@ MonoBehaviour:
     m_Component: {fileID: 2141719248}
     m_AssetRefs:
     - m_Bundle: '[3618217556]'
-      m_AssetPath: font10arial.sti
+      m_AssetPath: font10arial.asset
 --- !u!114 &1832165899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1729,14 +1674,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 366978043}
     m_Modifications:
-    - target: {fileID: 3774901761632816150, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
       propertyPath: m_text
       value: Copyright (C) 1999 Sir-tech Canada Ltd.  All rights reserved.
       objectReference: {fileID: 0}
-    - target: {fileID: 3774901761632816150, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
-      propertyPath: m_fontMaterial
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_fontSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 472873974}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_isOrthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 4089344873031001841, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
       propertyPath: m_Name
       value: Copyright
