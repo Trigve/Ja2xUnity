@@ -9,13 +9,13 @@ namespace Ja2.UI
 	/// <summary>
 	/// Mocker for the text UI control.
 	/// </summary>
-	public sealed class AssetRefMockerText : AssetRefMocker<TextWithShadow>
+	public sealed class AssetRefMockerText : AssetRefMocker<TextComponent>
 	{
 #region Constants
 		/// <summary>
 		/// Types used.
 		/// </summary>
-		private static readonly Type[] AssetTypes = { typeof(AssetJa2Font) };
+		private static readonly Type[] AssetTypes = { typeof(AssetFontClass) };
 #endregion
 
 #region Properties
@@ -29,7 +29,7 @@ namespace Ja2.UI
 		{
 			Assert.IsTrue(MockData.m_Assets.Length == 1);
 
-			m_Component!.fontAsset = (AssetJa2Font?)MockData.m_Assets[0];
+			m_Component!.fontAsset = (AssetFontClass?)MockData.m_Assets[0];
 		}
 
 #if UNITY_EDITOR
