@@ -24,7 +24,7 @@ namespace Ja2.Editor
 			foreach(string it in Directory.EnumerateFiles(SettingsDev.instance.m_InputDir, "*.slf"))
 			{
 				// Bundle name
-				string? bundle_name = UtilsPath.NormalizePath(
+				string bundle_name = UtilsPath.NormalizePath(
 					Path.GetFileNameWithoutExtension(it)
 				);
 
