@@ -31,6 +31,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private UI.View.ViewMainMenu? m_MainMenuView;
+
+		/// <summary>
+		/// Credits screen.
+		/// </summary>
+		[SerializeField]
+		private GameScreen? m_CreditsScreen;
 #endregion
 
 #region Messages
@@ -76,6 +82,13 @@ namespace Ja2
 		/// <inheritdoc/>
 		public void ShowCredits()
 		{
+			// Start the credits screen
+			m_GameState.screenManager.SetPendingScreen(m_CreditsScreen!,
+				new GameScreenOptions()
+				{
+					destroyActiveSceen = true
+				}
+			);
 		}
 
 		/// <inheritdoc/>

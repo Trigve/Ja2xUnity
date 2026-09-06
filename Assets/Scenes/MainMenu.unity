@@ -1344,6 +1344,7 @@ MonoBehaviour:
   m_AssetRefMocker: {fileID: 1832165898}
   m_Music: {fileID: 773972911}
   m_MainMenuView: {fileID: 366978044}
+  m_CreditsScreen: {fileID: 11400000, guid: b53358b453c99c5488b594757d280a48, type: 2}
 --- !u!4 &1832165900
 Transform:
   m_ObjectHideFlags: 0
