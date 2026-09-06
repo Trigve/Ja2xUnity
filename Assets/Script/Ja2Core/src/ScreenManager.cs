@@ -106,18 +106,6 @@ namespace Ja2
 				// Based on active screen, deinit!
 				if(m_PendingScreen != m_CurrentScreen)
 				{
-//x					switch(currentScreen)
-//x					{
-//x					case MAP_SCREEN:
-//x						if( guiPendingScreen != MSG_BOX_SCREEN && guiPendingScreen != MP_CHAT_SCREEN )
-//x						{
-//x							EndMapScreen( FALSE );
-//x						}
-//x						break;
-//x					case LAPTOP_SCREEN:
-//x						ExitLaptop();
-//x						break;
-//x					}
 				}
 
 				// Screen is changing
@@ -138,21 +126,6 @@ namespace Ja2
 				m_Task = ChangeScreenAsync(m_CurrentScreen.Value);
 				m_Task.Value.Forget();
 			}
-
-
-			// Handle the screen update
-//x			old_screen = m_AllScreens[currentScreen].Update();
-
-			// if the screen has changed
-//x			if(old_screen != m_CurrentScreen)
-//x			{
-//x				HandleNewScreenChange(old_screen,
-//x					m_CurrentScreen
-//x				);
-//x
-//x				m_PreviousScreen = m_CurrentScreen;
-//x				m_CurrentScreen = old_screen;
-//x			}
 		}
 #endregion
 
@@ -164,46 +137,6 @@ namespace Ja2
 		/// <param name="OldScreen">Old screen.</param>
 		private void HandleNewScreenChange(GameScreenData NewScreen, GameScreenData? OldScreen)
 		{
-/*
-			//if we are not going into the message box screen, and we didnt just come from it
-			if( ( uiNewScreen != MSG_BOX_SCREEN && uiOldScreen != MSG_BOX_SCREEN && uiNewScreen != MP_CHAT_SCREEN && uiOldScreen != MP_CHAT_SCREEN ) )
-			{
-				//reset the help screen
-				NewScreenSoResetHelpScreen( );
-			}
-
-			//rain
-			if( uiNewScreen == MAP_SCREEN )
-			{
-				if ( guiRainLoop != NO_SAMPLE )
-				{
-					SoundStop( guiRainLoop );
-					guiRainLoop = NO_SAMPLE;
-				}
-			}
-			// end rain
-
-			// sevenfm: start/stop SSA
-			if (uiNewScreen == GAME_SCREEN)
-			{
-				// check that no sound is playing currently
-				if (guiCurrentSteadyStateSoundHandle == NO_SAMPLE)
-				{
-					SetSSA();
-				}
-			}
-			else if (uiNewScreen != MSG_BOX_SCREEN)
-			{
-				// Stop SSA
-				if (guiCurrentSteadyStateSoundHandle != NO_SAMPLE)
-				{
-					SoundStop(guiCurrentSteadyStateSoundHandle);
-					guiCurrentSteadyStateSoundHandle = NO_SAMPLE;
-				}
-				// stop ambients
-				StopFireAmbient();
-			}
-*/
 		}
 
 		/// <summary>
