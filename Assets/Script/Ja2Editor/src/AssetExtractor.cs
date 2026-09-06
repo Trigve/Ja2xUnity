@@ -94,6 +94,32 @@ namespace Ja2.Editor
 
 				AssetDatabase.ImportAsset(out_file_path);
 			}
+			// Encrypted data files
+			else if(file_ext == ".edt")
+			{
+				string file_name_without_ext = Path.GetFileNameWithoutExtension(file_name);
+
+				// Credits
+				if(file_name == "credits.edt")
+				{
+					extract_as_is = false;
+
+					// File name for the asset
+					string out_file_path = Path.Combine(PathDirOutput,
+						root_path,
+						file_name_without_ext + ".asset"
+					);
+
+					// Parse and create the credits data
+					CreditsDataAsset credits_data = EdtUtils.ParseCredits(Data);
+
+					AssetDatabase.CreateAsset(credits_data,
+						out_file_path
+					);
+				}
+
+			}
+
 			// All other files extract as is
 			if(extract_as_is)
 			{
