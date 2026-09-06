@@ -12,15 +12,14 @@ namespace Ja2.Editor
 #region Messages
 		public void OnPreprocessAsset()
 		{
-			// Only font asset
-			if(assetPath.Contains(SettingsDev.instance.m_SlfExtractDir + "/fonts"))
+			// Only STCI importer
+			if(assetImporter is StciImporter stci_importer)
 			{
-				// Imported first time
-				if(assetImporter.importSettingsMissing)
+				// Only font asset
+				if(assetPath.Contains(SettingsDev.instance.m_SlfExtractDir + "/fonts"))
 				{
-					// Get the correct importer
-					var stci_importer = assetImporter as StciImporter;
-					if(stci_importer != null)
+					// Imported first time
+					if(assetImporter.importSettingsMissing)
 					{
 						// All are fonts
 						stci_importer.assetType = StciImporter.AssetType.Font;
