@@ -26,7 +26,7 @@ namespace Ja2.Editor
 		private float m_PixelsPerUnit = 100f;
 
 		/// <summary>
-		/// Filter mode for th textures.
+		/// Filter mode for the textures.
 		/// </summary>
 		[SerializeField]
 		private FilterMode m_FilterMode = FilterMode.Point;
@@ -38,22 +38,48 @@ namespace Ja2.Editor
 		private bool m_KeepTextureReadable;
 
 		/// <summary>
-		/// Is it a font asset.
+		/// See <see cref="isFont"/>.
 		/// </summary>
 		[SerializeField]
 		private bool m_IsFont;
 
 		/// <summary>
-		/// Font point size.
+		/// See <see cref="fontPointSize"/>.
 		/// </summary>
 		[SerializeField]
 		private int m_FontPointSize;
 
 		/// <summary>
-		/// Descent line position.
+		/// See <see cref="descentLine"/>.
 		/// </summary>
 		[SerializeField]
 		private int m_DescentLine;
+#endregion
+
+#region Properties
+		/// <summary>
+		/// Font point size.
+		/// </summary>
+		public int fontPointSize
+		{
+			set => m_FontPointSize = value;
+		}
+
+		/// <summary>
+		/// Descent line position.
+		/// </summary>
+		public int descentLine
+		{
+			set => m_DescentLine = value;
+		}
+
+		/// <summary>
+		/// Is it a font asset.
+		/// </summary>
+		public bool isFont
+		{
+			set => m_IsFont = value;
+		}
 #endregion
 
 #region Methods Public
