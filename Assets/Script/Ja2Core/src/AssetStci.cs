@@ -48,6 +48,13 @@ namespace Ja2
 		private byte[]? m_AppData;
 #endregion
 
+#region Properties
+		/// <summary>
+		/// Get all the sprites.
+		/// </summary>
+		public Sprite[] sprites => m_Sprites;
+#endregion
+
 #region Construction
 		/// <summary>
 		/// Constructor.

@@ -6,6 +6,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 
 using UnityEngine;
+using UnityEngine.U2D;
 
 using Object = UnityEngine.Object;
 
@@ -299,11 +300,93 @@ namespace Ja2
 		}
 #endregion
 
+#region Slots
+		/// <summary>
+		/// Called when atlas is requested for loading.
+		/// </summary>
+		/// <param name="Atlas">Atlas asset name (without extension).</param>
+		/// <param name="Callback">Callback to call, after atlas was loaded.</param>
+		private void OnAtlasRequested(string Atlas, Action<SpriteAtlas> Callback)
+		{
+			// Generate the asset file path with extension
+			string asset_file_path = "atlas/" + Atlas + ".spriteatlasv2";
+
+			Ja2Logger.LogInfo("Trying to load texture atlas \"{0}\"",
+				asset_file_path
+			);
+
+			// Should use asset bundle for loading
+			var use_asset_bundles = true;
+
+#if UNITY_EDITOR
+			// Load the config.
+			var ja_cfg = SettingsDev.instance;
+
+			// Not using asset bundles
+			if(ja_cfg != null && !ja_cfg.useAssetBundles)
+			{
+				// Traverse all the asset bundle directories
+				foreach(DirectoryInfo it in new DirectoryInfo(ja_cfg.m_SlfExtractDir).GetDirectories())
+				{
+					// Try to load from the bundle
+					var sprite_atlas = LoadAsset<SpriteAtlas>(
+						new AssetRef(asset_file_path,
+							string.Empty,
+							it.Name + ".bundle"
+						)
+					);
+
+					// Found
+					if(sprite_atlas != null)
+					{
+						Callback(sprite_atlas);
+
+						return;
+					}
+				}
+
+				use_asset_bundles = false;
+			}
+#endif
+			if(use_asset_bundles)
+			{
+				// Traverse all the bundles
+				foreach(BundleData it in m_Bundles)
+				{
+					// If the bundle contains the asset, load it
+					if(it.m_Paths.TryGetValue(asset_file_path, out string _))
+					{
+						var sprite_atlas = LoadAsset<SpriteAtlas>(
+							new AssetRef(asset_file_path,
+								string.Empty,
+								it.m_BundleInfo.bundleId
+							)
+						);
+
+						// Found
+						if(sprite_atlas != null)
+						{
+							Callback(sprite_atlas);
+
+							return;
+						}
+					}
+				}
+			}
+
+			Ja2Logger.LogInfo("Texture atlas \"{0}\" not found!",
+				asset_file_path
+			);
+		}
+#endregion
+
 #region Constructors
 		/// <inheritdoc />
 		protected override void DoInitialize(params object[] Params)
 		{
 			Ja2Logger.LogInfo("Loading all bundles ...");
+
+			SpriteAtlasManager.atlasRequested += OnAtlasRequested;
 
 			var asset_bundle_dir = string.Empty;
 
@@ -367,6 +450,7 @@ namespace Ja2
 			m_Bundles = Array.Empty<BundleData>();
 			m_LoadedBundles.Clear();
 
+			SpriteAtlasManager.atlasRequested -= OnAtlasRequested;
 #if UNITY_EDITOR
 			// Only for testing inside editor
 			AssetBundle.UnloadAllAssetBundles(true);

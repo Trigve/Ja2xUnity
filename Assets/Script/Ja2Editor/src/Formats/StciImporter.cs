@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.TextCore;
 
+using UnityEditor;
 using UnityEditor.AssetImporters;
 
 using TMPro;
@@ -17,6 +18,13 @@ namespace Ja2.Editor
 	[ScriptedImporter(1, "sti")]
 	public sealed class StciImporter : ScriptedImporter
 	{
+#region Constants
+		/// <summary>
+		/// Directory name where the atlases are stored.
+		/// </summary>
+		public const string AtlasDir = "atlas";
+#endregion
+
 #region Enums
 		/// <summary>
 		/// Type of the asset produced.
@@ -25,6 +33,7 @@ namespace Ja2.Editor
 		{
 			Generic,
 			Font,
+			SpriteAtlas,
 		}
 #endregion
 
@@ -67,6 +76,18 @@ namespace Ja2.Editor
 		private int m_DescentLine;
 #endregion
 
+#region Fields Static
+		/// <summary>
+		/// Paths to asssets which import was triggered by our own postprocessor and not by ueser.
+		/// </summary>
+		private static readonly HashSet<string> m_ApplyingRemap = new();
+
+		/// <summary>
+		/// Old external assets that needs to be deleted by asset postprocessor.
+		/// </summary>
+		private static readonly Dictionary<string, List<string>> m_PendingDeletes = new();
+#endregion
+
 #region Properties
 		/// <summary>
 		/// Font point size.
@@ -89,7 +110,68 @@ namespace Ja2.Editor
 		/// </summary>
 		public AssetType assetType
 		{
+			get => m_AssetType;
 			set => m_AssetType = value;
+		}
+#endregion
+
+#region Methods Public Static
+		/// <summary>
+		/// Generate the texture name.
+		/// </summary>
+		/// <param name="Index">Index of the texture.</param>
+		/// <returns></returns>
+		internal static string GenerateTextureName(int Index)
+		{
+			return "texture_" + Index;
+		}
+
+		/// <summary>
+		/// Generate the asset identifier.
+		/// </summary>
+		/// <param name="Index">Index of the asset.</param>
+		/// <typeparam name="T">Type of the asset.</typeparam>
+		/// <returns>New identifier based on the type and index.</returns>
+		internal static SourceAssetIdentifier GenerateAssetIdentifier<T>(int Index)
+		{
+			return new SourceAssetIdentifier(
+				typeof(T),
+				typeof(T).Name + "_" + Index
+			);
+		}
+
+		/// <summary>
+		/// Check if for given asset the remapping is being done.
+		/// </summary>
+		/// <param name="AssetPath">Asset path.</param>
+		/// <returns>True, if the remapping is being done. Otherwise, false.</returns>
+		internal static bool IsApplyingRemap(string AssetPath)
+		{
+			return m_ApplyingRemap.Remove(AssetPath);
+		}
+
+		/// <summary>
+		/// Return all mapping asset paths, that needs to be deleted for the given asset.
+		/// </summary>
+		/// <param name="AssetPath">Asset path, for which pending deletes are obtained.</param>
+		/// <returns>Assets that needs to be deleted.</returns>
+		internal static IEnumerable<string> MappingPendingDeletes(string AssetPath)
+		{
+			// Remove from the dict only if exist
+			if(m_PendingDeletes.Remove(AssetPath, out var deletes))
+				return deletes;
+
+			// Nothing here to remove
+			return Enumerable.Empty<string>();
+		}
+
+		/// <summary>
+		/// Signal that for the given asset, the remapping is being done.
+		/// </summary>
+		/// <param name="AssetPath">Asset, for which remapping is being done.</param>
+		internal static void ApplyRemap(string AssetPath)
+		{
+			m_ApplyingRemap.Add(AssetPath);
 		}
 #endregion
 
@@ -131,9 +213,7 @@ namespace Ja2.Editor
 						);
 						texture.filterMode = m_FilterMode;
 						texture.wrapMode = TextureWrapMode.Clamp;
-						texture.name = string.Format("texture_{0}",
-							i
-						);
+						texture.name = GenerateTextureName(i);
 
 						texture.SetPixels32(it.texture);
 
@@ -390,100 +470,198 @@ namespace Ja2.Editor
 					STCIUtils.ExtractionFlags.None
 				);
 
-				var textures = new Texture2D[stci_data.m_SubImageData.Count];
-				var sprites = new Sprite[stci_data.m_SubImageData.Count];
+				var textures = new List<Texture2D>();
+				var sprites = new List<Sprite>();
 				var sub_image_data = new STCISubImageData[stci_data.m_SubImageData.Count];
 
+				// The next steps are done for remapping the sub-asset textures to an external one. This is needed so,
+				// the textures, that were packed to sprite atlas, wouldn't be embedded in the asset bundle (which
+				// doesn't work with sub-assets, therefore they need to be moved outside).
+				//
+				// This is done in 2 passes. In the 1. pass, textures are generated as sub-assets. Then in asset
+				// postprocessor, those textures are moved outside the asset and new reimport is forced.
+				// In this 2. pass, the moved textures are read back and then sprites are created and
+				// then in postprocessor sprite atlas is created finally
+				if(m_AssetType == AssetType.SpriteAtlas)
 				{
-					var i = 0;
-					// Process all the subimages
-					foreach(STCIData.SubImage it in stci_data.m_SubImageData)
+					// Textures needs to readable, as they would be read from
+					m_KeepTextureReadable = true;
+
+					// Is this a ramapping pass
+					bool is_remap_apply_pass = m_ApplyingRemap.Contains(Context.assetPath);
+
+					// Genuine import (first import, manual "Reimport", source file changed, ...), everyting needs
+					// to be wiped clear and rebuild from scratch
+					if(!is_remap_apply_pass)
 					{
-						// As first, create the texture
-						var texture = new Texture2D(it.width,
-							it.height,
+						// The mappings that needs to be deleted
+						var old_paths = new List<string>();
+
+						// Remove all the current mappings
+						foreach(var it in GetExternalObjectMap())
+						{
+							if(it.Value != null)
+							{
+								old_paths.Add(
+									AssetDatabase.GetAssetPath(it.Value)
+								);
+							}
+
+							RemoveRemap(it.Key);
+						}
+
+						// Mark assets for deletion
+						if(old_paths.Count > 0)
+							m_PendingDeletes[Context.assetPath] = old_paths;
+					}
+
+					// For initial import, this should empty. For the 2. pass, it will contain mappings
+					// already
+					var asset_map = GetExternalObjectMap();
+
+					for(var i = 0; i < stci_data.m_SubImageData.Count; ++i)
+					{
+						// Sub-image data from which texture is generated
+						STCIData.SubImage sub_image = stci_data.m_SubImageData[i];
+
+						// Unique ID of the asset
+						SourceAssetIdentifier texture_id = GenerateAssetIdentifier<Texture2D>(i);
+
+						// 2. pass - found in the map (already move outside the asset)
+						if(asset_map.TryGetValue(texture_id, out Object asset) && asset is Texture2D texture)
+						{
+							string asset_path = AssetDatabase.GetAssetPath(texture);
+
+							// Need to load the asset, otherwise Unity will warn that dependency isn't used
+							AssetDatabase.LoadAssetAtPath<Texture2D>(asset_path);
+
+							// Add the source texture as dependency
+							Context.DependsOnArtifact(
+								AssetDatabase.GUIDFromAssetPath(asset_path)
+							);
+
+							// Mark for sprite generation
+							textures.Add(texture);
+						}
+						// 1. pass - need to create a "temporary" texture, don't generate sprites yet
+						else
+						{
+							texture = new Texture2D(sub_image.width,
+								sub_image.height,
+								stci_data.m_ImageFormat,
+								false
+							);
+							texture.filterMode = m_FilterMode;
+							texture.wrapMode = TextureWrapMode.Clamp;
+							texture.name = GenerateTextureName(i);
+
+							texture.SetPixels32(sub_image.texture);
+
+							texture.Apply(false,
+								!m_KeepTextureReadable
+							);
+
+							Context.AddObjectToAsset(texture.name,
+								texture,
+								texture
+							);
+						}
+					}
+				}
+				// Generic
+				else
+				{
+					for(var i = 0; i < stci_data.m_SubImageData.Count; ++i)
+					{
+						// Sub-image data from which texture is generated
+						STCIData.SubImage sub_image = stci_data.m_SubImageData[i];
+
+						string texture_name = GenerateTextureName(i);
+
+						var texture = new Texture2D(sub_image.width,
+							sub_image.height,
 							stci_data.m_ImageFormat,
 							false
 						);
 						texture.filterMode = m_FilterMode;
 						texture.wrapMode = TextureWrapMode.Clamp;
-						texture.name = string.Format("texture_{0}",
-							i
-						);
+						texture.name = GenerateTextureName(i);
 
-						texture.SetPixels32(it.texture);
+						texture.SetPixels32(sub_image.texture);
 
 						texture.Apply(false,
 							!m_KeepTextureReadable
 						);
 
-						textures[i] = texture;
-
-						// JA2 stores a per-tile draw offset rather than a centered pivot, therfore conversion into the
-						// sprite pivot space is needed.
-						var pivot = new Vector2(
-							0.5f - it.offsetX / it.width,
-							0.5f + it.offsetY / it.height
-						);
-
-						var sprite = Sprite.Create(
+						Context.AddObjectToAsset(texture_name,
 							texture,
-							new Rect(0,
-								0,
-								it.width,
-								it.height
-							),
-							pivot,
-							m_PixelsPerUnit,
-							0,
-							SpriteMeshType.FullRect
+							texture
 						);
 
-						sprite.name = string.Format("sprite_{0}",
-							i
-						);
-						sprites[i] = sprite;
-
-						// Sub-image data
-						sub_image_data[i] = new STCISubImageData
-						{
-							m_Index = i,
-							m_Offset = new Vector2Int(it.offsetX,
-								it.offsetY
-							)
-						};
-
-						++i;
+						textures.Add(texture);
 					}
+				}
+
+				// Create the sprites, if there are textures (2. pass)
+				for(var i = 0; i < textures.Count; ++i)
+				{
+					// Sub-image data from which texture is generated
+					STCIData.SubImage sub_image = stci_data.m_SubImageData[i];
+
+					Texture2D texture = textures[i];
+
+					// JA2 stores a per-tile draw offset rather than a centered pivot, therfore conversion into the
+					// sprite pivot space is needed
+					var pivot = new Vector2(
+						0.5f - sub_image.offsetX / sub_image.width,
+						0.5f + sub_image.offsetY / sub_image.height
+					);
+
+					var sprite = Sprite.Create(
+						texture,
+						new Rect(0,
+							0,
+							sub_image.width,
+							sub_image.height
+						),
+						pivot,
+						m_PixelsPerUnit,
+						0,
+						SpriteMeshType.FullRect
+					);
+
+					sprite.name = string.Format("sprite_{0}",
+						i
+					);
+					sprites.Add(sprite);
+
+					// Sub-image data
+					sub_image_data[i] = new STCISubImageData
+					{
+						m_Index = i,
+						m_Offset = new Vector2Int(sub_image.offsetX,
+							sub_image.offsetY
+						)
+					};
+
+					// Register as sub-assets
+					Context.AddObjectToAsset(
+						string.Format("sprite_{0}",
+							i
+						),
+						sprite,
+						sprite.texture
+					);
 				}
 
 				// Build the metadata asset that ties everything together
 				var data = AssetStci.Create(asset_file_name,
 					stci_data.m_Width,
 					stci_data.m_Height,
-					textures,
-					sprites,
+					textures.ToArray(),
+					sprites.ToArray(),
 					sub_image_data
 				);
-
-				// Register everything as sub-assets of this single import
-				for(var i = 0; i < sprites.Length; ++i)
-				{
-					Context.AddObjectToAsset(
-						string.Format("texture_{0}",
-							i
-						),
-						textures[i],
-						textures[i]
-					);
-					Context.AddObjectToAsset(
-						string.Format("sprite_{0}",
-							i
-						),
-						sprites[i],
-						sprites[i].texture
-					);
-				}
 
 				Context.AddObjectToAsset("data",
 					data
