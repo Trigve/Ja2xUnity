@@ -155,6 +155,19 @@ namespace Ja2
 		/// Load asset from the AssetRef.
 		/// </summary>
 		/// <param name="AssetPath">Asset reference.</param>
+		/// <typeparam name="T">Type of the asset to load.</typeparam>
+		/// <returns>Loaded asset if found. Otherwise, null.</returns>
+		public T? LoadAsset<T>(AssetRef AssetPath) where T : Object
+		{
+			return LoadAsset(AssetPath,
+				typeof(T)
+			) as T;
+		}
+
+		/// <summary>
+		/// Load asset from the AssetRef.
+		/// </summary>
+		/// <param name="AssetPath">Asset reference.</param>
 		/// <param name="AssetType">Type of the asset to load.</param>
 		/// <returns>Loaded asset if found. Otherwise, null.</returns>
 		public async UniTask<Object?> LoadAssetAsync(AssetRef AssetPath, Type AssetType)
