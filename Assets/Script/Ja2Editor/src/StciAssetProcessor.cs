@@ -5,9 +5,9 @@ using UnityEditor;
 namespace Ja2.Editor
 {
 	/// <summary>
-	/// STCI font Preprocessor.
+	/// STCI asset Preprocessor.
 	/// </summary>
-	public sealed class StciFontProcessor : AssetPostprocessor
+	public sealed class StciAssetProcessor : AssetPostprocessor
 	{
 #region Messages
 		public void OnPreprocessAsset()
