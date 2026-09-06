@@ -23,7 +23,7 @@ namespace Ja2.Editor
 					if(stci_importer != null)
 					{
 						// All are fonts
-						stci_importer.isFont = true;
+						stci_importer.assetType = StciImporter.AssetType.Font;
 
 						// Only file name of the asset
 						string asset_file_name = Path.GetFileName(assetPath);

@@ -17,11 +17,28 @@ namespace Ja2.Editor
 	[ScriptedImporter(1, "sti")]
 	public sealed class StciImporter : ScriptedImporter
 	{
+#region Enums
+		/// <summary>
+		/// Type of the asset produced.
+		/// </summary>
+		public enum AssetType
+		{
+			Generic,
+			Font,
+		}
+#endregion
+
 #region Fields Component
+		/// <summary>
+		/// See <see cref="assetType"/>.
+		/// </summary>
+		[Header("Import Settings")]
+		[SerializeField]
+		private AssetType m_AssetType;
+
 		/// <summary>
 		/// PPU for the sprite.
 		/// </summary>
-		[Header("Import Settings")]
 		[SerializeField]
 		private float m_PixelsPerUnit = 100f;
 
@@ -36,12 +53,6 @@ namespace Ja2.Editor
 		/// </summary>
 		[SerializeField]
 		private bool m_KeepTextureReadable;
-
-		/// <summary>
-		/// See <see cref="isFont"/>.
-		/// </summary>
-		[SerializeField]
-		private bool m_IsFont;
 
 		/// <summary>
 		/// See <see cref="fontPointSize"/>.
@@ -76,9 +87,9 @@ namespace Ja2.Editor
 		/// <summary>
 		/// Is it a font asset.
 		/// </summary>
-		public bool isFont
+		public AssetType assetType
 		{
-			set => m_IsFont = value;
+			set => m_AssetType = value;
 		}
 #endregion
 
@@ -89,7 +100,7 @@ namespace Ja2.Editor
 			string asset_file_name = Path.GetFileNameWithoutExtension(Context.assetPath);
 
 			// Font asset
-			if(m_IsFont)
+			if(m_AssetType == AssetType.Font)
 			{
 				// All the letters inside the font
 				const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=|\\{}[]:;\"'<>,.?/ ÄÖÜäöüßабвгдеёжзийклмнопрстуфхцчшщыьэюяÀÁÂÇËÈÉÊÏÒÓÔÙÚÛàáâçëèéêïòóôùúûÌìĄĆĘŁŃŚŻŹąćęłńśżź";
