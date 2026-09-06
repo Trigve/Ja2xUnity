@@ -108,6 +108,7 @@ namespace Ja2
 		/// Sound manager.
 		/// </summary>
 		public SoundManager soundManager => m_SoundManager;
+
 		/// <summary>
 		/// Get the new cancelation token.
 		/// </summary>
