@@ -83,13 +83,6 @@ namespace Ja2.UI
 			{
 				m_FontAsset = value;
 
-				// Only for bitmap fonts
-				if(m_FontAsset?.fontType == AssetFontClass.FontType.BitmapFont)
-				{
-					// Clone the material, so the changes aren't propagated for each text control
-					Material _ = m_TextComponent!.material;
-				}
-
 				// Set the font in the control, if any
 				m_TextComponent!.font = m_FontAsset?.fontBase;
 
