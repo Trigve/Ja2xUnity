@@ -5,6 +5,13 @@ namespace Ja2.Editor
 	/// </summary>
 	internal static class Utils
 	{
+#region Constants
+		/// <summary>
+		/// String used for the <see cref="PathAttribute.Ignore"/> attribute.
+		/// </summary>
+		private const string IgnoreStr = "_!";
+#endregion
+
 #region Enums
 		/// <summary>
 		/// Path attribute.
@@ -30,7 +37,7 @@ namespace Ja2.Editor
 			switch(Attribute)
 			{
 			case PathAttribute.Ignore:
-				prefix += "_!";
+				prefix += IgnoreStr;
 				break;
 			case PathAttribute.Normal:
 			default:
@@ -39,6 +46,34 @@ namespace Ja2.Editor
 			}
 
 			return prefix + Name;
+		}
+
+		/// <summary>
+		/// Find out if the given path attribue is set for the given path.
+		/// </summary>
+		/// <param name="Path">Path to check for.</param>
+		/// <param name="Attribute">Path attribute to check.</param>
+		/// <returns>True, if the path contains the attribute. Otherwise, false.</returns>
+		public static bool IsPathAttributeSet(string Path, PathAttribute Attribute)
+		{
+			string str_to_test;
+
+			switch(Attribute)
+			{
+			case PathAttribute.Ignore:
+				str_to_test = IgnoreStr;
+				break;
+			case PathAttribute.Normal:
+			default:
+				return true;
+			}
+
+			// Only if provided
+			if(!string.IsNullOrEmpty(str_to_test))
+				return Path[0..str_to_test.Length] == str_to_test;
+
+
+			return false;
 		}
 #endregion
 	}
