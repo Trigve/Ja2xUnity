@@ -53,7 +53,6 @@ namespace Ja2
 #endif
 			m_TextGenerated = Text;
 			m_RectTransform = GetComponent<RectTransform>();
-			GetComponentInParent<CanvasRenderer>();
 
 			// Set the font asset as first
 			m_TextComponent!.fontAsset = Font;
