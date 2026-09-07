@@ -119,43 +119,62 @@ namespace Ja2.Editor
 
 				string it_path = bundle_info.directory;
 
-				var search_options = SearchOption.TopDirectoryOnly;
-				if(bundle_info.recursive)
-					search_options = SearchOption.AllDirectories;
+				// Directory stack
+				var dir_stack = new Stack<string>();
+				dir_stack.Push(it_path);
 
-				// Process files with specific extension only
-				foreach(string file in Directory.EnumerateFiles(it_path, "*", search_options))
+				// Process directories
+				do
 				{
-					// Ignore budle descriptor
-					if(AssetDatabase.LoadMainAssetAtPath(file) is AssetBundleDesc)
-						continue;
+					// Latest dir
+					string dir = dir_stack.Pop();
 
-					// Ignore all .meta files
-					if(Path.GetExtension(file).ToLower() == ".meta")
-						continue;
+					// Process only if directory shouldn't be ignored
+					if(!Utils.IsPathAttributeSet(Path.GetFileName(dir), Utils.PathAttribute.Ignore))
+					{
+						// Process files with specific extension only
+						foreach(string file in Directory.EnumerateFiles(dir, "*"))
+						{
+							// Ignore budle descriptor
+							if(AssetDatabase.LoadMainAssetAtPath(file) is AssetBundleDesc)
+								continue;
 
-					// Addressable path
-					asset_mappings.Add(
-						UtilsPath.NormalizePath(
-							Path.GetRelativePath(it_path,
+							// Ignore all .meta files
+							if(Path.GetExtension(file).ToLower() == ".meta")
+								continue;
+
+							// Addressable path, relative to the current bundle
+							asset_mappings.Add(
+								UtilsPath.NormalizePath(
+									Path.GetRelativePath(it_path,
+										file
+									)
+								)
+							);
+
+							// "Real" path
+							string asset_real_path = Path.GetRelativePath(project_path,
 								file
-							)
-						)
-					);
+							);
+							asset_real_paths.Add(
+								asset_real_path
+							);
 
-					// "Real" path
-					string asset_real_path = Path.GetRelativePath(project_path,
-						file
-					);
-					asset_real_paths.Add(
-						asset_real_path
-					);
+							// GUID
+							asset_guids.Add(
+								AssetDatabase.AssetPathToGUID(asset_real_path)
+							);
+						}
 
-					// GUID
-					asset_guids.Add(
-						AssetDatabase.AssetPathToGUID(asset_real_path)
-					);
-				}
+						// Should process recursively
+						if(bundle_info.recursive)
+						{
+							// Process all subdirectories
+							foreach(string new_dir in Directory.EnumerateDirectories(dir, "*", SearchOption.TopDirectoryOnly))
+								dir_stack.Push(new_dir);
+						}
+					}
+				} while(dir_stack.Count > 0);
 
 				// Create the manifest
 				var bundle_manifest = AssetBundleInfo.Create(bundle_info.assetBundleDesc!.bundleId,
