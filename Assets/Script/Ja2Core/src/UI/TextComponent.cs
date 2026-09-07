@@ -117,6 +117,7 @@ namespace Ja2.UI
 		/// </summary>
 		private void ApplyChanges()
 		{
+			// \FIXME Breaks batching
 			// Only for bitmap fonts
 			if(m_FontAsset?.fontType == AssetFontClass.FontType.BitmapFont)
 			{
