@@ -63,7 +63,7 @@ namespace Ja2
 
 			// If palette is provided, set the color
 			if(m_TextComponent.fontAsset.paletteFontBase != null)
-				m_TextControl.faceColor = m_TextComponent.fontAsset.paletteFontBase[TextColor];
+				m_TextControl.color = m_TextComponent.fontAsset.paletteFontBase[TextColor];
 
 			m_TextControl.horizontalAlignment = AlignmentHor;
 
