@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 
 using UnityEngine;
 
@@ -18,26 +19,21 @@ namespace Ja2
 		/// <summary>
 		/// Space between the nodes in pixels.
 		/// </summary>
-		[HistoricName("CRDT_SPACE_BN_NODES")]
 		private const ushort NodesSpace = 12;
 
 		/// <summary>
 		/// Scroll speed in miliseconds for 1 pixel for the nodes.
 		/// </summary>
-		[HistoricName("CRDT_NODE_DELAY_AMOUNT")]
-		[HistoricName("CRDT_SCROLL_PIXEL_AMOUNT")]
 		private const ushort NodeScrollSpeed = 25;
 
 		/// <summary>
 		/// Title text predefined color.
 		/// </summary>
-		[HistoricName("FONT_MCOLOR_RED")]
 		private const ushort ColorTitleDefault = 163;
 
 		/// <summary>
 		/// Default text predefined color.
 		/// </summary>
-		[HistoricName("FONT_MCOLOR_DKWHITE")]
 		private const ushort ColorScreenDefault = 134;
 #endregion
 
@@ -93,6 +89,11 @@ namespace Ja2
 
 #region Fields
 		/// <summary>
+		/// Cancelatation token source for all the tasks.
+		/// </summary>
+		private CancellationTokenSource m_CancellationTokenSource = null!;
+
+		/// <summary>
 		/// Credits data instance.
 		/// </summary>
 		private CreditsDataAsset? m_CreditsData;
@@ -110,19 +111,16 @@ namespace Ja2
 		/// <summary>
 		/// Space margin, when new node is displayed.
 		/// </summary>
-		[HistoricName("guiGapTillReadNextCredit")]
 		private ushort m_SpaceForNextNodeRead;
 
 		/// <summary>
 		/// Space between the credits nodes.
 		/// </summary>
-		[HistoricName("guiGapBetweenCreditNodes")]
 		private ushort m_SpaceBetweenNodes;
 
 		/// <summary>
 		/// Space between the credits sections.
 		/// </summary>
-		[HistoricName("guiGapBetweenCreditSections")]
 		private ushort m_SpaceBetweenSections;
 
 		/// <summary>
@@ -138,13 +136,11 @@ namespace Ja2
 		/// <summary>
 		/// Current font.
 		/// </summary>
-		[HistoricName("guiCreditScreenTitleFont")]
 		private AssetFontClass? m_CurrentFont;
 
 		/// <summary>
 		/// Current text alignment.
 		/// </summary>
-		[HistoricName("gubCrdtJustification")]
 		private HorizontalAlignmentOptions m_CurrentTextAlignment;
 
 		/// <summary>
@@ -161,11 +157,19 @@ namespace Ja2
 		/// Is the screen paused.
 		/// </summary>
 		private bool m_IsPaused;
+
+		/// <summary>
+		/// All the face components.
+		/// </summary>
+		private CreditsFaceComponent[] m_Faces = Array.Empty<CreditsFaceComponent>();
 #endregion
 
 #region Messages
 		public void Start()
 		{
+			// Use the game state cancelation token, os if the game is ended, all the task will end
+			m_CancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(m_GameState.cancellationToken);
+
 			m_NodesShown = new Queue<CreditsDataNodeComponent>();
 
 			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
@@ -181,6 +185,13 @@ namespace Ja2
 			m_CurrentColorTitle = ColorTitleDefault;
 			m_CurrentTextAlignment = HorizontalAlignmentOptions.Center;
 			m_IsPaused = false;
+
+			// Find all the components
+			m_Faces = FindObjectsByType<CreditsFaceComponent>(FindObjectsSortMode.None);
+
+			// Initialize faces
+			foreach(CreditsFaceComponent it in m_Faces)
+				it.Initialize(m_CancellationTokenSource.Token);
 
 			m_GameState.eventUpdate += OnUpdate;
 		}
@@ -218,6 +229,9 @@ namespace Ja2
 			// Forced exit or nothing to process
 			if(Input.GetKeyDown(KeyCode.Escape) || (m_NodesShown.Count == 0 && m_NodeIndex >= m_CreditsData!.count))
 			{
+				// Cancel any async tasks
+				m_CancellationTokenSource.Cancel();
+
 				m_GameState.screenManager.SetPendingScreen(m_ExitScreen!,
 					new GameScreenOptions()
 					{
@@ -365,6 +379,12 @@ namespace Ja2
 				CreditsDataNodeComponent last_node = m_NodesShown.Dequeue();
 				// Destroy the GO
 				Destroy(last_node.gameObject);
+			}
+
+			// Process the faces
+			foreach(CreditsFaceComponent it in m_Faces)
+			{
+				it.DoUpdate();
 			}
 		}
 #endregion

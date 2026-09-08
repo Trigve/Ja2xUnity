@@ -49,4 +49,12 @@ namespace Ja2.Editor
 	public class AssetRefMockerCreditsDataEditor : AssetRefMockerBaseEditor
 	{
 	}
+
+	/// <summary>
+	/// Editor for <see cref="AssetRefMockerCreditsFace"/>.
+	/// </summary>
+	[CustomEditor(typeof(AssetRefMockerCreditsFace))]
+	public class AssetRefMockerCreditsFaceEditor : AssetRefMockerBaseEditor
+	{
+	}
 }
