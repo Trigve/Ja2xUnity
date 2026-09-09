@@ -19,7 +19,7 @@ namespace Ja2.Editor
 			// Only STCI importer
 			if(assetImporter is StciImporter stci_importer)
 			{
-				// Only font asset
+				// Font asset
 				if(assetPath.Contains(SettingsDev.instance.m_SlfExtractDir + "/fonts"))
 				{
 					// Imported first time
@@ -38,6 +38,20 @@ namespace Ja2.Editor
 							stci_importer.fontPointSize = font_section.fontPointSize;
 							stci_importer.descentLine = font_section.fontDescentLine;
 						}
+					}
+				}
+				// Interfaces assets
+				else if(assetPath.Contains(SettingsDev.instance.m_SlfExtractDir + "/interface"))
+				{
+					// Imported first time
+					if(assetImporter.importSettingsMissing)
+					{
+						// Only file name of the asset
+						string asset_file_name = Path.GetFileName(assetPath);
+
+						// Found the section and file
+						if(ImportDataSettings.instance.FindSection("interface")?.FindFile(asset_file_name) is ImportDataFileSpriteAtlas atlas_section)
+							stci_importer.assetType = atlas_section.assetType;
 					}
 				}
 			}

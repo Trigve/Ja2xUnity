@@ -183,4 +183,18 @@ namespace Ja2.Editor
 		}
 #endregion
 	}
+
+	/// <summary>
+	/// Sprite atlas data.
+	/// </summary>
+	[Serializable]
+	public sealed class ImportDataFileSpriteAtlas : ImportDataFile
+	{
+#region Construction
+		public ImportDataFileSpriteAtlas()
+			: base(StciImporter.AssetType.SpriteAtlas)
+		{
+		}
+#endregion
+	}
 }
