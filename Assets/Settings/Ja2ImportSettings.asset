@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbee43619b824a3ba04399ea53d37a99, type: 3}
+  m_Name: Ja2ImportSettings
+  m_EditorClassIdentifier: 
+  m_Sections:
+  - m_FolderName: fonts
+    m_AssetType: 2
+    m_FileSettngs:
+    - rid: 1055736991439913030
+    - rid: 1055736991439913031
+    - rid: 1055736991439913032
+  references:
+    version: 2
+    RefIds:
+    - rid: 1055736991439913030
+      type: {class: ImportDataFileFont, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 1
+        m_FileName: font10arial.sti
+        m_FontPointSize: 10
+        m_FontDescentLine: -2
+    - rid: 1055736991439913031
+      type: {class: ImportDataFileFont, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 1
+        m_FileName: font12arial.sti
+        m_FontPointSize: 12
+        m_FontDescentLine: -2
+    - rid: 1055736991439913032
+      type: {class: ImportDataFileFont, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 1
+        m_FileName: font14arial.sti
+        m_FontPointSize: 14
+        m_FontDescentLine: -3
