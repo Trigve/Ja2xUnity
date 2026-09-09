@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Sections:
   - m_FolderName: fonts
-    m_AssetType: 2
     m_FileSettngs:
     - rid: 1055736991439913030
     - rid: 1055736991439913031
     - rid: 1055736991439913032
+  - m_FolderName: interface
+    m_FileSettngs:
+    - rid: 1055736991439913033
   references:
     version: 2
     RefIds:
@@ -43,3 +45,8 @@ MonoBehaviour:
         m_FileName: font14arial.sti
         m_FontPointSize: 14
         m_FontDescentLine: -3
+    - rid: 1055736991439913033
+      type: {class: ImportDataFileSpriteAtlas, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 2
+        m_FileName: credit faces.sti
