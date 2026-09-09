@@ -143,4 +143,44 @@ namespace Ja2.Editor
 		}
 #endregion
 	}
+
+	/// <summary>
+	/// Font data.
+	/// </summary>
+	[Serializable]
+	public sealed class ImportDataFileFont : ImportDataFile
+	{
+#region Fields
+		/// <summary>
+		/// See <see cref="fontPointSize"/>.
+		/// </summary>
+		[SerializeField]
+		private int m_FontPointSize;
+
+		/// <summary>
+		/// See <see cref="fontDescentLine"/>.
+		/// </summary>
+		[SerializeField]
+		private int m_FontDescentLine;
+#endregion
+
+#region Properties
+		/// <summary>
+		/// Font point size.
+		/// </summary>
+		public int fontPointSize => m_FontPointSize;
+
+		/// <summary>
+		/// Descent line position.
+		/// </summary>
+		public int fontDescentLine => m_FontDescentLine;
+#endregion
+
+#region Construction
+		public ImportDataFileFont()
+		: base(StciImporter.AssetType.Font)
+		{
+		}
+#endregion
+	}
 }

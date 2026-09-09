@@ -25,27 +25,18 @@ namespace Ja2.Editor
 					// Imported first time
 					if(assetImporter.importSettingsMissing)
 					{
-						// All are fonts
-						stci_importer.assetType = StciImporter.AssetType.Font;
-
 						// Only file name of the asset
 						string asset_file_name = Path.GetFileName(assetPath);
 
-						// Set the importer fields (brute force)
-						if(asset_file_name == "font10arial.sti")
+						// All should be fonts by default
+						stci_importer.assetType = StciImporter.AssetType.Font;
+
+						// Found the section and file
+						if(ImportDataSettings.instance.FindSection("fonts")?.FindFile(asset_file_name) is ImportDataFileFont font_section)
 						{
-							stci_importer.fontPointSize = 10;
-							stci_importer.descentLine = -2;
-						}
-						else if(asset_file_name == "font12arial.sti")
-						{
-							stci_importer.fontPointSize = 12;
-							stci_importer.descentLine = -2;
-						}
-						else if(asset_file_name == "font14arial.sti")
-						{
-							stci_importer.fontPointSize = 14;
-							stci_importer.descentLine = -3;
+							stci_importer.assetType = font_section.assetType;
+							stci_importer.fontPointSize = font_section.fontPointSize;
+							stci_importer.descentLine = font_section.fontDescentLine;
 						}
 					}
 				}
