@@ -19,15 +19,15 @@ namespace Ja2.Editor
 			// Only STCI importer
 			if(assetImporter is StciImporter stci_importer)
 			{
+				// Only file name of the asset
+				string asset_file_name = Path.GetFileName(assetPath);
+
 				// Font asset
 				if(assetPath.Contains(SettingsDev.instance.m_SlfExtractDir + "/fonts"))
 				{
 					// Imported first time
 					if(assetImporter.importSettingsMissing)
 					{
-						// Only file name of the asset
-						string asset_file_name = Path.GetFileName(assetPath);
-
 						// All should be fonts by default
 						stci_importer.assetType = StciImporter.AssetType.Font;
 
@@ -46,9 +46,6 @@ namespace Ja2.Editor
 					// Imported first time
 					if(assetImporter.importSettingsMissing)
 					{
-						// Only file name of the asset
-						string asset_file_name = Path.GetFileName(assetPath);
-
 						// Found the section and file
 						if(ImportDataSettings.instance.FindSection("interface")?.FindFile(asset_file_name) is ImportDataFileSpriteAtlas atlas_section)
 							stci_importer.assetType = atlas_section.assetType;
