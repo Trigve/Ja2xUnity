@@ -12,6 +12,20 @@ namespace Ja2
 	[Serializable]
 	public struct AssetRef : ISerializationCallbackReceiver
 	{
+#if UNITY_EDITOR
+#region Constants Editor
+		/// <summary>
+		/// Field name for editor.
+		/// </summary>
+		public const string PropertyNameBundle = nameof(m_Bundle);
+
+		/// <summary>
+		/// Field name for editor.
+		/// </summary>
+		public const string PropertyNameAssetPath = nameof(m_AssetPath);
+#endregion
+#endif
+
 #region Fields Component
 		/// <summary>
 		/// If it is a simple string, then it denotes a bundle name. If it is in format "[x]", then
@@ -40,6 +54,11 @@ namespace Ja2
 #endregion
 
 #region Properties
+		/// <summary>
+		/// Full asset path.
+		/// </summary>
+		public string assetPath => m_AssetPath;
+
 		/// <summary>
 		/// Is instance valid. At least, asset should be valid.
 		/// </summary>
