@@ -37,7 +37,7 @@ namespace Ja2
 		/// <param name="AssetPath">Asset reference.</param>
 		/// <param name="AssetType">Type of the asset to load.</param>
 		/// <returns>Loaded asset if found. Otherwise, null.</returns>
-		public Object? LoadAsset(AssetRef AssetPath, Type AssetType)
+		public Object? LoadAsset(AssetRef AssetPath, Type? AssetType = null)
 		{
 			Object? ret = null;
 
@@ -133,7 +133,7 @@ namespace Ja2
 				// Sub-asset
 				if(AssetPath.hasSubAsset)
 				{
-					if(it_obj.GetType() == AssetType && it_obj.name == AssetPath.subAssetName)
+					if((AssetType is null || it_obj.GetType() == AssetType) && it_obj.name == AssetPath.subAssetName)
 					{
 						ret = it_obj;
 						break;
@@ -141,7 +141,7 @@ namespace Ja2
 				}
 				else
 				{
-					if(it_obj.GetType() == AssetType)
+					if(AssetType is null || it_obj.GetType() == AssetType)
 					{
 						ret = it_obj;
 						break;

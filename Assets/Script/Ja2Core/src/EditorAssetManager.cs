@@ -39,7 +39,7 @@ namespace Ja2
 		/// <param name="AssetPath">Asset ref.</param>
 		/// <param name="AssetType">Type of object to load.</param>
 		/// <returns>Object instance loaded, if found. Otherwise, null.</returns>
-		public Object? LoadAsset(AssetRef AssetPath, Type AssetType)
+		public Object? LoadAsset(AssetRef AssetPath, Type? AssetType)
 		{
 			Object? ret = null;
 
@@ -67,7 +67,7 @@ namespace Ja2
 				{
 					// Is the sub-asset
 					if(AssetPath.hasSubAsset)
-						ret = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(it.path + "/" + AssetPath.assetPathMain).First(Item => Item.GetType() == AssetType && Item.name == AssetPath.subAssetName)!;
+						ret = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(it.path + "/" + AssetPath.assetPathMain).First(Item => Item.name == AssetPath.subAssetName && (Item.GetType() == AssetType || AssetType is null))!;
 					// Main asset
 					else
 					{
