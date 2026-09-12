@@ -35,7 +35,7 @@ namespace Ja2.Editor
 		/// <summary>
 		/// Context menu asset creation.
 		/// </summary>
-		[UnityEditor.MenuItem("Assets/Create/JA2 Import Daa Settings", false, 1)]
+		[UnityEditor.MenuItem("Assets/Create/JA2 Import Data Settings", false, 1)]
 		public static void CreateContext()
 		{
 			UnityEditor.ProjectWindowUtil.CreateAsset(Create(),
