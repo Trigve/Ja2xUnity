@@ -220,7 +220,7 @@ namespace Ja2
 		private void OnUpdate()
 		{
 			// Pause handling
-			if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Pause))
+			if(m_GameState.inputManager.IsKeyDown(KeyCode.Space) || m_GameState.inputManager.IsKeyDown(KeyCode.Pause))
 				m_IsPaused = !m_IsPaused;
 
 			// If paused, skip the processing
@@ -228,17 +228,17 @@ namespace Ja2
 				return;
 
 			// Credit speed down
-			if(Input.GetKeyDown(KeyCode.UpArrow))
+			if(m_GameState.inputManager.IsKeyDown(KeyCode.UpArrow))
 				m_CurrentScrollSpeed += 5;
 			// Credit speed up
-			else if(Input.GetKeyDown(KeyCode.DownArrow))
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.DownArrow))
 			{
 				// Couldn't go past the minimum scroll speed
 				m_CurrentScrollSpeed = (ushort)Mathf.Max(m_CurrentScrollSpeed - 5, 5);
 			}
 
 			// Forced exit or nothing to process
-			if(Input.GetKeyDown(KeyCode.Escape) || (m_NodesShown.Count == 0 && m_NodeIndex >= m_CreditsData!.count))
+			if(m_GameState.inputManager.IsKeyDown(KeyCode.Escape) || (m_NodesShown.Count == 0 && m_NodeIndex >= m_CreditsData!.count))
 			{
 				// Cancel any async tasks
 				m_CancellationTokenSource.Cancel();
