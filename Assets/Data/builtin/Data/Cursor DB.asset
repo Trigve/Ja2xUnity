@@ -13,4 +13,26 @@ MonoBehaviour:
   m_Name: Cursor DB
   m_EditorClassIdentifier: 
   m_Cursors:
-    _serializedList: []
+    _serializedList:
+    - Key: 0
+      Value:
+        m_IsSimpleCursor: 1
+        m_Images:
+        - m_PositionMode: 0
+          m_CursorFile:
+            m_Bundle: '[540863389]'
+            m_AssetPath: cursor.sti
+          m_PosX: 0
+          m_PosY: 0
+          m_SubImageIndex: 0
+    - Key: 47
+      Value:
+        m_IsSimpleCursor: 1
+        m_Images:
+        - m_PositionMode: 0
+          m_CursorFile:
+            m_Bundle: '[926785302]'
+            m_AssetPath: fingercursor.sti
+          m_PosX: 0
+          m_PosY: 0
+          m_SubImageIndex: 0

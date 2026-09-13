@@ -21,6 +21,12 @@ MonoBehaviour:
   - m_FolderName: interface
     m_FileSettngs:
     - rid: 1055736991439913033
+  - m_FolderName: laptop
+    m_FileSettngs:
+    - rid: 1055737026148827136
+  - m_FolderName: cursors
+    m_FileSettngs:
+    - rid: 1055737071346647108
   references:
     version: 2
     RefIds:
@@ -50,3 +56,17 @@ MonoBehaviour:
       data:
         m_AssetType: 2
         m_FileName: credit faces.sti
+    - rid: 1055737026148827136
+      type: {class: ImportDataFileCursor, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 3
+        m_FileName: fingercursor.sti
+        m_IsCursorAnimated: 0
+        m_AnimFps: 0
+    - rid: 1055737071346647108
+      type: {class: ImportDataFileCursor, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 3
+        m_FileName: cursor.sti
+        m_IsCursorAnimated: 0
+        m_AnimFps: 0
