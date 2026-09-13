@@ -30,6 +30,7 @@ namespace Ja2
 #endregion
 
 #region Methods Public Static
+#if UNITY_EDITOR
 		/// <summary>
 		/// Context menu asset creation.
 		/// </summary>
@@ -40,6 +41,7 @@ namespace Ja2
 				"Cursor DB.asset"
 			);
 		}
+#endif
 #endregion
 
 #region Construction
