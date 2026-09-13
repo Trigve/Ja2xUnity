@@ -243,7 +243,8 @@ namespace Ja2
 				// Cancel any async tasks
 				m_CancellationTokenSource.Cancel();
 
-				m_GameState.screenManager.SetPendingScreen(m_ExitScreen!,
+				// Return to the previous screen
+				m_GameState.screenManager.SetPreviousScreen(
 					new GameScreenOptions()
 					{
 						destroyActiveSceen = true
