@@ -90,6 +90,25 @@ namespace Ja2
 		}
 
 		/// <summary>
+		/// Set the previous screen as the next one.
+		/// </summary>
+		/// <param name="Options">Screen options.</param>
+		internal void SetPreviousScreen(GameScreenOptions Options = new())
+		{
+			// No previous screen
+			if(!m_PreviousScreen.HasValue)
+			{
+				Debug.LogError("No previous screen has been set yet.");
+
+				return;
+			}
+
+			m_PendingScreen = new GameScreenData(m_PreviousScreen.Value.gameScreen,
+				Options
+			);
+		}
+
+		/// <summary>
 		/// Update the screen manager.
 		/// </summary>
 		internal void UpdateManager()
