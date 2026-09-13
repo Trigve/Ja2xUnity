@@ -107,7 +107,21 @@ namespace Ja2
 		/// </summary>
 		private void OnUpdate()
 		{
-
+			// New game
+			if(m_GameState.inputManager.IsKeyDown(KeyCode.N))
+				StartNewGame();
+			// Saved game
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.C))
+				ContinueSaveGame();
+			// Preferences
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.O))
+				ShowPreferences();
+			// Credits
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.S))
+				ShowCredits();
+			// Quit game
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.Q))
+				Quit();
 		}
 #endregion
 	}
