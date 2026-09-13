@@ -15,7 +15,7 @@ only this version, as it is guratanteed to be working.
 - __`ffmpeg`__ - For converting the `.smk` (SMACK) videos. Path to the executable is set in `Ja2DevSettings` (see
 below)
 
-# How To build
+# Asset workflow
 
 The base game could be build in the Unity without any assets. So you don't need the original files if you just want
 to build the player (without asset bundles). But to be able to play the game, you'll need tho build the asset bundles
@@ -35,18 +35,30 @@ already to be able to use this option)
 
 ![](doc/img/Ja2DevSettingsPanel.png)
 
-1. In the menu click the `JA2` -> `Extract SLF`. The Unity will extract the files from all the `.slf` in the specified
-paths. After the extraction is done, you can review the assets if everything was extracted correctly. The extracted
-asset are located in the `Slf extract dir` of the devel settings.  
+## Extracting assets
 
-1. In the menu click the `JA2` -> `Build Asset Bundles`. The dialog will be shown to select which bundles should be
+In the menu click the `JA2` -> `Extract SLF`. The Unity will extract the files from all the `.slf` in the specified
+paths. After the extraction is done, you can review the assets if everything was extracted correctly. The extracted
+asset are located in the `Slf extract dir` of the devel settings. You could change some importer attributes per-asset
+with with `Ja2ImportSettings` asset. There for each directory, you could add files and specify some defaults.
+
+![](doc/img/ImportSettings1.png)
+
+### Fonts
+
+After extracting the fonts, one need to run `JA2` -> `Post-process Fonts` from menu, to generate default font classes
+(`AssetFontClass`). You could also do it manually if needed (using Asset creation menu).
+
+## AssetBundle build
+
+In the menu click the `JA2` -> `Build Asset Bundles`. The dialog will be shown to select which bundles should be
 created and various other options. You must also set the player options in project settings to match the player
 (for instance IL2Cpp VS Mono):
    - `Debug build` - Build the "debug" asset bundles with no compression
 
 ![](doc/img/ExtractBundles.png)
 
-1. Copy the generated `*.bundle` files to the `StreamingAssets` dir of the player and game now should run with the
+Copy the generated `*.bundle` files to the `StreamingAssets` dir of the player and game now should run with the
 assets from the asset bundles. You could download the current version of the player from the releases.
 
 Dev blog: [https://ja2-3d.blogspot.com/](https://ja2-3d.blogspot.com/)
