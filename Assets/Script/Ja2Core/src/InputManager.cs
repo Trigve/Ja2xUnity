@@ -173,6 +173,16 @@ namespace Ja2
 		}
 
 		/// <summary>
+		/// See <see cref="Input.GetKeyDown"/>.
+		/// </summary>
+		/// <param name="Key"></param>
+		/// <returns></returns>
+		public bool IsKeyDown(KeyCode Key)
+		{
+			return Input.GetKeyDown(Key);
+		}
+
+		/// <summary>
 		/// Deque the event, if event mask match the one in the front of the queue.
 		/// </summary>
 		/// <param name="Event"></param>
