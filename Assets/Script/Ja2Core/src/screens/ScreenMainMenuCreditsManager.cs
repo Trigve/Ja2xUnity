@@ -85,6 +85,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameScreen? m_ExitScreen;
+
+		/// <summary>
+		/// Credits info text component.
+		/// </summary>
+		[SerializeField]
+		private CreditsInfoComponent? m_InfoComponent;
 #endregion
 
 #region Fields
@@ -191,7 +197,12 @@ namespace Ja2
 
 			// Initialize faces
 			foreach(CreditsFaceComponent it in m_Faces)
+			{
 				it.Initialize(m_CancellationTokenSource.Token);
+
+				it.eventFaceInfoShow += OnDisplayFaceEnter;
+				it.eventFaceInfoHide += OnDisplayFaceExit;
+			}
 
 			m_GameState.eventUpdate += OnUpdate;
 		}
@@ -386,6 +397,28 @@ namespace Ja2
 			{
 				it.DoUpdate();
 			}
+		}
+
+		/// <summary>
+		/// On credits face text shown.
+		/// </summary>
+		/// <param name="Text">Text to show</param>
+		private void OnDisplayFaceEnter(string Text)
+		{
+			// Change the cursor
+			m_GameState.cursorManager.ChangeCursor(CursorType.CursorWww);
+
+			m_InfoComponent?.UpdateText(Text);
+			m_InfoComponent?.Show();
+		}
+
+		/// <summary>
+		/// On credits face text hide.
+		/// </summary>
+		private void OnDisplayFaceExit()
+		{
+			m_InfoComponent?.Hide();
+			m_GameState.cursorManager.ChangeCursor(CursorType.Generic);
 		}
 #endregion
 	}

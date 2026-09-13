@@ -1,7 +1,9 @@
+using System;
 using System.Threading;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 using Cysharp.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace Ja2
 	/// <summary>
 	/// Component handling the credits faces.
 	/// </summary>
-	public sealed class CreditsFaceComponent : MonoBehaviour
+	public sealed class CreditsFaceComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 #region Constants
 		/// <summary>
@@ -34,12 +36,6 @@ namespace Ja2
 
 #region Fields Component
 		/// <summary>
-		/// Button used for the face.
-		/// </summary>
-		[SerializeField]
-		private Button? m_Button;
-
-		/// <summary>
 		/// Image component used for the eyes.
 		/// </summary>
 		/// <returns></returns>
@@ -57,6 +53,13 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private float m_BlinkDelay;
+
+		/// <summary>
+		/// Additional info text.
+		/// </summary>
+		[Multiline(3)]
+		[SerializeField]
+		private string m_InfoText = string.Empty;
 #endregion
 
 #region Fields
@@ -91,6 +94,18 @@ namespace Ja2
 				m_ImageEyes!.sprite = m_SpriteEyes;
 			}
 		}
+#endregion
+
+#region Events
+		/// <summary>
+		/// Event raised, when the info text should be shown
+		/// </summary>
+		public event Action<string>? eventFaceInfoShow;
+
+		/// <summary>
+		/// Event raised, when the info text should be hidden.
+		/// </summary>
+		public event Action? eventFaceInfoHide;
 #endregion
 
 #region Methods Public
@@ -172,6 +187,26 @@ namespace Ja2
 			m_ImageEyes!.color =  new_color_reset;
 
 			m_LastBlink = 0;
+		}
+#endregion
+
+#region Slots
+		/// <summary>
+		/// On mouse enter.
+		/// </summary>
+		/// <param name="EventData">Event.</param>
+		public void OnPointerEnter(PointerEventData EventData)
+		{
+			eventFaceInfoShow?.Invoke(m_InfoText);
+		}
+
+		/// <summary>
+		/// On mouse exit.
+		/// </summary>
+		/// <param name="EventData">Event.</param>
+		public void OnPointerExit(PointerEventData EventData)
+		{
+			eventFaceInfoHide?.Invoke();
 		}
 #endregion
 	}
