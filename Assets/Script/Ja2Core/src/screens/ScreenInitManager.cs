@@ -25,6 +25,8 @@ namespace Ja2
 #region Messages
 		public void Start()
 		{
+			m_GameState.cursorManager.HideCursor();
+
 			// Start intro
 			m_GameState.screenManager.SetPendingScreen(m_IntroScreen!,
 				new GameScreenOptions()

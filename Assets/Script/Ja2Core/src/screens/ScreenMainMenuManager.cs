@@ -42,6 +42,9 @@ namespace Ja2
 #region Messages
 		public void Start()
 		{
+			m_GameState.cursorManager.ChangeCursor(CursorType.Generic);
+			m_GameState.cursorManager.ShowCursor();
+
 			// UI initalization
 			m_MainMenuView?.Initialize(
 				new UI.ViewModel.ViewModelMainMenu(this)
