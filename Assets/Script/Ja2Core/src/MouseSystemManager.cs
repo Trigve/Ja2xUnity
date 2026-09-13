@@ -210,12 +210,6 @@ namespace Ja2
 
 #region Fields
 		/// <summary>
-		/// All the mouse regions.
-		/// </summary>
-		[HistoricName("MSYS_RegList")]
-		private List<MouseRegion> m_MouseRegions = new ();
-
-		/// <summary>
 		/// Current region ID.
 		/// </summary>
 		[HistoricName("MSYS_CurrentID")]
@@ -268,18 +262,6 @@ namespace Ja2
 		/// </summary>
 		[HistoricName("MSYS_Mouse_Grabbed")]
 		private bool m_IsMouseGrabbed;
-
-		/// <summary>
-		/// ???
-		/// </summary>
-		[HistoricName("MSYS_GrabRegion")]
-		private MouseRegion? m_GrabRegion;
-
-		/// <summary>
-		/// Background region.
-		/// </summary>
-		[HistoricName("MSYS_SystemBaseRegion")]
-		private MouseRegion m_SystemBaseRegion;
 
 		/// <summary>
 		/// Flag used if some mouse region becomes dirty.
@@ -461,8 +443,6 @@ namespace Ja2
 		/// <inheritdoc />
 		protected override void DoInitialize(params object[] Params)
 		{
-			m_MouseRegions.Clear();
-
 			m_CurrentId = IdSystem;
 			m_ScanForId = false;
 
@@ -475,28 +455,6 @@ namespace Ja2
 			m_UseMouseHandlerHook = true;
 
 			m_IsMouseGrabbed = false;
-			m_GrabRegion = null;
-
-			// Setup the system's background region
-			m_SystemBaseRegion = new MouseRegion(IdSystem,
-				MouseRegion.PrioritySystem,
-				MouseRegion.RegionFlag.BaseRegion,
-				new RectInt(-32767,
-					-32767,
-					32767 * 2,
-					32767 * 2
-				),
-				new Vector2Int(),
-				new Vector2Int(),
-				0,
-				0,
-				0,
-				Array.Empty<int>()
-			);
-
-
-			// Add the base region to the list
-			m_MouseRegions.Add(m_SystemBaseRegion);
 		}
 #endregion
 	}
