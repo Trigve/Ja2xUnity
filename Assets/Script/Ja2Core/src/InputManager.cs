@@ -157,7 +157,7 @@ namespace Ja2
 
 			// Mouse position
 			mousePosition = Input.mousePosition;
-
+/*
 			// Check for keyboard
 			foreach(KeyCode key_code in KeyCodes)
 			{
@@ -166,7 +166,7 @@ namespace Ja2
 				else if(Input.GetKeyUp(key_code))
 					KeyUp(key_code);
 			}
-
+*/
 			// Mouse stuff
 			isMouseButtonLeftDown = Input.GetMouseButtonDown(0);
 			isMouseButtonRightDown = Input.GetMouseButtonDown(1);
