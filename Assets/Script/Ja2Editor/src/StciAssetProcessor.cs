@@ -51,6 +51,36 @@ namespace Ja2.Editor
 							stci_importer.assetType = atlas_section.assetType;
 					}
 				}
+				// Cursor assets
+				else if(assetPath.Contains(SettingsDev.instance.m_SlfExtractDir + "/cursors"))
+				{
+					// Imported first time
+					if(assetImporter.importSettingsMissing)
+					{
+						// Default asset type
+						stci_importer.assetType = StciImporter.AssetType.Cursor;
+
+						// Found the section and file
+						if(ImportDataSettings.instance.FindSection("cursors")?.FindFile(asset_file_name) is ImportDataFileCursor cursor_section)
+						{
+							stci_importer.isCursorAnimated = cursor_section.isCursorCursorAnimated;
+						}
+					}
+				}
+				// Laptop assets
+				else if(assetPath.Contains(SettingsDev.instance.m_SlfExtractDir + "/laptop"))
+				{
+					// Imported first time
+					if(assetImporter.importSettingsMissing)
+					{
+						// Found the section and file
+						if(ImportDataSettings.instance.FindSection("laptop")?.FindFile(asset_file_name) is ImportDataFileCursor cursor_section)
+						{
+							stci_importer.assetType =  cursor_section.assetType;
+							stci_importer.isCursorAnimated = cursor_section.isCursorCursorAnimated;
+						}
+					}
+				}
 			}
 		}
 

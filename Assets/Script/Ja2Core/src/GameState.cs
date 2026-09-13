@@ -54,6 +54,12 @@ namespace Ja2
 		private SoundManager? m_SoundManager;
 
 		/// <summary>
+		/// See <see cref="cursorManager"/>.
+		/// </summary>
+		[SerializeField]
+		private CursorManager? m_CursorManager;
+
+		/// <summary>
 		/// Camera prefab.
 		/// </summary>
 		[SerializeField]
@@ -108,6 +114,11 @@ namespace Ja2
 		/// Sound manager.
 		/// </summary>
 		public SoundManager soundManager => m_SoundManager;
+
+		/// <summary>
+		/// Cursor manager.
+		/// </summary>
+		public CursorManager cursorManager => m_CursorManager!;
 
 		/// <summary>
 		/// Get the new cancelation token.
@@ -180,6 +191,7 @@ namespace Ja2
 			Assert.IsNotNull(m_ScreenManager);
 			Assert.IsNotNull(m_AssetManager);
 			Assert.IsNotNull(m_SoundManager);
+			Assert.IsNotNull(m_CursorManager);
 
 			m_CancellationTokenSource = new CancellationTokenSource();
 
@@ -190,6 +202,7 @@ namespace Ja2
 			m_AssetManager!.Initialize();
 			m_ScreenManager!.Initialize(cancellationToken);
 			m_SoundManager!.Initialize();
+			m_CursorManager!.Initialize();
 
 			eventStart?.Invoke();
 		}
@@ -212,6 +225,7 @@ namespace Ja2
 		{
 			m_CancellationTokenSource?.Cancel();
 
+			m_CursorManager!.Deinitialize();
 			m_SoundManager!.Deinitialize();
 			m_MouseSystemManager!.Deinitialize();
 			m_RandomManager!.Deinitialize();

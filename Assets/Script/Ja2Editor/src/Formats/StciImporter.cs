@@ -34,6 +34,7 @@ namespace Ja2.Editor
 			Generic,
 			Font,
 			SpriteAtlas,
+			Cursor,
 		}
 #endregion
 
@@ -74,6 +75,12 @@ namespace Ja2.Editor
 		/// </summary>
 		[SerializeField]
 		private int m_DescentLine;
+
+		/// <summary>
+		/// See <see cref="isCursorAnimated"/>.
+		/// </summary>
+		[SerializeField]
+		private bool m_IsCursorAnimated;
 #endregion
 
 #region Fields Static
@@ -112,6 +119,15 @@ namespace Ja2.Editor
 		{
 			get => m_AssetType;
 			set => m_AssetType = value;
+		}
+
+		/// <summary>
+		/// Is cursor animated.
+		/// </summary>
+		public bool isCursorAnimated
+		{
+			get => m_IsCursorAnimated;
+			set => m_IsCursorAnimated = value;
 		}
 #endregion
 
@@ -461,6 +477,96 @@ namespace Ja2.Editor
 
 				// Main object is the font asset
 				Context.SetMainObject(ja2_font_asset);
+			}
+			else if(m_AssetType == AssetType.Cursor)
+			{
+				// Need to be forced for cursors
+				m_KeepTextureReadable = true;
+				m_FilterMode = FilterMode.Point;
+
+				// Parse the STCI as first
+				STCIData stci_data = STCIUtils.Load(
+					File.ReadAllBytes(Context.assetPath),
+					STCIUtils.ExtractionFlags.None
+				);
+
+				var textures = new List<Texture2D>();
+				var sprites = new List<Sprite>();
+
+				for(var i = 0; i < stci_data.m_SubImageData.Count; ++i)
+				{
+					// Sub-image data from which texture is generated
+					STCIData.SubImage sub_image = stci_data.m_SubImageData[i];
+
+					string texture_name = GenerateTextureName(i);
+
+					var texture = new Texture2D(sub_image.width,
+						sub_image.height,
+						stci_data.m_ImageFormat,
+						false
+					);
+					texture.filterMode = m_FilterMode;
+					texture.wrapMode = TextureWrapMode.Clamp;
+					texture.name = GenerateTextureName(i);
+					texture.alphaIsTransparency = true;
+
+					texture.SetPixels32(sub_image.texture);
+
+					texture.Apply(false,
+						!m_KeepTextureReadable
+					);
+
+					Context.AddObjectToAsset(texture_name,
+						texture,
+						texture
+					);
+
+					textures.Add(texture);
+
+					// JA2 stores a per-tile draw offset rather than a centered pivot, therfore conversion into the
+					// sprite pivot space is needed
+					var pivot = new Vector2(
+						0.5f - sub_image.offsetX / sub_image.width,
+						0.5f + sub_image.offsetY / sub_image.height
+					);
+
+					var sprite = Sprite.Create(
+						texture,
+						new Rect(0,
+							0,
+							sub_image.width,
+							sub_image.height
+						),
+						pivot,
+						m_PixelsPerUnit,
+						0,
+						SpriteMeshType.FullRect
+					);
+
+					sprite.name = string.Format("sprite_{0}",
+						i
+					);
+					sprites.Add(sprite);
+
+					// Register as sub-assets
+					Context.AddObjectToAsset(sprite.name,
+						sprite,
+						sprite.texture
+					);
+				}
+
+				// Main asset
+				var data = AssetCursorFile.Create(m_IsCursorAnimated,
+					textures.ToArray(),
+					sprites.ToArray()
+				);
+
+				Context.AddObjectToAsset("data",
+					data
+				);
+
+				// Main object is the data
+				Context.SetMainObject(data);
 			}
 			else
 			{

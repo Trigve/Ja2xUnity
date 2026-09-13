@@ -197,4 +197,39 @@ namespace Ja2.Editor
 		}
 #endregion
 	}
+
+	/// <summary>
+	/// Cusror file data.
+	/// </summary>
+	[Serializable]
+	public sealed class ImportDataFileCursor : ImportDataFile
+	{
+#region Fields
+		/// <summary>
+		/// See <see cref="isCursorCursorAnimated"/>.
+		/// </summary>
+		[SerializeField]
+		private bool m_IsCursorAnimated;
+
+		/// <summary>
+		/// If the cursor is animated, it is FPs.
+		/// </summary>
+		[SerializeField]
+		private float m_AnimFps;
+#endregion
+
+#region Properties
+		/// <summary>
+		/// Is animation cursor.
+		/// </summary>
+		public bool isCursorCursorAnimated => m_IsCursorAnimated;
+#endregion
+
+#region Construction
+		public ImportDataFileCursor()
+			: base(StciImporter.AssetType.Cursor)
+		{
+		}
+#endregion
+	}
 }
