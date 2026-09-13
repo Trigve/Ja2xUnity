@@ -76,6 +76,9 @@ crashlytics-build.properties
 
 GitExtensions.settings
 
+# Rider
+/.idea/.idea.Ja2Unity/.idea/indexLayout.xml
+
 /Assets/Plugins/Aspid
 /Assets/Data/Ja2/
 /Assets/StreamingAssets/
