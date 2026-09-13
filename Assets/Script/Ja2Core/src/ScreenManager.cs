@@ -76,7 +76,7 @@ namespace Ja2
 #endif
 #endregion
 
-#region Methods Public
+#region Methods Private
 		/// <summary>
 		/// Set the new pending screen.
 		/// </summary>
@@ -92,7 +92,7 @@ namespace Ja2
 		/// <summary>
 		/// Update the screen manager.
 		/// </summary>
-		public void UpdateManager()
+		internal void UpdateManager()
 		{
 			// Task already in progress
 			if(m_Task.HasValue)
