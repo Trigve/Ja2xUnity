@@ -31,9 +31,9 @@ from the original content. Next are the steps for setting up the enviroment and 
    - `Bundle export dir` - Directory, where the asset bundles will be exported. Default is `Assets/StreamingAssets/bundles`
    - `Use Asset Bundles` - If chcecked, even in the editor, the asset bundles will be used (asset bundles must be built
 already to be able to use this option)
-![](doc/Ja2DevSettings.png)
+![](doc/img/Ja2DevSettings.png)
 
-![](doc/Ja2DevSettingsPanel.png)
+![](doc/img/Ja2DevSettingsPanel.png)
 
 1. In the menu click the `JA2` -> `Extract SLF`. The Unity will extract the files from all the `.slf` in the specified
 paths. After the extraction is done, you can review the assets if everything was extracted correctly. The extracted
@@ -44,7 +44,7 @@ created and various other options. You must also set the player options in proje
 (for instance IL2Cpp VS Mono):
    - `Debug build` - Build the "debug" asset bundles with no compression
 
-![](doc/ExtractBundles.png)
+![](doc/img/ExtractBundles.png)
 
 1. Copy the generated `*.bundle` files to the `StreamingAssets` dir of the player and game now should run with the
 assets from the asset bundles. You could download the current version of the player from the releases.
