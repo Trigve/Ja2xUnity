@@ -203,21 +203,9 @@ namespace Ja2
 				it.eventFaceInfoShow += OnDisplayFaceEnter;
 				it.eventFaceInfoHide += OnDisplayFaceExit;
 			}
-
-			m_GameState.eventUpdate += OnUpdate;
 		}
 
-		public void OnDestroy()
-		{
-			m_GameState.eventUpdate -= OnUpdate;
-		}
-#endregion
-
-#region Slots
-		/// <summary>
-		/// Update is called on each frame.
-		/// </summary>
-		private void OnUpdate()
+		public void Update()
 		{
 			// Pause handling
 			if(m_GameState.inputManager.IsKeyDown(KeyCode.Space) || m_GameState.inputManager.IsKeyDown(KeyCode.Pause))
@@ -251,8 +239,8 @@ namespace Ja2
 					}
 				);
 
-				// Don't run the update anymore
-				m_GameState.eventUpdate -= OnUpdate;
+				// Pause, so the Update isn't run anymore
+				m_IsPaused = true;
 
 				return;
 			}

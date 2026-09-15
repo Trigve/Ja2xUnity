@@ -50,18 +50,33 @@ namespace Ja2
 				new UI.ViewModel.ViewModelMainMenu(this)
 			);
 
-			m_GameState.eventUpdate += OnUpdate;
-
 			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
 
 			// Start the main menu music, if not already started
 			m_GameState.soundManager.AddMusicSource(m_Music!);
 		}
 
+		public void Update()
+		{
+			// New game
+			if(m_GameState.inputManager.IsKeyDown(KeyCode.N))
+				StartNewGame();
+			// Saved game
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.C))
+				ContinueSaveGame();
+			// Preferences
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.O))
+				ShowPreferences();
+			// Credits
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.S))
+				ShowCredits();
+			// Quit game
+			else if(m_GameState.inputManager.IsKeyDown(KeyCode.Q))
+				Quit();
+		}
+
 		public void OnDestroy()
 		{
-			m_GameState.eventUpdate -= OnUpdate;
-
 			m_MainMenuView?.Deinitialize();
 		}
 #endregion
@@ -98,30 +113,6 @@ namespace Ja2
 		public void Quit()
 		{
 			Application.Quit();
-		}
-#endregion
-
-#region Slots
-		/// <summary>
-		/// Update is called on each frame.
-		/// </summary>
-		private void OnUpdate()
-		{
-			// New game
-			if(m_GameState.inputManager.IsKeyDown(KeyCode.N))
-				StartNewGame();
-			// Saved game
-			else if(m_GameState.inputManager.IsKeyDown(KeyCode.C))
-				ContinueSaveGame();
-			// Preferences
-			else if(m_GameState.inputManager.IsKeyDown(KeyCode.O))
-				ShowPreferences();
-			// Credits
-			else if(m_GameState.inputManager.IsKeyDown(KeyCode.S))
-				ShowCredits();
-			// Quit game
-			else if(m_GameState.inputManager.IsKeyDown(KeyCode.Q))
-				Quit();
 		}
 #endregion
 	}
