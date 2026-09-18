@@ -109,6 +109,13 @@ namespace Ja2
 		protected virtual void DoInitializeEditor()
 		{
 		}
+
+		/// <summary>
+		/// Override in derived class to do some editor deinitilization.
+		/// </summary>
+		protected virtual void DoDeinitializeEditor()
+		{
+		}
 #endif
 
 		/// <summary>
@@ -229,8 +236,15 @@ namespace Ja2
 			);
 #endif
 		}
-
 #if UNITY_EDITOR
+		/// <summary>
+		/// Deinitialize the instance when run in the editor.
+		/// </summary>
+		private void DeinitializeEditor()
+		{
+			DoDeinitializeEditor();
+		}
+
 		private void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange StateChange)
 		{
 			if(StateChange == UnityEditor.PlayModeStateChange.ExitingEditMode)
@@ -240,7 +254,11 @@ namespace Ja2
 				Deinitialize();
 				m_IsPlayMode = false;
 			}
-
+			else if(StateChange == UnityEditor.PlayModeStateChange.EnteredEditMode)
+			{
+				Assert.IsFalse(m_IsPlayMode);
+				DeinitializeEditor();
+			}
 		}
 #endif
 #endregion
