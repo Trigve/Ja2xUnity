@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 namespace Ja2
 {
@@ -82,6 +84,11 @@ namespace Ja2
 		/// Active camera backing field.
 		/// </summary>
 		private Camera? m_ActiveCamera;
+
+		/// <summary>
+		/// Scene managers associated for the given scens.
+		/// </summary>
+		private Dictionary<Scene, SceneManagerSingleton>? m_SceneManagers;
 #endregion
 
 #region Properties
@@ -167,6 +174,35 @@ namespace Ja2
 
 #region Methods Public
 		/// <summary>
+		/// Associate the given scene manager for the given scene.
+		/// </summary>
+		/// <param name="SceneActive">Scene, for which the scene manager is set.</param>
+		/// <param name="Manager">Scene manager to set.</param>
+		public void SetSceneManager(Scene SceneActive, SceneManagerSingleton Manager)
+		{
+			m_SceneManagers![SceneActive] = Manager;
+		}
+
+		/// <summary>
+		/// Get the scene manager for the given scene.
+		/// </summary>
+		/// <param name="SceneActive">Scene for which the scene manager is gathered.</param>
+		/// <returns><see cref="SceneManagerSingleton"/> for the given scene.</returns>
+		public SceneManagerSingleton SceneManagerForScene(Scene SceneActive)
+		{
+			return m_SceneManagers![SceneActive];
+		}
+
+		/// <summary>
+		/// Remove the scene manager for the given scene.
+		/// </summary>
+		/// <param name="SceneActive">Scene, for which to remove scene manager.</param>
+		public void RemoveSceneManager(Scene SceneActive)
+		{
+			m_SceneManagers!.Remove(SceneActive);
+		}
+
+		/// <summary>
 		/// Update the game state.
 		/// </summary>
 		protected override void DoUpdate()
@@ -193,6 +229,7 @@ namespace Ja2
 			Assert.IsNotNull(m_SoundManager);
 			Assert.IsNotNull(m_CursorManager);
 
+			m_SceneManagers = new Dictionary<Scene, SceneManagerSingleton>();
 			m_CancellationTokenSource = new CancellationTokenSource();
 
 			m_MouseSystemManager!.Initialize();
@@ -252,6 +289,12 @@ namespace Ja2
 			originalScene = ScreenManager.FindScreenBySceneName(
 				UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name
 			);
+		}
+
+		/// <inheritdoc />
+		protected override void DoDeinitializeEditor()
+		{
+			m_SceneManagers = null;
 		}
 #endif
 #endregion
