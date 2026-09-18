@@ -30,10 +30,19 @@ namespace Ja2
 		private bool m_IsActiveLoop;
 #endregion
 
+#region Properties
+		/// <summary>
+		/// Instance.
+		/// </summary>
+		public static T? instance { get; private set; }
+#endregion
+
 #region Messages
 		protected override void OnEnable()
 		{
 			base.OnEnable();
+
+			instance = this as T;
 
 			if(Application.isPlaying)
 				m_IsPlayMode = true;
@@ -59,6 +68,8 @@ namespace Ja2
 			// Only in play mode
 			if(m_IsPlayMode)
 				Deinitialize();
+
+			instance = null;
 		}
 #endregion
 
