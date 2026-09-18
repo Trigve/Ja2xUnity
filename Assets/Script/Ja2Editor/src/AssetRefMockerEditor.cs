@@ -57,4 +57,12 @@ namespace Ja2.Editor
 	public class AssetRefMockerCreditsFaceEditor : AssetRefMockerBaseEditor
 	{
 	}
+
+	/// <summary>
+	/// Editor for <see cref="UI.AssetRefMockerButton5State"/>.
+	/// </summary>
+	[CustomEditor(typeof(UI.AssetRefMockerButton5State))]
+	public class AssetRefMockerButton5StateEditor : AssetRefMockerBaseEditor
+	{
+	}
 }
