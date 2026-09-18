@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using Cysharp.Threading.Tasks;
 
@@ -13,76 +12,38 @@ namespace Ja2
 	/// <summary>
 	/// Helper class for managing the <see cref="AssetRefMocker{T}"/>.
 	/// </summary>
-	public sealed class AssetRefMockerManager : MonoBehaviour
+	public sealed class AssetRefMockerManager : MonoBehaviour, IAssetRefMockRegistry
 	{
-#region Fields Component
+#region Fields
 		/// <summary>
 		/// All the mock data.
 		/// </summary>
-		[SerializeField]
 		private List<AssetRefMockerInstance> m_AssetMocks = new();
 #endregion
 
 #region Methods Public
-#if UNITY_EDITOR
 		/// <summary>
-		/// Add new ref mocker to the manager. Only used in the editor.
+		/// Register new ref mocker to the manager.
 		/// </summary>
 		/// <param name="MockerComponent">Component to add to the asset list.</param>
-		public void AddRefMocker(IAssetRefMocker MockerComponent)
+		public void RegisterAssetRefMocker(AssetRefMockerBase MockerComponent)
 		{
-			UnityEditor.Undo.RecordObject(MockerComponent.componentsModified,
-				"Clear component data "
+#if UNITY_EDITOR
+			UnityEditor.Undo.RecordObject(this,
+				"Add mocker to manager"
 			);
-
-			var asset_mock = MockerComponent.GatherAssets();
-
-			if(asset_mock == null)
-			{
-				Debug.LogWarningFormat("{0}: Component not set for the '{1}'",
-					nameof(AssetRefMockerManager),
-					((Component)MockerComponent).gameObject
-				);
-
-				return;
-			}
-
-			// Be sure it isn't already present
-			if(m_AssetMocks.Any(Value => Value.m_Component == (Component)MockerComponent))
-				return;
-
-			var asset_refs = new List<AssetRef>();
-
-			// Load all the asset refs
-			foreach(Object? it_asset in asset_mock.Value.m_Assets)
-			{
-				var asset_ref = new AssetRef();
-
-				// Only if there is some valid asset
-				if(it_asset != null)
-				{
-					var asset_ref_found = EditorAssetManager.instance.GetAssetRefFromAsset(it_asset);
-
-					// \FIXME Asset ref may not be valid when???
-					if(asset_ref_found.HasValue)
-						asset_ref = asset_ref_found.Value;
-				}
-
-				asset_refs.Add(asset_ref);
-			}
 
 			// Need to mark it as modified, otherwise, it wouldn't be saved to scene, see
 			// https://discussions.unity.com/t/updating-prefab-variable-via-script-doesnt-save-override/727795/5
 			UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(MockerComponent.componentsModified);
+#endif
 
 			// Add new item
 			m_AssetMocks.Add(
-				new AssetRefMockerInstance(MockerComponent,
-					asset_refs.ToArray()
-				)
+				new AssetRefMockerInstance(MockerComponent)
 			);
 		}
-#endif
+
 		/// <summary>
 		/// Load all the assets from the AssetRefs.
 		/// </summary>
@@ -97,9 +58,9 @@ namespace Ja2
 				asset_list.Clear();
 
 				// Process all the assets
-				for(var i = 0; i < it.m_AssetRefs.Length; ++i)
+				var i = 0;
+				foreach(AssetRef it_ref in it.component.assetRefs)
 				{
-					AssetRef it_ref = it.m_AssetRefs[i];
 					// Find the right type
 					Type asset_type = it.component.assetType.Length == 1 ? it.component.assetType[0] : it.component.assetType[i];
 
@@ -113,6 +74,8 @@ namespace Ja2
 					}
 
 					asset_list.Add(asset_loaded);
+
+					++i;
 				}
 
 				it.component.LoadAssets(
@@ -137,9 +100,9 @@ namespace Ja2
 				asset_list.Clear();
 
 				// Process all the assets
-				for(var i = 0; i < it.m_AssetRefs.Length; ++i)
+				var i = 0;
+				foreach(var it_ref in it.component.assetRefs)
 				{
-					AssetRef it_ref = it.m_AssetRefs[i];
 					// Find the right type
 					Type asset_type = it.component.assetType.Length == 1 ? it.component.assetType[0] : it.component.assetType[i];
 
@@ -153,6 +116,8 @@ namespace Ja2
 					}
 
 					asset_list.Add(asset_loaded);
+
+					++i;
 				}
 
 				it.component.LoadAssets(
@@ -161,6 +126,16 @@ namespace Ja2
 					)
 				);
 			}
+		}
+#endregion
+
+#region Construction
+		/// <summary>
+		/// Initialization.
+		/// </summary>
+		public void Initialize()
+		{
+			m_AssetMocks =  new List<AssetRefMockerInstance>();
 		}
 #endregion
 	}
@@ -173,45 +148,27 @@ namespace Ja2
 	{
 #region Fields
 		/// <summary>
-		/// Version of the data. Should be updated on the field changes.
-		/// </summary>
-		[SerializeField]
-		public uint m_Version;
-
-		/// <summary>
 		/// Component instance.
 		/// </summary>
 		[SerializeField]
 		public Component m_Component;
-
-		/// <summary>
-		/// AssetRefs. We cannot use Nullable here, because Unity doesn't support serialization
-		/// of the Nullable structs.
-		/// </summary>
-		[SerializeField]
-		public AssetRef[] m_AssetRefs;
 #endregion
 
 #region Properties
 		/// <summary>
 		/// Automatic casting to the interface.
 		/// </summary>
-		public IAssetRefMocker component => (IAssetRefMocker)m_Component;
+		public AssetRefMockerBase component => (AssetRefMockerBase)m_Component;
 #endregion
 
 #region Construction
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="Component">Componen used for the given data.</param>
-		/// <param name="Data">Asset data.</param>
-		public AssetRefMockerInstance(IAssetRefMocker Component, AssetRef[] Data)
+		/// <param name="Component">Component used for the given data.</param>
+		public AssetRefMockerInstance(AssetRefMockerBase Component)
 		{
-			// The most recent one
-			m_Version = 1;
-
-			m_Component = (Component)Component;
-			m_AssetRefs = Data;
+			m_Component = Component;
 		}
 #endregion
 	}

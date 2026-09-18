@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 namespace Ja2
@@ -9,9 +7,9 @@ namespace Ja2
 	/// only "mocks" are saved, not actual assets. Then, during the runtime, the real assets are loaded from the
 	/// mocks.
 	/// </summary>
-	public abstract class AssetRefMocker<T> : MonoBehaviour, IAssetRefMocker where T : Component
+	public abstract class AssetRefMocker<T> : AssetRefMockerBase where T : Component
 	{
-#region Fields component
+#region Fields Component
 		/// <summary>
 		/// Component.
 		/// </summary>
@@ -20,94 +18,20 @@ namespace Ja2
 #endregion
 
 #region Properties
-		/// <inheritdoc />
-		public abstract Type[] assetType { get; }
-
-#if UNITY_EDITOR
-		/// <inheritdoc />
-		public Component componentsModified => m_Component!;
-#endif
-
+		/// <summary>
+		/// Typed component.
+		/// </summary>
+		protected override Component? component => m_Component;
 #endregion
 
-#region Messages
-		public void Awake()
+#region Methods Private
+		/// <inheritdoc/>
+		protected override void DoAwake()
 		{
 			// Try to find component, if not assigned already
 			if(m_Component == null)
 				m_Component = GetComponent<T>();
 		}
-#endregion
-
-#region Methods Public
-		/// <inheritdoc />
-		public void LoadAssets(AssetMockData MockData)
-		{
-			if(m_Component == null)
-			{
-				Debug.LogErrorFormat("{0}: Component is Null",
-					nameof(AssetRefMocker<T>)
-				);
-
-				return;
-			}
-
-			DoLoadAssets(MockData);
-		}
-
-#if UNITY_EDITOR
-		/// <inheritdoc />
-		public AssetMockData? GatherAssets()
-		{
-			if(m_Component == null)
-			{
-				Debug.LogErrorFormat("{0}: Component is Null",
-					nameof(AssetRefMocker<T>)
-				);
-
-				return null;
-			}
-
-			return DoGatherAssets();
-		}
-
-		/// <inheritdoc />
-		public void ResetAssets()
-		{
-			if(m_Component == null)
-			{
-				Debug.LogErrorFormat("{0}: Component is Null",
-					nameof(AssetRefMocker<T>)
-				);
-
-				return;
-			}
-
-			DoResetAssets();
-		}
-#endif
-
-#endregion
-
-#region Methods Private
-		/// <summary>
-		/// Implementation.
-		/// </summary>
-		protected abstract void DoLoadAssets(AssetMockData MockData);
-
-#if UNITY_EDITOR
-		/// <summary>
-		/// Implementation.
-		/// </summary>
-		/// <returns></returns>
-		protected abstract AssetMockData DoGatherAssets();
-
-		/// <summary>
-		/// Implementation.
-		/// </summary>
-		protected abstract void DoResetAssets();
-#endif
-
 #endregion
 	}
 }

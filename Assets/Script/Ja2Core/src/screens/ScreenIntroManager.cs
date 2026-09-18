@@ -1,14 +1,13 @@
 using System;
 using System.Threading;
 
-using Cysharp.Threading.Tasks;
-
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Video;
 
-using Ja2.Extensions.UnityComponentAsync;
+using Cysharp.Threading.Tasks;
 
-using UnityEngine.Assertions;
+using Ja2.Extensions.UnityComponentAsync;
 
 namespace Ja2
 {
@@ -16,15 +15,9 @@ namespace Ja2
 	/// Intro screen game manager.
 	/// </summary>
 	[HistoricName("INTRO_SCREEN")]
-	public sealed class ScreenIntroManager : MonoBehaviour
+	public sealed class ScreenIntroManager : SceneManagerSingleton
 	{
 #region Fields Component
-		/// <summary>
-		/// Game state.
-		/// </summary>
-		[SerializeField]
-		private GameState m_GameState = null!;
-
 		/// <summary>
 		/// Mock manager.
 		/// </summary>
@@ -51,6 +44,9 @@ namespace Ja2
 #endregion
 
 #region Properties
+		/// <inheritdoc/>
+		public override IAssetRefMockRegistry assetRefMockRegistry => m_MockManager!;
+
 		/// <summary>
 		/// All the video clips to play.
 		/// </summary>
@@ -105,6 +101,14 @@ namespace Ja2
 					}
 				);
 			}
+		}
+#endregion
+
+#region Methods Private
+		/// <inheritdoc/>
+		protected override void DoAwake()
+		{
+			m_MockManager!.Initialize();
 		}
 #endregion
 	}

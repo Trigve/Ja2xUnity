@@ -13,7 +13,7 @@ namespace Ja2
 	/// <summary>
 	/// Screen manager for the main menu's credits
 	/// </summary>
-	public sealed class ScreenMainMenuCreditsManager : MonoBehaviour
+	public sealed class ScreenMainMenuCreditsManager : SceneManagerSingleton
 	{
 #region Constants
 		/// <summary>
@@ -38,12 +38,6 @@ namespace Ja2
 #endregion
 
 #region Fields Component
-		/// <summary>
-		/// Game state.
-		/// </summary>
-		[SerializeField]
-		private GameState m_GameState = null!;
-
 		/// <summary>
 		/// Asset ref mocker manager.
 		/// </summary>
@@ -168,6 +162,11 @@ namespace Ja2
 		/// All the face components.
 		/// </summary>
 		private CreditsFaceComponent[] m_Faces = Array.Empty<CreditsFaceComponent>();
+#endregion
+
+#region Properties
+		/// <inheritdoc/>
+		public override IAssetRefMockRegistry assetRefMockRegistry => m_AssetRefMocker!;
 #endregion
 
 #region Messages
@@ -408,6 +407,14 @@ namespace Ja2
 		{
 			m_InfoComponent?.Hide();
 			m_GameState.cursorManager.ChangeCursor(CursorType.Generic);
+		}
+#endregion
+
+#region Methods Private
+		/// <inheritdoc/>
+		protected override void DoAwake()
+		{
+			m_AssetRefMocker!.Initialize();
 		}
 #endregion
 	}

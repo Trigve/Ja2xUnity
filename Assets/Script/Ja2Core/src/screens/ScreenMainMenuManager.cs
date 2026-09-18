@@ -5,15 +5,9 @@ namespace Ja2
 	/// <summary>
 	/// Main menu screen manager.
 	/// </summary>
-	public sealed class ScreenMainMenuManager :  MonoBehaviour, IModelMainMenu
+	public sealed class ScreenMainMenuManager :  SceneManagerSingleton, IModelMainMenu
 	{
 #region Fields Component
-		/// <summary>
-		/// Game state.
-		/// </summary>
-		[SerializeField]
-		private GameState m_GameState = null!;
-
 		/// <summary>
 		/// Asset ref mocker.
 		/// </summary>
@@ -37,6 +31,11 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameScreen? m_CreditsScreen;
+#endregion
+
+#region Properties
+		/// <inheritdoc/>
+		public override IAssetRefMockRegistry assetRefMockRegistry => m_AssetRefMocker!;
 #endregion
 
 #region Messages
@@ -74,11 +73,6 @@ namespace Ja2
 			else if(m_GameState.inputManager.IsKeyDown(KeyCode.Q))
 				Quit();
 		}
-
-		public void OnDestroy()
-		{
-			m_MainMenuView?.Deinitialize();
-		}
 #endregion
 
 #region Methods Public
@@ -113,6 +107,20 @@ namespace Ja2
 		public void Quit()
 		{
 			Application.Quit();
+		}
+#endregion
+
+#region Methods Private
+		/// <inheritdoc/>
+		protected override void DoAwake()
+		{
+			m_AssetRefMocker!.Initialize();
+		}
+
+		/// <inheritdoc/>
+		protected override void DoOnDestroy()
+		{
+			m_MainMenuView?.Deinitialize();
 		}
 #endregion
 	}

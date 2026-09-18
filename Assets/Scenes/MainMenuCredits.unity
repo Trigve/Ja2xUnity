@@ -167,6 +167,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -20
       objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_30
+      objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
       value: 'Scot Loving
@@ -322,100 +334,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetMocks:
-  - m_Version: 1
-    m_Component: {fileID: 234132439}
-    m_AssetRefs:
-    - m_Bundle: '[2751180143]'
-      m_AssetPath: credits.asset
-    - m_Bundle: '[3618217556]'
-      m_AssetPath: font14arial.asset
-    - m_Bundle: '[3618217556]'
-      m_AssetPath: font12arial.asset
-  - m_Version: 1
-    m_Component: {fileID: 656219889}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credits.sti@sprite_0
-  - m_Version: 1
-    m_Component: {fileID: 2548147372828705124}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_0
-  - m_Version: 1
-    m_Component: {fileID: 1185651259}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_3
-  - m_Version: 1
-    m_Component: {fileID: 658555496}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_6
-  - m_Version: 1
-    m_Component: {fileID: 988819959}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_9
-  - m_Version: 1
-    m_Component: {fileID: 2088507403}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_12
-  - m_Version: 1
-    m_Component: {fileID: 1867080371}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_15
-  - m_Version: 1
-    m_Component: {fileID: 659237459}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_18
-  - m_Version: 1
-    m_Component: {fileID: 1431528992}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_21
-  - m_Version: 1
-    m_Component: {fileID: 262060493}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_24
-  - m_Version: 1
-    m_Component: {fileID: 1226054934}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_27
-  - m_Version: 1
-    m_Component: {fileID: 110088553}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_30
-  - m_Version: 1
-    m_Component: {fileID: 487487259}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_33
-  - m_Version: 1
-    m_Component: {fileID: 1679029310}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_36
-  - m_Version: 1
-    m_Component: {fileID: 562157702}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_39
-  - m_Version: 1
-    m_Component: {fileID: 1546681856}
-    m_AssetRefs:
-    - m_Bundle: '[1702164613]'
-      m_AssetPath: credit faces.sti@sprite_42
-  - m_Version: 1
-    m_Component: {fileID: 1640028152}
-    m_AssetRefs:
-    - m_Bundle: '[3618217556]'
-      m_AssetPath: font12arial.asset
+  - m_Component: {fileID: 234132439}
+  - m_Component: {fileID: 656219889}
+  - m_Component: {fileID: 2548147372828705124}
+  - m_Component: {fileID: 1185651259}
+  - m_Component: {fileID: 658555496}
+  - m_Component: {fileID: 988819959}
+  - m_Component: {fileID: 2088507403}
+  - m_Component: {fileID: 1867080371}
+  - m_Component: {fileID: 659237459}
+  - m_Component: {fileID: 1431528992}
+  - m_Component: {fileID: 262060493}
+  - m_Component: {fileID: 1226054934}
+  - m_Component: {fileID: 110088553}
+  - m_Component: {fileID: 487487259}
+  - m_Component: {fileID: 1679029310}
+  - m_Component: {fileID: 562157702}
+  - m_Component: {fileID: 1546681856}
+  - m_Component: {fileID: 1640028152}
 --- !u!114 &234132437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,6 +400,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539b28d65a03422ba6c7ea8280c5b29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_AssetRefs:
+  - m_Bundle: '[2751180143]'
+    m_AssetPath: credits.asset
+  - m_Bundle: '[3618217556]'
+    m_AssetPath: font14arial.asset
+  - m_Bundle: '[3618217556]'
+    m_AssetPath: font12arial.asset
   m_Component: {fileID: 234132440}
 --- !u!114 &234132440
 MonoBehaviour:
@@ -527,6 +470,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_24
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -732,6 +687,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -18
       objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_33
+      objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
       value: 'Andrew "Big Cheese" Emmons
@@ -901,6 +868,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_39
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -1116,9 +1095,21 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4662550159470387268, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4662550159470387268, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4662550159470387268, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credits.sti@sprite_0
+      objectReference: {fileID: 0}
     - target: {fileID: 5780754860927641074, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
       propertyPath: m_Name
-      value: Image
+      value: Background
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1204,6 +1195,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_18
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -1374,6 +1377,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_9
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -1580,6 +1595,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -16
       objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_3
+      objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
       value: 'Shaun Lyng
@@ -1748,6 +1775,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_27
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -1918,6 +1957,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_21
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -2206,6 +2257,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -22
       objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_42
+      objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
       value: 'Joey "Joeker" Whelan
@@ -2380,6 +2443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff0d7a3b74d432ab62bdc43b745e52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_AssetRefs:
+  - m_Bundle: '[3618217556]'
+    m_AssetPath: font12arial.asset
   m_Component: {fileID: 1640028153}
 --- !u!114 &1640028153
 MonoBehaviour:
@@ -2558,6 +2624,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -19
       objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_36
+      objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
       value: 'Dave "The Feral" French
@@ -2727,6 +2805,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_15
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -2898,6 +2988,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -19
       objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_6
+      objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
       value: "Kris M\xE4rnes\nStrategic Systems & Editor Programmer\n(\"It's done.
@@ -3047,6 +3149,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_12
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText
@@ -3217,6 +3331,18 @@ PrefabInstance:
     - target: {fileID: 1732697143812129240, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_Bundle
+      value: '[1702164613]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109049285251468213, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
+      propertyPath: m_AssetRefs.Array.data[0].m_AssetPath
+      value: credit faces.sti@sprite_0
       objectReference: {fileID: 0}
     - target: {fileID: 3085192823049688498, guid: 5010c7647c896134bb8fae51016c4110, type: 3}
       propertyPath: m_InfoText

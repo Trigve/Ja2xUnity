@@ -6,7 +6,6 @@ using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 using Object = UnityEngine.Object;
@@ -19,20 +18,6 @@ namespace Ja2.Editor
 	[CustomEditor(typeof(AssetRefMockerManager))]
 	public sealed class AssetRefMockerManagerEditor : UnityEditor.Editor
 	{
-#region Fields
-		/// <summary>
-		/// Assets.
-		/// </summary>
-		private SerializedProperty m_AssetMocks = null!;
-#endregion
-
-#region Messages
-		private void OnEnable()
-		{
-			m_AssetMocks = serializedObject.FindProperty(nameof(m_AssetMocks));
-		}
-#endregion
-
 #region Methods Public
 		/// <inheritdoc />
 		public override VisualElement CreateInspectorGUI()
@@ -56,11 +41,6 @@ namespace Ja2.Editor
 				}
 			);
 
-			var gather_button = new Button(OnGatherAllAssets);
-			gather_button.text = "Gather all assets";
-
-			root.Add(gather_button);
-
 			var load_button = new Button(OnLoadAllAssets);
 			load_button.text = "Load all assets";
 
@@ -77,66 +57,23 @@ namespace Ja2.Editor
 
 #region Slots
 		/// <summary>
-		/// "Gather all asset" button handler.
-		/// </summary>
-		private void OnGatherAllAssets()
-		{
-			serializedObject.Update();
-
-			// Clear the data
-			m_AssetMocks.ClearArray();
-			serializedObject.ApplyModifiedProperties();
-
-			var root_objects = new Queue<GameObject>(
-				SceneManager.GetActiveScene().GetRootGameObjects()
-			);
-
-			while(root_objects.Count > 0)
-			{
-				GameObject top_go = root_objects.Dequeue();
-
-				// Get all the children
-				foreach(Transform it in top_go.transform)
-					root_objects.Enqueue(it.gameObject);
-
-				// Process all the components in the current GO
-				foreach(Component it in top_go.GetComponents<Component>())
-				{
-					if(it is IAssetRefMocker mocker_component)
-						((AssetRefMockerManager)serializedObject.targetObject).AddRefMocker(mocker_component);
-				}
-
-				serializedObject.Update();
-			}
-		}
-
-		/// <summary>
 		/// "Load all assets" button handler.
 		/// </summary>
 		private void OnLoadAllAssets()
 		{
-			for(var i = 0; i < m_AssetMocks.arraySize; ++i)
+			// Get all the mocker components
+			foreach(AssetRefMockerBase it in FindObjectsByType<AssetRefMockerBase>(FindObjectsInactive.Include, FindObjectsSortMode.None))
 			{
-				SerializedProperty asset_mock = m_AssetMocks.GetArrayElementAtIndex(i);
-
-				var mocker_component = (IAssetRefMocker)asset_mock.FindPropertyRelative(
-					nameof(AssetRefMockerInstance.m_Component)
-				).boxedValue;
-
-				SerializedProperty asset_refs = asset_mock.FindPropertyRelative(
-					nameof(AssetRefMockerInstance.m_AssetRefs)
-				);
-
 				var asset_list = new List<Object?>();
 
-				for(var j = 0; j < asset_refs.arraySize; ++j)
+				var j = 0;
+				foreach(AssetRef asset_ref in it.assetRefs)
 				{
 					// Find the right type
-					Type asset_type = mocker_component.assetType.Length == 1 ? mocker_component.assetType[0] : mocker_component.assetType[j];
+					Type asset_type = it.assetType.Length == 1 ? it.assetType[0] : it.assetType[j];
 
 					Object? asset_loaded = null;
 
-					var asset_ref = (AssetRef)asset_refs.GetArrayElementAtIndex(j).boxedValue;
 					if(asset_ref.isValid)
 					{
 						asset_loaded = EditorAssetManager.instance.LoadAsset(asset_ref,
@@ -145,9 +82,11 @@ namespace Ja2.Editor
 					}
 
 					asset_list.Add(asset_loaded);
+
+					++j;
 				}
 
-				mocker_component.LoadAssets(
+				it.LoadAssets(
 					new AssetMockData(
 						asset_list.ToArray()
 					)
@@ -160,16 +99,9 @@ namespace Ja2.Editor
 		/// </summary>
 		private void OnResetAllAssets()
 		{
-			for(var i = 0; i < m_AssetMocks.arraySize; ++i)
-			{
-				SerializedProperty asset_mock = m_AssetMocks.GetArrayElementAtIndex(i);
-
-				var mocker_component = (IAssetRefMocker)asset_mock.FindPropertyRelative(
-					nameof(AssetRefMockerInstance.m_Component)
-				).boxedValue;
-
-				mocker_component.ResetAssets();
-			}
+			// Get all the mocker components
+			foreach(AssetRefMockerBase it in FindObjectsByType<AssetRefMockerBase>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+				it.ResetAssets();
 
 			// Mark the scene dirty, so it is saved if needed
 			EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());

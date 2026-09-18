@@ -250,6 +250,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cc3ed0161f4d44ad693ca95b602b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_AssetRefs:
+  - m_Bundle: '[1507694452]'
+    m_AssetPath: splashscreen.mp4
+  - m_Bundle: '[1507694452]'
+    m_AssetPath: talonsoftid_endhold.mp4
   m_Component: {fileID: 574964787}
 --- !u!114 &574964790
 MonoBehaviour:
@@ -264,13 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetMocks:
-  - m_Version: 1
-    m_Component: {fileID: 574964789}
-    m_AssetRefs:
-    - m_Bundle: '[1507694452]'
-      m_AssetPath: splashscreen.mp4
-    - m_Bundle: '[1507694452]'
-      m_AssetPath: talonsoftid_endhold.mp4
+  - m_Component: {fileID: 574964789}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
