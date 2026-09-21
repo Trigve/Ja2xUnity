@@ -16,6 +16,16 @@ namespace Ja2
 	{
 #region Fields
 		/// <summary>
+		/// True, if the registered assets were loaded.
+		/// </summary>
+		private bool m_AssetLoaded;
+
+		/// <summary>
+		/// Asset manager.
+		/// </summary>
+		private AssetManager m_AssetManager = null!;
+
+		/// <summary>
 		/// All the mock data.
 		/// </summary>
 		private List<AssetRefMockerInstance> m_AssetMocks = new();
@@ -32,13 +42,18 @@ namespace Ja2
 			m_AssetMocks.Add(
 				new AssetRefMockerInstance(MockerComponent)
 			);
+
+			// If it is called AFTER the initial loading, load on demenad
+			if(m_AssetLoaded)
+			{
+				LoadAssets();
+			}
 		}
 
 		/// <summary>
 		/// Load all the assets from the AssetRefs.
 		/// </summary>
-		/// <param name="Manager"></param>
-		public void LoadAssets(AssetManager Manager)
+		public void LoadAssets()
 		{
 			var asset_list = new List<Object?>();
 
@@ -58,7 +73,7 @@ namespace Ja2
 
 					if(it_ref.isValid)
 					{
-						asset_loaded = Manager.LoadAsset(it_ref,
+						asset_loaded = m_AssetManager.LoadAsset(it_ref,
 							asset_type
 						);
 					}
@@ -74,13 +89,14 @@ namespace Ja2
 					)
 				);
 			}
+
+			MarkAssetsLoaded();
 		}
 
 		/// <summary>
 		/// Load all the assets from the AssetRefs.
 		/// </summary>
-		/// <param name="Manager"></param>
-		public async UniTask LoadAssetsAsync(AssetManager Manager)
+		public async UniTask LoadAssetsAsync()
 		{
 			var asset_list = new List<Object?>();
 
@@ -100,7 +116,7 @@ namespace Ja2
 
 					if(it_ref.isValid)
 					{
-						asset_loaded = await Manager.LoadAssetAsync(it_ref,
+						asset_loaded = await m_AssetManager.LoadAssetAsync(it_ref,
 							asset_type
 						);
 					}
@@ -116,6 +132,19 @@ namespace Ja2
 					)
 				);
 			}
+
+			MarkAssetsLoaded();
+		}
+#endregion
+
+#region Methods Private
+		/// <summary>
+		/// Mark, that asset were loaded.
+		/// </summary>
+		private void MarkAssetsLoaded()
+		{
+			m_AssetLoaded = true;
+			m_AssetMocks.Clear();
 		}
 #endregion
 
@@ -123,8 +152,10 @@ namespace Ja2
 		/// <summary>
 		/// Initialization.
 		/// </summary>
-		public void Initialize()
+		/// <param name="AssetManager">Asset manager instance.</param>
+		public void Initialize(AssetManager AssetManager)
 		{
+			m_AssetManager = AssetManager;
 			m_AssetMocks =  new List<AssetRefMockerInstance>();
 		}
 #endregion

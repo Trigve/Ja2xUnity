@@ -49,7 +49,7 @@ namespace Ja2
 				new UI.ViewModel.ViewModelMainMenu(this)
 			);
 
-			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
+			m_AssetRefMocker!.LoadAssets();
 
 			// Start the main menu music, if not already started
 			m_GameState.soundManager.AddMusicSource(m_Music!);
@@ -114,7 +114,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			m_AssetRefMocker!.Initialize();
+			m_AssetRefMocker!.Initialize(m_GameState.assetManager);
 		}
 
 		/// <inheritdoc/>

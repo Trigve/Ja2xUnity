@@ -177,7 +177,7 @@ namespace Ja2
 
 			m_NodesShown = new Queue<CreditsDataNodeComponent>();
 
-			m_AssetRefMocker!.LoadAssets(m_GameState.assetManager);
+			m_AssetRefMocker!.LoadAssets();
 
 			// Get the actual credits data after loading the data
 			m_CreditsData = m_DataComponent!.m_CreditsData;
@@ -414,7 +414,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			m_AssetRefMocker!.Initialize();
+			m_AssetRefMocker!.Initialize(m_GameState.assetManager);
 		}
 #endregion
 	}

@@ -61,7 +61,7 @@ namespace Ja2
 			m_VideoPlayer.targetCamera = m_GameState.activeCamera;
 
 			// As first, load all the needed assets
-			await m_MockManager!.LoadAssetsAsync(m_GameState.assetManager);
+			await m_MockManager!.LoadAssetsAsync();
 
 			// Play all the clips
 			foreach(VideoClip? it in m_VideoClips)
@@ -108,7 +108,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			m_MockManager!.Initialize();
+			m_MockManager!.Initialize(m_GameState.assetManager);
 		}
 #endregion
 	}
