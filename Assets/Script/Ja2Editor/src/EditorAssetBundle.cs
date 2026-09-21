@@ -246,7 +246,7 @@ namespace Ja2.Editor
 				m_OutputPath = he_cfg.bundleExportDir;
 
 				// Find all the bundle descriptors
-				foreach(AssetBundleDesc it in Resources.FindObjectsOfTypeAll<AssetBundleDesc>())
+				foreach(AssetBundleDesc it in AssetDatabase.FindAssets(string.Format("t:{0}", nameof(AssetBundleDesc))).Select(Item => AssetDatabase.LoadAssetByGUID<AssetBundleDesc>(new GUID(Item))))
 				{
 					// Find the path, where is the descriptor located
 					m_AssetBundleInput.Add(
