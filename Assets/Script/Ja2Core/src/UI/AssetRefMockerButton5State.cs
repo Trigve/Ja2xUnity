@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -20,6 +21,11 @@ namespace Ja2.UI
 #region Properties
 		/// <inheritdoc />
 		public override Type[] assetType => AssetTypes;
+
+#if UNITY_EDITOR
+		/// <inheritdoc />
+		protected override IEnumerable<Component> componentsModified => new Component[] {m_Component!, m_Component!.image};
+#endif
 #endregion
 
 #region Methods Private

@@ -89,6 +89,11 @@ namespace Ja2.UI
 				ApplyChanges();
 			}
 		}
+
+		/// <summary>
+		/// Text component associated.
+		/// </summary>
+		public TMP_Text textComponent => m_TextComponent!;
 #endregion
 
 #if UNITY_EDITOR

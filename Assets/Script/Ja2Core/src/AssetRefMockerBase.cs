@@ -49,7 +49,7 @@ namespace Ja2
 		/// <summary>
 		/// Return the managed component, that's need to be tracked in the editor.
 		/// </summary>
-		public Component componentsModified => component!;
+		protected virtual IEnumerable<Component> componentsModified => new [] {component!};
 #endif
 #endregion
 
@@ -121,6 +121,9 @@ namespace Ja2
 
 				m_AssetRefs[i] = asset_ref;
 			}
+
+			// Reset all assets
+			ResetAssets();
 		}
 
 		/// <summary>
@@ -137,7 +140,14 @@ namespace Ja2
 				return;
 			}
 
+			foreach(Component it in componentsModified)
+				UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(it);
+
 			DoResetAssets();
+
+			foreach(Component it in componentsModified)
+				UnityEditor.EditorUtility.SetDirty(it);
+
 		}
 #endif
 #endregion

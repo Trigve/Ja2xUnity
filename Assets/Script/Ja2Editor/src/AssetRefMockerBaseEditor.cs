@@ -68,13 +68,6 @@ namespace Ja2.Editor
 
 			var mocker_component = (AssetRefMockerBase)serializedObject.targetObject;
 
-			Undo.RecordObject(mocker_component.componentsModified,
-				"Gather component data "
-			);
-			// Need to mark it as modified, otherwise, it wouldn't be saved to scene, see
-			// https://discussions.unity.com/t/updating-prefab-variable-via-script-doesnt-save-override/727795/5
-			PrefabUtility.RecordPrefabInstancePropertyModifications(mocker_component.componentsModified);
-
 			mocker_component.GatherAssets();
 		}
 
@@ -121,14 +114,7 @@ namespace Ja2.Editor
 		{
 			var mocker_component = (AssetRefMockerBase)serializedObject.targetObject;
 
-			Undo.RecordObject(mocker_component.componentsModified,
-				"Reset assets"
-			);
-			PrefabUtility.RecordPrefabInstancePropertyModifications(mocker_component.componentsModified);
-
 			mocker_component.ResetAssets();
-
-			EditorUtility.SetDirty(mocker_component.componentsModified);
 		}
 #endregion
 	}

@@ -28,16 +28,6 @@ namespace Ja2
 		/// <param name="MockerComponent">Component to add to the asset list.</param>
 		public void RegisterAssetRefMocker(AssetRefMockerBase MockerComponent)
 		{
-#if UNITY_EDITOR
-			UnityEditor.Undo.RecordObject(this,
-				"Add mocker to manager"
-			);
-
-			// Need to mark it as modified, otherwise, it wouldn't be saved to scene, see
-			// https://discussions.unity.com/t/updating-prefab-variable-via-script-doesnt-save-override/727795/5
-			UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(MockerComponent.componentsModified);
-#endif
-
 			// Add new item
 			m_AssetMocks.Add(
 				new AssetRefMockerInstance(MockerComponent)
