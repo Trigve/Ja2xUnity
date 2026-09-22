@@ -38,11 +38,18 @@ namespace Ja2
 		};
 #endregion
 
+#region Fields Static
+		/// <summary>
+		/// Case-insensitive comparer.
+		/// </summary>
+		private static readonly IEqualityComparer<string> StringComparer = new CaseInsensitiveStringComparer();
+#endregion
+
 #region Fields
 		/// <summary>
 		/// Sections.
 		/// </summary>
-		private readonly Dictionary<string, Section> m_mapProps = new Dictionary<string, Section>();
+		private readonly Dictionary<string, Section> m_MapProps = new(StringComparer);
 #endregion
 
 #region Methods
@@ -53,12 +60,12 @@ namespace Ja2
 		/// <param name="Key">Key.</param>
 		/// <param name="DefaultValue">Default value, if section or key is not found.</param>
 		/// <returns>Value for the given key in the given section if found. Otherwise <paramref name="DefaultValue"/>.</returns>
-		public string getStringProperty(string Section, string Key, string DefaultValue = "")
+		public string GetStringProperty(string Section, string Key, string DefaultValue = "")
 		{
 			string ret = DefaultValue;
 
 			// Find section and key
-			if(m_mapProps.TryGetValue(Section, out Section? section) && section.TryGetValue(Key, out string value))
+			if(m_MapProps.TryGetValue(Section, out Section? section) && section.TryGetValue(Key, out string value))
 				ret = value;
 
 			return ret;
@@ -71,7 +78,7 @@ namespace Ja2
 		/// <param name="Key">Key.</param>
 		/// <param name="DefaultValue">Default value, if section or key is not found.</param>
 		/// <returns>Value for the given key in the given section if found. Otherwise <paramref name="DefaultValue"/>.</returns>
-		public long getIntProperty(string Section, string Key, long DefaultValue)
+		public long GetIntProperty(string Section, string Key, long DefaultValue)
 		{
 			long ret = DefaultValue;
 
@@ -88,7 +95,7 @@ namespace Ja2
 		/// <param name="Key">Key.</param>
 		/// <param name="DefaultValue">Default value, if section or key is not found.</param>
 		/// <returns>Value for the given key in the given section if found. Otherwise <paramref name="DefaultValue"/>.</returns>
-		public double getFloatProperty(string Section, string Key, double DefaultValue)
+		public double GetFloatProperty(string Section, string Key, double DefaultValue)
 		{
 			double ret = DefaultValue;
 
@@ -110,13 +117,13 @@ namespace Ja2
 			Value = string.Empty;
 
 			// \TODO Is it really needed to trim?
-			return (m_mapProps.TryGetValue(Section.Trim(), out Section? section) && section.TryGetValue(Key.Trim(), out Value));
+			return (m_MapProps.TryGetValue(Section.Trim(), out Section? section) && section.TryGetValue(Key.Trim(), out Value));
 		}
 #endregion
 
 #region Methods Static
 		/// <summary>
-		/// Extract the section fromt he string.
+		/// Extract the section from the string.
 		/// </summary>
 		/// <param name="Input">Input string.</param>
 		/// <param name="Section">Section name.</param>
@@ -227,7 +234,7 @@ namespace Ja2
 						{
 							// Try to extract section, use 1 char off becuase of '['
 							if(ExtractSection(line_span[1..], out current_section))
-								m_mapProps[current_section.ToString()] = new Section();
+								m_MapProps[current_section.ToString()] = new Section();
 							else
 							{
 								Ja2Logger.LogVfs("Could not extract section name: '{0}', line: {1}",
@@ -248,7 +255,7 @@ namespace Ja2
 							if(op != ValueOperation.Error)
 							{
 								// Try to find section
-								if(m_mapProps.TryGetValue(current_section.ToString(), out Section section))
+								if(m_MapProps.TryGetValue(current_section.ToString(), out Section section))
 								{
 									if(op == ValueOperation.Set)
 									{
@@ -285,11 +292,18 @@ namespace Ja2
 	/// </summary>
 	internal sealed class Section
 	{
+#region Fields Static
+		/// <summary>
+		/// Case-insensitive comparer.
+		/// </summary>
+		private static readonly IEqualityComparer<string> StringComparer = new CaseInsensitiveStringComparer();
+#endregion
+
 #region Fields
 		/// <summary>
 		/// Dictionary of the section values.
 		/// </summary>
-		private readonly Dictionary<string, string> m_MapProps = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> m_MapValues = new(StringComparer);
 #endregion
 
 #region Methods
@@ -300,7 +314,7 @@ namespace Ja2
 		/// <param name="Value">Value.</param>
 		public void SetValue(string Key, string Value)
 		{
-			m_MapProps[Key] = Value;
+			m_MapValues[Key] = Value;
 		}
 
 		/// <summary>
@@ -314,12 +328,12 @@ namespace Ja2
 			var value_new = string.Empty;
 
 			// If key exist already and isn't empty, add separator
-			if(m_MapProps.TryGetValue(Key, out string? old_value) && old_value.Length != 0)
+			if(m_MapValues.TryGetValue(Key, out string? old_value) && old_value.Length != 0)
 				value_new = old_value + ", ";
 
 			value_new += Value;
 
-			m_MapProps[Key] = value_new;
+			m_MapValues[Key] = value_new;
 		}
 
 		/// <summary>
@@ -330,9 +344,29 @@ namespace Ja2
 		/// <returns>True, if key was found. Otherwise, false.</returns>
 		public bool TryGetValue(string Key, out string Value)
 		{
-			return m_MapProps.TryGetValue(Key,
+			return m_MapValues.TryGetValue(Key,
 				out Value
 			);
+		}
+#endregion
+	}
+
+	/// <summary>
+	/// Case-insensitive comparer used for the keys.
+	/// </summary>
+	internal class CaseInsensitiveStringComparer : IEqualityComparer<string>
+	{
+#region Methods Public
+		/// <inheritdoc/>
+		public bool Equals(string x, string y)
+		{
+			return string.Compare(x, y, StringComparison.OrdinalIgnoreCase) == 0;
+		}
+
+		/// <inheritdoc/>
+		public int GetHashCode(string obj)
+		{
+			return obj.ToLowerInvariant().GetHashCode();
 		}
 #endregion
 	}
