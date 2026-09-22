@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 
 namespace Ja2
 {
@@ -197,17 +198,18 @@ namespace Ja2
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="File">Input file.</param>
-		public IniParser(Vfs.IFileReadable File)
+		/// <param name="File">Input file stream. Stream is automatically disposed.</param>
+		public IniParser(Stream File)
 		{
 			ReadOnlySpan<char> current_section = default;
 
 			var line_counter = 0;
 
-			var rl = new Vfs.LineReader(File);
+			using var stream_reader = new StreamReader(File);
 
-			while(rl.ReadLine(out string line))
+			while (stream_reader.Peek() >= 0)
 			{
+				string line = stream_reader.ReadLine()!;
 				++line_counter;
 
 				var line_span = line.AsSpan();
