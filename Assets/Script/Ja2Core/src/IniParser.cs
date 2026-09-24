@@ -107,6 +107,22 @@ namespace Ja2
 		}
 
 		/// <summary>
+		/// Get the section's key bool value.
+		/// </summary>
+		/// <param name="Section">Section to search in.</param>
+		/// <param name="Key">Key.</param>
+		/// <param name="DefaultValue">Default value, if section or key is not found.</param>
+		/// <returns>Value for the given key in the given section if found. Otherwise <paramref name="DefaultValue"/>.</returns>
+		public bool? GetBoolProperty(string Section, string Key, bool? DefaultValue = null)
+		{
+			bool? ret = DefaultValue;
+
+			if(ValueForKey(Section, Key, out string value_str))
+				ret = value_str.ToLower(CultureInfo.InvariantCulture) == "true";
+
+			return ret;
+		}
+		/// <summary>
 		/// Get the value for the given section and the key.
 		/// </summary>
 		/// <param name="Section">Section to search in.</param>
