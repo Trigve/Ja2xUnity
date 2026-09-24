@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 
 using UnityEngine;
@@ -94,15 +95,18 @@ namespace Ja2
 		private bool InitializeStandardGamingPlatform()
 		{
 			// Open the game config file
-			Vfs.File file_game_ini = m_GameState.vfsManager.OpenFileRegular(
-				new Vfs.Path(Constants.GameIniFile)
+			using var stream_reader = new StreamReader(
+				new FileStream(
+					Path.Combine(Ja2Settings.userDataPath,
+						Constants.GameIniFile
+					),
+					FileMode.Open
+				)
 			);
-			if(file_game_ini.AsReadable(out Vfs.IFileReadable file_game_ini_stream))
+			// Read in settings
+			var oProps = new IniParser(stream_reader);
 			{
-				using (file_game_ini_stream)
 				{
-					// Read in settings
-					var oProps = new IniParser(file_game_ini_stream);
 
 					string loc = oProps.getStringProperty(Constants.IniSectionJa2Settings,
 						Constants.IniKeyLocale

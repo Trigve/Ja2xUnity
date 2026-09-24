@@ -198,18 +198,16 @@ namespace Ja2
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="File">Input file stream. Stream is automatically disposed.</param>
-		public IniParser(Stream File)
+		/// <param name="Reader">Stream reader instance to read from.</param>
+		public IniParser(StreamReader Reader)
 		{
 			ReadOnlySpan<char> current_section = default;
 
 			var line_counter = 0;
 
-			using var stream_reader = new StreamReader(File);
-
-			while (stream_reader.Peek() >= 0)
+			while(Reader.Peek() >= 0)
 			{
-				string line = stream_reader.ReadLine()!;
+				string line = Reader.ReadLine()!;
 				++line_counter;
 
 				var line_span = line.AsSpan();
