@@ -105,87 +105,84 @@ namespace Ja2
 			);
 			// Read in settings
 			var oProps = new IniParser(stream_reader);
+
+			string loc = oProps.GetStringProperty(Constants.IniSectionJa2Settings,
+				Constants.IniKeyLocale,
+				string.Empty
+			)!;
+			if(loc.Length > 0)
 			{
-				{
-
-					string loc = oProps.getStringProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyLocale
-					);
-					if(loc.Length > 0)
-					{
-					}
-
-					long iResolution = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyScreenResolution,
-						-1
-					);
-
-					// Is windowed mdoe
-					if(oProps.getIntProperty(Constants.IniSectionJa2Settings, Constants.IniKeyScreenModeWindowed, -1) == 1)
-						Ja2Settings.windowMode = Ja2Settings.WindowMode.Windowed;
-
-					// Window mode should be maximized
-					Ja2Settings.isWindowedModeMaximized = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyScreenModeWindowedMaximized,
-						-1
-					) == 1;
-
-					var res_x = 1920;
-					var res_y = 1080;
-
-					// \TODO Minimal resolution should be 1920x1080?
-					switch(iResolution)
-					{
-					case 25:
-						res_x = Mathf.Max(
-							(int)oProps.getIntProperty(Constants.IniSectionJa2Settings,
-								Constants.IniKeyScreenResolutionX,
-								-1
-							),
-							1920
-						);
-						res_y = Math.Max(
-							(int)oProps.getIntProperty(Constants.IniSectionJa2Settings,
-								Constants.IniKeyScreenResolutionY,
-								-1
-							),
-							1080
-						);
-						break;
-					// 1920x1080
-					default:
-						res_x = 1920;
-						res_y = 1080;
-						break;
-					}
-
-					if(Ja2Settings.windowMode == Ja2Settings.WindowMode.Windowed && Ja2Settings.isWindowedModeMaximized)
-					{
-					}
-
-					Ja2Settings.screenWidth = res_x;
-					Ja2Settings.screenHeight = res_y;
-
-					Ja2Settings.playIntro = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyPlayIntro,
-						1
-					) == 1;
-
-					float fTooltipScaleFactor = ((float)oProps.getFloatProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyTooltipScaleFactor,
-						100)
-					) / 100;
-					if(fTooltipScaleFactor < 1)
-						fTooltipScaleFactor = 1;
-
-					Ja2Settings.tooltipScaleFactor = fTooltipScaleFactor;
-
-					Ja2Settings.disableMouseScroll = oProps.getIntProperty(Constants.IniSectionJa2Settings,
-						Constants.IniKeyDisableMouseScrolling,
-						0
-					) == 1;
-				}
 			}
+
+			long iResolution = oProps.GetIntProperty(Constants.IniSectionJa2Settings,
+				Constants.IniKeyScreenResolution,
+				-1
+			)!.Value;
+
+			// Is windowed mdoe
+			if(oProps.GetIntProperty(Constants.IniSectionJa2Settings, Constants.IniKeyScreenModeWindowed, -1) == 1)
+				Ja2Settings.windowMode = Ja2Settings.WindowMode.Windowed;
+
+			// Window mode should be maximized
+			Ja2Settings.isWindowedModeMaximized = oProps.GetIntProperty(Constants.IniSectionJa2Settings,
+				Constants.IniKeyScreenModeWindowedMaximized,
+				-1
+			) == 1;
+
+			var res_x = 1920;
+			var res_y = 1080;
+
+			// \TODO Minimal resolution should be 1920x1080?
+			switch(iResolution)
+			{
+			case 25:
+				res_x = Mathf.Max(
+					(int)oProps.GetIntProperty(Constants.IniSectionJa2Settings,
+						Constants.IniKeyScreenResolutionX,
+						-1
+					)!.Value,
+					1920
+				);
+				res_y = Math.Max(
+					(int)oProps.GetIntProperty(Constants.IniSectionJa2Settings,
+						Constants.IniKeyScreenResolutionY,
+						-1
+					)!.Value,
+					1080
+				);
+				break;
+			// 1920x1080
+			default:
+				res_x = 1920;
+				res_y = 1080;
+				break;
+			}
+
+			if(Ja2Settings.windowMode == Ja2Settings.WindowMode.Windowed && Ja2Settings.isWindowedModeMaximized)
+			{
+			}
+
+			Ja2Settings.screenWidth = res_x;
+			Ja2Settings.screenHeight = res_y;
+
+			Ja2Settings.playIntro = oProps.GetIntProperty(Constants.IniSectionJa2Settings,
+				Constants.IniKeyPlayIntro,
+				1
+			) == 1;
+
+			float fTooltipScaleFactor = ((float)oProps.GetFloatProperty(Constants.IniSectionJa2Settings,
+					Constants.IniKeyTooltipScaleFactor,
+					100)!.Value
+				) / 100;
+			if(fTooltipScaleFactor < 1)
+				fTooltipScaleFactor = 1;
+
+			Ja2Settings.tooltipScaleFactor = fTooltipScaleFactor;
+
+			Ja2Settings.disableMouseScroll = oProps.GetIntProperty(Constants.IniSectionJa2Settings,
+				Constants.IniKeyDisableMouseScrolling,
+				0
+			) == 1;
 
 			Ja2Logger.LogInfo("Initializing Game Manager");
 

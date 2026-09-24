@@ -53,7 +53,7 @@ namespace Ja2
 		private readonly Dictionary<string, Section> m_MapProps = new(StringComparer);
 #endregion
 
-#region Methods
+#region Methods Public
 		/// <summary>
 		/// Get the section's key string value.
 		/// </summary>
@@ -61,9 +61,9 @@ namespace Ja2
 		/// <param name="Key">Key.</param>
 		/// <param name="DefaultValue">Default value, if section or key is not found.</param>
 		/// <returns>Value for the given key in the given section if found. Otherwise <paramref name="DefaultValue"/>.</returns>
-		public string GetStringProperty(string Section, string Key, string DefaultValue = "")
+		public string? GetStringProperty(string Section, string Key, string? DefaultValue = null)
 		{
-			string ret = DefaultValue;
+			string? ret = DefaultValue;
 
 			// Find section and key
 			if(m_MapProps.TryGetValue(Section, out Section? section) && section.TryGetValue(Key, out string value))
@@ -79,12 +79,12 @@ namespace Ja2
 		/// <param name="Key">Key.</param>
 		/// <param name="DefaultValue">Default value, if section or key is not found.</param>
 		/// <returns>Value for the given key in the given section if found. Otherwise <paramref name="DefaultValue"/>.</returns>
-		public long GetIntProperty(string Section, string Key, long DefaultValue)
+		public long? GetIntProperty(string Section, string Key, long? DefaultValue = null)
 		{
-			long ret = DefaultValue;
+			long? ret = DefaultValue;
 
-			if(ValueForKey(Section,Key, out string value) && long.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out ret))
-			{}
+			if(ValueForKey(Section, Key, out string value_str) && long.TryParse(value_str, NumberStyles.Any, CultureInfo.InvariantCulture, out long value))
+				ret = value;
 
 			return ret;
 		}
@@ -96,12 +96,12 @@ namespace Ja2
 		/// <param name="Key">Key.</param>
 		/// <param name="DefaultValue">Default value, if section or key is not found.</param>
 		/// <returns>Value for the given key in the given section if found. Otherwise <paramref name="DefaultValue"/>.</returns>
-		public double GetFloatProperty(string Section, string Key, double DefaultValue)
+		public double? GetFloatProperty(string Section, string Key, double? DefaultValue = null)
 		{
-			double ret = DefaultValue;
+			double? ret = DefaultValue;
 
-			if(ValueForKey(Section, Key, out string value) && double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out ret))
-			{}
+			if(ValueForKey(Section, Key, out string value_str) && double.TryParse(value_str, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+				ret = value;
 
 			return ret;
 		}
