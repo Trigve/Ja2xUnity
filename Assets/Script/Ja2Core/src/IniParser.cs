@@ -140,7 +140,7 @@ namespace Ja2
 			// Found something valid
 			if(idx != -1 && idx > 0)
 			{
-				Section = Input[..(idx - 1)];
+				Section = Input[..idx];
 
 				ret = true;
 			}
