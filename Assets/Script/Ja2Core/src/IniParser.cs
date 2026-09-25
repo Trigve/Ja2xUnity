@@ -73,6 +73,19 @@ namespace Ja2
 		}
 
 		/// <summary>
+		/// Set the string property in the given section and given key.
+		/// </summary>
+		/// <param name="Section">Section, in which the key/value will be stored.</param>
+		/// <param name="Key">Key for the value.</param>
+		/// <param name="Value">Value to store.</param>
+		public void SetProperty(string Section, string Key, string Value)
+		{
+			GetOrCreateSection(Section).SetValue(Key,
+				Value
+			);
+		}
+
+		/// <summary>
 		/// Get the section's key long value.
 		/// </summary>
 		/// <param name="Section">Section to search in.</param>
@@ -87,6 +100,19 @@ namespace Ja2
 				ret = value;
 
 			return ret;
+		}
+
+		/// <summary>
+		/// Set the int property in the given section and given key.
+		/// </summary>
+		/// <param name="Section">Section, in which the key/value will be stored.</param>
+		/// <param name="Key">Key for the value.</param>
+		/// <param name="Value">Value to store.</param>
+		public void SetProperty(string Section, string Key, long Value)
+		{
+			GetOrCreateSection(Section).SetValue(Key,
+				Value.ToString(CultureInfo.InvariantCulture)
+			);
 		}
 
 		/// <summary>
@@ -107,6 +133,19 @@ namespace Ja2
 		}
 
 		/// <summary>
+		/// Set the float property in the given section and given key.
+		/// </summary>
+		/// <param name="Section">Section, in which the key/value will be stored.</param>
+		/// <param name="Key">Key for the value.</param>
+		/// <param name="Value">Value to store.</param>
+		public void SetProperty(string Section, string Key, float Value)
+		{
+			GetOrCreateSection(Section).SetValue(Key,
+				Value.ToString(CultureInfo.InvariantCulture)
+			);
+		}
+
+		/// <summary>
 		/// Get the section's key bool value.
 		/// </summary>
 		/// <param name="Section">Section to search in.</param>
@@ -122,6 +161,45 @@ namespace Ja2
 
 			return ret;
 		}
+
+		/// <summary>
+		/// Set the bool property in the given section and given key.
+		/// </summary>
+		/// <param name="Section">Section, in which the key/value will be stored.</param>
+		/// <param name="Key">Key for the value.</param>
+		/// <param name="Value">Value to store.</param>
+		public void SetProperty(string Section, string Key, bool Value)
+		{
+			GetOrCreateSection(Section).SetValue(Key,
+				Value ? "true" : "false"
+			);
+		}
+
+		/// <summary>
+		/// Write the content to the stream writeer.
+		/// </summary>
+		/// <param name="Writer">Stream writer instance.</param>
+		public void Write(StreamWriter Writer)
+		{
+			foreach(var it in m_MapProps)
+			{
+				Writer.WriteLine("[{0}]",
+					it.Key.Trim()
+				);
+				foreach(var it_sections in it.Value.values)
+				{
+					Writer.WriteLine("{0} = {1}",
+						it_sections.Key,
+						it_sections.Value
+					);
+				}
+
+				Writer.WriteLine(string.Empty);
+			}
+		}
+#endregion
+
+#region Methods Private
 		/// <summary>
 		/// Get the value for the given section and the key.
 		/// </summary>
@@ -135,6 +213,21 @@ namespace Ja2
 
 			// \TODO Is it really needed to trim?
 			return (m_MapProps.TryGetValue(Section.Trim(), out Section? section) && section.TryGetValue(Key.Trim(), out Value));
+		}
+
+		/// <summary>
+		/// Get or create the section.
+		/// </summary>
+		/// <param name="SectionName">Section name.</param>
+		private Section GetOrCreateSection(string SectionName)
+		{
+			if(!m_MapProps.TryGetValue(SectionName, out Section? section_found))
+			{
+				section_found = new Section();
+				m_MapProps[SectionName] = section_found;
+			}
+
+			return section_found;
 		}
 #endregion
 
@@ -211,6 +304,12 @@ namespace Ja2
 #endregion
 
 #region Construction
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public IniParser()
+		{}
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -320,6 +419,13 @@ namespace Ja2
 		/// Dictionary of the section values.
 		/// </summary>
 		private readonly Dictionary<string, string> m_MapValues = new(StringComparer);
+#endregion
+
+#region Properties
+		/// <summary>
+		/// All values in the section.
+		/// </summary>
+		public IEnumerable<KeyValuePair<string, string>> values => m_MapValues;
 #endregion
 
 #region Methods
