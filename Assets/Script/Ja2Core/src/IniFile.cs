@@ -6,9 +6,9 @@ using System.IO;
 namespace Ja2
 {
 	/// <summary>
-	/// .ini file parser.
+	/// .ini file handling.
 	/// </summary>
-	internal sealed class IniParser
+	internal sealed class IniFile
 	{
 #region Constants
 		/// <summary>
@@ -307,14 +307,14 @@ namespace Ja2
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public IniParser()
+		public IniFile()
 		{}
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="Reader">Stream reader instance to read from.</param>
-		public IniParser(StreamReader Reader)
+		public IniFile(StreamReader Reader)
 		{
 			ReadOnlySpan<char> current_section = default;
 

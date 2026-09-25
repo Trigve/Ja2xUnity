@@ -104,7 +104,7 @@ namespace Ja2
 				)
 			);
 			// Read in settings
-			var oProps = new IniParser(stream_reader);
+			var oProps = new IniFile(stream_reader);
 
 			string loc = oProps.GetStringProperty(Constants.IniSectionJa2Settings,
 				Constants.IniKeyLocale,
