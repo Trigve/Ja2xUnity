@@ -282,7 +282,6 @@ MonoBehaviour:
   m_HiliteOff: {fileID: 0}
   m_Grayed: {fileID: 0}
   m_DisableStyle: 0
-  m_VisualRoot: {fileID: 898860801093890737}
 --- !u!114 &5979863373926785217
 MonoBehaviour:
   m_ObjectHideFlags: 0

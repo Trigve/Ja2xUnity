@@ -75,13 +75,6 @@ namespace Ja2.UI
 		/// </summary>
 		[SerializeField]
 		private ButtonDisableStyle m_DisableStyle;
-
-		/// <summary>
-		/// Visual root transform.
-		/// </summary>
-		[SerializeField]
-		[HideInInspector]
-		private RectTransform? m_VisualRoot;
 #endregion
 
 #region Fields
@@ -156,10 +149,6 @@ namespace Ja2.UI
 #endif
 				image = GetComponentInChildren<Image>();
 			}
-
-			// Get the visual root
-			if(m_VisualRoot == null)
-				m_VisualRoot = image.rectTransform;
 
 			m_Animator = GetComponent<Animator>();
 
