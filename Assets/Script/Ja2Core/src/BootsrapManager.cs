@@ -3,11 +3,13 @@ using System.IO;
 using System.Linq;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Ja2
 {
 	/// <summary>
 	/// This is the main manager class, that is always present and is responsible for the initialization of the game.
+	/// It is also a singleton, so it could be accessed from other scenes.
 	/// </summary>
 	public sealed class BootsrapManager : MonoBehaviour
 	{
@@ -25,7 +27,29 @@ namespace Ja2
 		private GameScreen? m_InitScreen;
 #endregion
 
+#region Fields Static
+		/// <summary>
+		/// Singleton instance.
+		/// </summary>
+		private static BootsrapManager? m_Instance;
+#endregion
+
+#region Properties Static
+		/// <summary>
+		/// Get the singleton instance.
+		/// </summary>
+		public static BootsrapManager instance => m_Instance!;
+#endregion
+
 #region Messages
+		public void Awake()
+		{
+			// Need to check it explicitly (to avoid using '==' operator)
+			Assert.IsTrue(m_Instance is null);
+
+			m_Instance = this;
+		}
+
 		public void Start()
 		{
 			Ja2Logger.LogInfo("BootsrapManager Start");
@@ -52,6 +76,11 @@ namespace Ja2
 
 			if(next_screen != null)
 				m_GameState.screenManager.SetPendingScreen(next_screen);
+		}
+
+		private void OnDestroy()
+		{
+			m_Instance = null;
 		}
 #endregion
 
