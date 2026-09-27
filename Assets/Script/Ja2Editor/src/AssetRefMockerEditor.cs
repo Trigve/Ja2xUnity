@@ -65,4 +65,12 @@ namespace Ja2.Editor
 	public class AssetRefMockerButton5StateEditor : AssetRefMockerBaseEditor
 	{
 	}
+
+	/// <summary>
+	/// Editor for <see cref="UI.AssetRefMockerToggle4State"/>.
+	/// </summary>
+	[CustomEditor(typeof(UI.AssetRefMockerToggle4State))]
+	public class AssetRefMockerToggle4StateEditor : AssetRefMockerBaseEditor
+	{
+	}
 }
