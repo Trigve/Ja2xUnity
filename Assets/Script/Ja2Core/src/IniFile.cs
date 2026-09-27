@@ -138,7 +138,7 @@ namespace Ja2
 		/// <param name="Section">Section, in which the key/value will be stored.</param>
 		/// <param name="Key">Key for the value.</param>
 		/// <param name="Value">Value to store.</param>
-		public void SetProperty(string Section, string Key, float Value)
+		public void SetProperty(string Section, string Key, double Value)
 		{
 			GetOrCreateSection(Section).SetValue(Key,
 				Value.ToString(CultureInfo.InvariantCulture)
