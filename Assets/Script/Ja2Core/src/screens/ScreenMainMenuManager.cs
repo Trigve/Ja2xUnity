@@ -31,6 +31,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameScreen? m_CreditsScreen;
+
+		/// <summary>
+		/// Preferences screen.
+		/// </summary>
+		[SerializeField]
+		private GameScreen? m_PreferencesScreen;
 #endregion
 
 #region Properties
@@ -89,6 +95,12 @@ namespace Ja2
 		/// <inheritdoc/>
 		public void ShowPreferences()
 		{
+			m_GameState.screenManager.SetPendingScreen(m_PreferencesScreen!,
+				new GameScreenOptions()
+				{
+					destroyActiveSceen = true
+				}
+			);
 		}
 
 		/// <inheritdoc/>
