@@ -20,6 +20,21 @@ namespace Ja2
 
 #region Properties
 		/// <summary>
+		/// User profile path for the JA2.
+		/// </summary>
+		public static string userProfilePath { get; } = UtilsPath.Combine(
+			UtilsPath.NormalizePath(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)),
+			"Ja2"
+		);
+
+		/// <summary>
+		/// Game settings path.
+		/// </summary>
+		public static string settingsPath { get; } = UtilsPath.Combine(userProfilePath,
+			"ja2_settings.ini"
+		);
+
+		/// <summary>
 		/// Path for saving/loading various data.
 		/// </summary>
 		public static string userDataPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Ja2";
