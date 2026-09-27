@@ -52,7 +52,7 @@ namespace Ja2
 			m_AssetRefMocker!.LoadAssets();
 
 			// Start the main menu music, if not already started
-			m_GameState.soundManager.AddMusicSource(m_Music!);
+			BootsrapManager.instance.soundManager.AddMusicSource(m_Music!);
 		}
 
 		public void Update()

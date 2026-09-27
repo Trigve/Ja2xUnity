@@ -21,6 +21,12 @@ namespace Ja2
 		private GameState m_GameState = null!;
 
 		/// <summary>
+		/// See <see cref="soundManager"/>.
+		/// </summary>
+		[SerializeField]
+		private SoundManager? m_SoundManager;
+
+		/// <summary>
 		/// Init screen to run.
 		/// </summary>
 		[SerializeField]
@@ -41,6 +47,13 @@ namespace Ja2
 		public static BootsrapManager instance => m_Instance!;
 #endregion
 
+#region Properties
+		/// <summary>
+		/// Sound manager.
+		/// </summary>
+		public SoundManager soundManager => m_SoundManager!;
+#endregion
+
 #region Messages
 		public void Awake()
 		{
@@ -53,6 +66,8 @@ namespace Ja2
 		public void Start()
 		{
 			Ja2Logger.LogInfo("BootsrapManager Start");
+
+			m_SoundManager!.Initialize();
 
 			ProcessJa2CommandLineBeforeInitialization();
 

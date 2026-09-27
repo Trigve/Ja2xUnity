@@ -10,8 +10,7 @@ namespace Ja2
 	/// <summary>
 	/// Sound manager.
 	/// </summary>
-	[CreateAssetMenu(menuName = "JA2/Create Sound Manager")]
-	public sealed class SoundManager : ScriptableObjectManager<SoundManager>
+	public sealed class SoundManager : MonoBehaviour
 	{
 #region Fields Component
 		/// <summary>
@@ -28,11 +27,6 @@ namespace Ja2
 #endregion
 
 #region Fields
-		/// <summary>
-		/// Parent object for all the audio sources.
-		/// </summary>
-		private GameObject? m_AudioSourceParent;
-
 		/// <summary>
 		/// Audio sources used for the music.
 		/// </summary>
@@ -65,7 +59,7 @@ namespace Ja2
 			{
 				m_MusicAudioSources!.Add(Source);
 				// Parent it
-				Source.transform.SetParent(m_AudioSourceParent!.transform);
+				Source.transform.SetParent(transform);
 
 				// Play the clip now
 				Source.Play();
@@ -73,32 +67,17 @@ namespace Ja2
 		}
 #endregion
 
-#region Construction
-		/// <inheritdoc />
-		protected override void DoInitialize(params object[] Params)
+#region Initialization
+		/// <summary>
+		/// Initialization.
+		/// </summary>
+		public void Initialize()
 		{
 			Ja2Logger.LogSound("Initialising JA2 sound manager");
 
 			Assert.IsNotNull(m_AudioMixer);
 
 			m_MusicAudioSources =  new List<AudioSource>();
-		}
-
-		/// <summary>
-		/// Initialize after the scene was loaded.
-		/// </summary>
-		/// <param name="Parent">Parent GO, to which to parent the audio sources.</param>
-		public void InitializeSceneLoad(GameObject Parent)
-		{
-			m_AudioSourceParent = Parent;
-		}
-
-		/// <inheritdoc />
-		protected override void DoDeinitialize()
-		{
-			m_MusicAudioSources!.Clear();
-			m_MusicAudioSources = null;
-			m_AudioSourceParent = null;
 		}
 #endregion
 	}

@@ -50,12 +50,6 @@ namespace Ja2
 		private AssetManager? m_AssetManager;
 
 		/// <summary>
-		/// See <see cref="soundManager"/>.
-		/// </summary>
-		[SerializeField]
-		private SoundManager? m_SoundManager;
-
-		/// <summary>
 		/// See <see cref="cursorManager"/>.
 		/// </summary>
 		[SerializeField]
@@ -116,11 +110,6 @@ namespace Ja2
 		/// Asset manager.
 		/// </summary>
 		public AssetManager assetManager => m_AssetManager!;
-
-		/// <summary>
-		/// Sound manager.
-		/// </summary>
-		public SoundManager soundManager => m_SoundManager;
 
 		/// <summary>
 		/// Cursor manager.
@@ -226,7 +215,6 @@ namespace Ja2
 			Assert.IsNotNull(m_InputManager);
 			Assert.IsNotNull(m_ScreenManager);
 			Assert.IsNotNull(m_AssetManager);
-			Assert.IsNotNull(m_SoundManager);
 			Assert.IsNotNull(m_CursorManager);
 
 			m_SceneManagers = new Dictionary<Scene, SceneManagerSingleton>();
@@ -238,7 +226,6 @@ namespace Ja2
 			m_InputManager!.Initialize();
 			m_AssetManager!.Initialize();
 			m_ScreenManager!.Initialize(cancellationToken);
-			m_SoundManager!.Initialize();
 			m_CursorManager!.Initialize();
 
 			eventStart?.Invoke();
@@ -252,9 +239,6 @@ namespace Ja2
 			// Create the objects that needs the scene be present already.
 			Assert.IsNotNull(m_CameraPrefab);
 			m_ActiveCamera = Instantiate(m_CameraPrefab!).GetComponent<Camera>();
-
-			// Initialize sound manager post scene load
-			m_SoundManager!.InitializeSceneLoad(m_ActiveCamera.gameObject);
 		}
 
 		/// <inheritdoc />
@@ -263,7 +247,6 @@ namespace Ja2
 			m_CancellationTokenSource?.Cancel();
 
 			m_CursorManager!.Deinitialize();
-			m_SoundManager!.Deinitialize();
 			m_MouseSystemManager!.Deinitialize();
 			m_RandomManager!.Deinitialize();
 			m_VfsManager!.Deinitialize();
