@@ -51,7 +51,7 @@ namespace Ja2
 		}
 
 		/// <summary>
-		/// Save the settins to the INI.
+		/// Save the settings to the INI.
 		/// </summary>
 		/// <param name="Ini"></param>
 		public void Save(IniFile Ini)
