@@ -1,0 +1,251 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ff681ed38a4f979764d2144a97d082, type: 3}
+  m_Name: GameSettingsData
+  m_EditorClassIdentifier: 
+  m_Options:
+  - m_SectionName: Audio
+    m_OptionType: 1
+    m_Names:
+    - sfx_vol
+    m_Text: 
+    m_Description: Sound effects volume
+    m_ValueType: 2
+    m_DefaultValue: 0.5
+    m_Flags: 0
+  - m_SectionName: Audio
+    m_OptionType: 2
+    m_Names:
+    - speech_vol
+    m_Text: 
+    m_Description: Speech volume
+    m_ValueType: 2
+    m_DefaultValue: 0.7
+    m_Flags: 0
+  - m_SectionName: Audio
+    m_OptionType: 3
+    m_Names:
+    - music_vol
+    m_Text: 
+    m_Description: Music volume
+    m_ValueType: 2
+    m_DefaultValue: 0.1
+    m_Flags: 0
+  - m_SectionName: Preferences
+    m_OptionType: 4
+    m_Names:
+    - speech_on
+    m_Text: Speech
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 5
+    m_Names:
+    - mute_conf
+    m_Text: Mute Confirmations
+    m_Description: Turns characters' verbal confirmations on or off.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 6
+    m_Names:
+    - subtitles
+    m_Text: SubTitles
+    m_Description: Controls whether on-screen text is displayed for dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 7
+    m_Names:
+    - pause_txt_dlg
+    m_Text: Pause Text Dialogue
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 8
+    m_Names:
+    - smoke_anim
+    m_Text: Animate Smoke
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 9
+    m_Names:
+    - blood_n_gore
+    m_Text: Blood n Gore
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 10
+    m_Names:
+    - mouse_move
+    m_Text: Never Move My Mouse!
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 11
+    m_Names:
+    - old_sel_meth
+    m_Text: Old Selection Method
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 12
+    m_Names:
+    - show_move_path
+    m_Text: Show Movement Path
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 13
+    m_Names:
+    - show_miss
+    m_Text: Show Misses
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 14
+    m_Names:
+    - rt_conf
+    m_Text: Real Time Confirmation
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 15
+    m_Names:
+    - disp_sl_wk_notif
+    m_Text: Display sleep/wake notifications
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 16
+    m_Names:
+    - use_metric
+    m_Text: Use Metric System
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 17
+    m_Names:
+    - merc_light_move
+    m_Text: Merc Lights during Movement
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 18
+    m_Names:
+    - merc_curs_snap
+    m_Text: Snap Cursor to Mercs
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 19
+    m_Names:
+    - door_curs_snap
+    m_Text: Snap Cursor to Doors
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 20
+    m_Names:
+    - items_glow
+    m_Text: Make Items Glow
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 21
+    m_Names:
+    - tree_tops
+    m_Text: Show Tree Tops
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 22
+    m_Names:
+    - show_wirefr
+    m_Text: Show Wireframes
+    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 23
+    m_Names:
+    - curs_3d
+    m_Text: Show 3D Cursor
+    m_Description: When ON, the movement cursor is shown in 3D. (|H|o|m|e)
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 24
+    m_Names:
+    - merc_light_under
+    m_Text: Show Lights under Mercs
+    m_Description: When ON, mercs will display with lights around them during darkness
+      (|G).
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 25
+    m_Names:
+    - bullets_hide
+    m_Text: Hide Bullets
+    m_Description: When ON, bullets will not be shown.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
+  - m_SectionName: Preferences
+    m_OptionType: 26
+    m_Names:
+    - tracking_mode
+    m_Text: Tracking Mode
+    m_Description: When ON, the camera will keep focus on the selected merc while
+      in combat mode.
+    m_ValueType: 3
+    m_DefaultValue: true
+    m_Flags: -1
