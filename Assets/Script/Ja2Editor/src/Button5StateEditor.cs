@@ -23,6 +23,8 @@ namespace Ja2.Editor
 			SerializedProperty hilite_off = serializedObject.FindProperty(UI.Button5State.PropertyNameHiliteOff);
 			SerializedProperty grayed = serializedObject.FindProperty(UI.Button5State.PropertyNameGrayed);
 			SerializedProperty disable_style = serializedObject.FindProperty(UI.Button5State.PropertyNameDisableStyle);
+			SerializedProperty disabled_hatched = serializedObject.FindProperty(UI.Button5State.PropertyNameDisableHatched);
+			SerializedProperty disable_shaded = serializedObject.FindProperty(UI.Button5State.PropertyNameDisableShaded);
 
 			VisualElement root = new();
 
@@ -61,6 +63,12 @@ namespace Ja2.Editor
 			);
 			root.Add(
 				new PropertyField(disable_style)
+			);
+			root.Add(
+				new PropertyField(disabled_hatched)
+			);
+			root.Add(
+				new PropertyField(disable_shaded)
 			);
 
 			return root;

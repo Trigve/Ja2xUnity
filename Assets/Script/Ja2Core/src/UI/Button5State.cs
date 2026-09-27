@@ -18,15 +18,10 @@ namespace Ja2.UI
 		public const string PropertyNameHiliteOff = nameof(m_HiliteOff);
 		public const string PropertyNameGrayed = nameof(m_Grayed);
 		public const string PropertyNameDisableStyle = nameof(m_DisableStyle);
+		public const string PropertyNameDisableHatched = nameof(m_DisabledHatched);
+		public const string PropertyNameDisableShaded = nameof(m_DisabledShaded);
 #endregion
 #endif
-
-#region Constants
-		/// <summary>
-		/// Property for animator.
-		/// </summary>
-		private static readonly int ParameterDisableStyle = Animator.StringToHash("DisableStyle");
-#endregion
 
 #region Enums
 		/// <summary>
@@ -75,6 +70,18 @@ namespace Ja2.UI
 		/// </summary>
 		[SerializeField]
 		private ButtonDisableStyle m_DisableStyle;
+
+		/// <summary>
+		/// Game object for hatch disabled "style".
+		/// </summary>
+		[SerializeField]
+		private GameObject? m_DisabledHatched;
+
+		/// <summary>
+		/// Game object for shade disabled "style".
+		/// </summary>
+		[SerializeField]
+		private GameObject? m_DisabledShaded;
 #endregion
 
 #region Fields
@@ -82,11 +89,6 @@ namespace Ja2.UI
 		/// Is pointer inside the button.
 		/// </summary>
 		private bool m_IsPointerInside;
-
-		/// <summary>
-		/// Animator component.
-		/// </summary>
-		private Animator? m_Animator;
 #endregion
 
 #region Properties
@@ -149,13 +151,6 @@ namespace Ja2.UI
 #endif
 				image = GetComponentInChildren<Image>();
 			}
-
-			m_Animator = GetComponent<Animator>();
-
-			// Set the disabled style
-			m_Animator.SetInteger(ParameterDisableStyle,
-				(int)m_DisableStyle
-			);
 		}
 #endregion
 
@@ -170,7 +165,6 @@ namespace Ja2.UI
 			image.sprite = null;
 		}
 #endif
-
 		/// <summary>
 		/// Refresh the state.
 		/// </summary>
@@ -231,6 +225,29 @@ namespace Ja2.UI
 #endregion
 
 #region Methods Private
+		/// <inheritdoc />
+		protected override void DoStateTransition(SelectionState State, bool Instant)
+		{
+			base.DoStateTransition(State, Instant);
+
+			// For disable state only
+			if(State == SelectionState.Disabled)
+			{
+				// Enable/Disable GO based on the style
+				switch(m_DisableStyle)
+				{
+				case ButtonDisableStyle.DisabledHatched:
+					m_DisabledHatched!.SetActive(true);
+					m_DisabledShaded!.SetActive(false);
+					break;
+				case ButtonDisableStyle.DisabledShaded:
+					m_DisabledHatched!.SetActive(false);
+					m_DisabledShaded!.SetActive(true);
+					break;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Apply normal sprite.
 		/// </summary>
