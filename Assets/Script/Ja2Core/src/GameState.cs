@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 
 using UnityEngine;
@@ -56,6 +57,12 @@ namespace Ja2
 		private CursorManager? m_CursorManager;
 
 		/// <summary>
+		/// Game setting data.
+		/// </summary>
+		[SerializeField]
+		private AssetGameSettingsData? m_GameSettingsData;
+
+		/// <summary>
 		/// Camera prefab.
 		/// </summary>
 		[SerializeField]
@@ -83,6 +90,11 @@ namespace Ja2
 		/// Scene managers associated for the given scens.
 		/// </summary>
 		private Dictionary<Scene, SceneManagerSingleton>? m_SceneManagers;
+
+		/// <summary>
+		/// See <see cref="gameSettings"/>;
+		/// </summary>
+		private GameSettings? m_GameSettings;
 #endregion
 
 #region Properties
@@ -125,6 +137,15 @@ namespace Ja2
 		/// Currently active camera.
 		/// </summary>
 		public Camera? activeCamera => m_ActiveCamera;
+
+		/// <summary>
+		/// Game settings.
+		/// </summary>
+		internal GameSettings gameSettings
+		{
+			get => m_GameSettings!;
+			set => m_GameSettings = value;
+		}
 
 #if UNITY_EDITOR
 		/// <summary>
@@ -191,6 +212,27 @@ namespace Ja2
 			m_SceneManagers!.Remove(SceneActive);
 		}
 
+		public void SaveSettings()
+		{
+			// Be sure that path exist
+			Directory.CreateDirectory(
+				Directory.GetParent(Ja2Settings.settingsPath)!.FullName
+			);
+
+			var ini_file = new IniFile();
+
+			// Save to the INI
+			gameSettings.Save(ini_file);
+
+			// Save to the file
+			using var file_writer = new StreamWriter(
+				new FileStream(Ja2Settings.settingsPath,
+					FileMode.Create
+				)
+			);
+			ini_file.Write(file_writer);
+		}
+
 		/// <summary>
 		/// Update the game state.
 		/// </summary>
@@ -220,6 +262,24 @@ namespace Ja2
 			m_SceneManagers = new Dictionary<Scene, SceneManagerSingleton>();
 			m_CancellationTokenSource = new CancellationTokenSource();
 
+			// Settings file exist
+			if(File.Exists(Ja2Settings.settingsPath))
+			{
+				// Reader for the settings file
+				using var file_reader = new StreamReader(
+					new FileStream(Ja2Settings.settingsPath,
+						FileMode.Open
+					)
+				);
+
+				m_GameSettings = new GameSettings(m_GameSettingsData!,
+					new IniFile(file_reader)
+				);
+			}
+			// Defaults settings
+			else
+				m_GameSettings = new GameSettings(m_GameSettingsData!);
+
 			m_MouseSystemManager!.Initialize();
 			m_RandomManager!.Initialize();
 			m_VfsManager!.Initialize();
@@ -246,6 +306,7 @@ namespace Ja2
 		{
 			m_CancellationTokenSource?.Cancel();
 
+			m_GameSettings = null;
 			m_CursorManager!.Deinitialize();
 			m_MouseSystemManager!.Deinitialize();
 			m_RandomManager!.Deinitialize();
