@@ -154,6 +154,18 @@ namespace Ja2
 		public string m_DefaultValue = string.Empty;
 
 		/// <summary>
+		/// Minimum value, if provided.
+		/// </summary>
+		[SerializeField]
+		public string m_ValueMin = string.Empty;
+
+		/// <summary>
+		/// Maximum value, if provided.
+		/// </summary>
+		[SerializeField]
+		public string m_ValueMax = string.Empty;
+
+		/// <summary>
 		/// Option flags.
 		/// </summary>
 		[SerializeField]

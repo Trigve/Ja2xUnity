@@ -21,6 +21,8 @@ MonoBehaviour:
     m_Description: Sound effects volume
     m_ValueType: 2
     m_DefaultValue: 0.5
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: 0
   - m_SectionName: Audio
     m_OptionType: 2
@@ -30,6 +32,8 @@ MonoBehaviour:
     m_Description: Speech volume
     m_ValueType: 2
     m_DefaultValue: 0.7
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: 0
   - m_SectionName: Audio
     m_OptionType: 3
@@ -39,6 +43,8 @@ MonoBehaviour:
     m_Description: Music volume
     m_ValueType: 2
     m_DefaultValue: 0.1
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: 0
   - m_SectionName: Preferences
     m_OptionType: 4
@@ -48,6 +54,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 5
@@ -57,6 +65,8 @@ MonoBehaviour:
     m_Description: Turns characters' verbal confirmations on or off.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 6
@@ -66,6 +76,8 @@ MonoBehaviour:
     m_Description: Controls whether on-screen text is displayed for dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 7
@@ -75,6 +87,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 8
@@ -84,6 +98,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 9
@@ -93,6 +109,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 10
@@ -102,6 +120,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 11
@@ -111,6 +131,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 12
@@ -120,6 +142,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 13
@@ -129,6 +153,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 14
@@ -138,6 +164,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 15
@@ -147,6 +175,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 16
@@ -156,6 +186,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 17
@@ -165,6 +197,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 18
@@ -174,6 +208,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 19
@@ -183,6 +219,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 20
@@ -192,6 +230,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 21
@@ -201,6 +241,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 22
@@ -210,6 +252,8 @@ MonoBehaviour:
     m_Description: Keep this option ON if you want to hear character dialogue.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 23
@@ -219,6 +263,8 @@ MonoBehaviour:
     m_Description: When ON, the movement cursor is shown in 3D. (|H|o|m|e)
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 24
@@ -229,6 +275,8 @@ MonoBehaviour:
       (|G).
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 25
@@ -238,6 +286,8 @@ MonoBehaviour:
     m_Description: When ON, bullets will not be shown.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1
   - m_SectionName: Preferences
     m_OptionType: 26
@@ -248,4 +298,6 @@ MonoBehaviour:
       in combat mode.
     m_ValueType: 3
     m_DefaultValue: true
+    m_ValueMin: 
+    m_ValueMax: 
     m_Flags: -1

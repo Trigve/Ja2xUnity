@@ -248,6 +248,27 @@ namespace Ja2
 
 			m_Value = Value;
 		}
+
+		/// <summary>
+		/// Get the min and max value for the option.
+		/// </summary>
+		/// <typeparam name="T">Type.</typeparam>
+		/// <returns>Minimum and maxmimum value for the option. If the options don't have min/max value define, exception is thrown.</returns>
+		public (T min, T max) GetMinMaxValues<T>()
+		{
+			// Min/Max values should be specified
+			if(string.IsNullOrEmpty(optionData.m_ValueMin) || string.IsNullOrEmpty(optionData.m_ValueMax))
+				throw new Exception("No min/max values specified for the game settings option!");
+
+			return (
+				(T)ValueFromString(optionData,
+					optionData.m_ValueMin
+				),
+				(T)ValueFromString(optionData,
+					optionData.m_ValueMax
+				)
+			);
+		}
 #endregion
 
 #region Methods Private
