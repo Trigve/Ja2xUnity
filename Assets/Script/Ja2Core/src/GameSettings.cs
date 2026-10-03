@@ -32,6 +32,13 @@ namespace Ja2
 		}
 #endregion
 
+#region Events
+		/// <summary>
+		/// Event called when the settings value is changed.
+		/// </summary>
+		public event EventHandler<GameSettingsEventArgs>? eventSettingsChanged;
+#endregion
+
 #region Methods Public
 		/// <summary>
 		/// Get the value for the given option.
@@ -58,6 +65,11 @@ namespace Ja2
 			option_value.SetValue(Value);
 			// Store the value back
 			this[Option] = option_value;
+
+			// Call the event
+			eventSettingsChanged?.Invoke(this,
+				new GameSettingsEventArgs(option_value)
+			);
 		}
 
 		/// <summary>
@@ -185,6 +197,9 @@ namespace Ja2
 		public GameSettings(GameSettings Copy)
 		{
 			m_Options = new Dictionary<GameSettingOptionData.OptionType, GameSettingOptionValue>(Copy.m_Options);
+
+			// Also, forward events
+			eventSettingsChanged = Copy.eventSettingsChanged;
 		}
 #endregion
 	}
@@ -312,6 +327,30 @@ namespace Ja2
 			}
 			else
 				m_Value = Value;
+		}
+#endregion
+	}
+
+	/// <summary>
+	/// Game settings event arguments.
+	/// </summary>
+	internal class GameSettingsEventArgs : EventArgs
+	{
+#region Properties
+		/// <summary>
+		/// Game setting option value.
+		/// </summary>
+		public GameSettingOptionValue optionValue { get; }
+#endregion
+
+#region Construction
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="OptionValue">See <see cref="optionValue"/>.</param>
+		public GameSettingsEventArgs(GameSettingOptionValue OptionValue)
+		{
+			optionValue = OptionValue;
 		}
 #endregion
 	}
