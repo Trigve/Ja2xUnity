@@ -203,7 +203,7 @@ namespace Ja2
 		/// </summary>
 		public void Initialize()
 		{
-			Ja2Logger.LogSound("Initialising JA2 sound manager");
+			Ja2Logger.LogInfo("Initialising JA2 sound manager");
 
 			Assert.IsNotNull(m_AudioMixer);
 
