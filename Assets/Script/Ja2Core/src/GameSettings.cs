@@ -20,6 +20,16 @@ namespace Ja2
 		/// Get all the options.
 		/// </summary>
 		public IEnumerable<GameSettingOptionValue> options => m_Options.Values;
+
+		/// <summary>
+		/// Accessor for the option.
+		/// </summary>
+		/// <param name="Option">Option</param>
+		public GameSettingOptionValue this[GameSettingOptionData.OptionType Option]
+		{
+			get => m_Options[Option];
+			set => m_Options[Option] = value;
+		}
 #endregion
 
 #region Methods Public
@@ -31,7 +41,7 @@ namespace Ja2
 		/// <returns>Option value.</returns>
 		public T GetValue<T>(GameSettingOptionData.OptionType Option) where T : struct
 		{
-			return m_Options[Option].GetValue<T>();
+			return this[Option].GetValue<T>();
 		}
 
 		/// <summary>
@@ -42,12 +52,12 @@ namespace Ja2
 		/// <typeparam name="T">Type of the value.</typeparam>
 		public void SetValue<T>(GameSettingOptionData.OptionType Option, in T Value) where T : struct
 		{
-			GameSettingOptionValue option_value = m_Options[Option];
+			GameSettingOptionValue option_value = this[Option];
 
 			// Set the value
 			option_value.SetValue(Value);
 			// Store the value back
-			m_Options[Option] = option_value;
+			this[Option] = option_value;
 		}
 
 		/// <summary>
