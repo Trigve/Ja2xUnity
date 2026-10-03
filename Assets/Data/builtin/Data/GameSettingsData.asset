@@ -21,8 +21,8 @@ MonoBehaviour:
     m_Description: Sound effects volume
     m_ValueType: 2
     m_DefaultValue: 0.5
-    m_ValueMin: 
-    m_ValueMax: 
+    m_ValueMin: -80
+    m_ValueMax: 0
     m_Flags: 0
   - m_SectionName: Audio
     m_OptionType: 2
@@ -32,8 +32,8 @@ MonoBehaviour:
     m_Description: Speech volume
     m_ValueType: 2
     m_DefaultValue: 0.7
-    m_ValueMin: 
-    m_ValueMax: 
+    m_ValueMin: -80
+    m_ValueMax: 0
     m_Flags: 0
   - m_SectionName: Audio
     m_OptionType: 3
@@ -43,8 +43,8 @@ MonoBehaviour:
     m_Description: Music volume
     m_ValueType: 2
     m_DefaultValue: 0.1
-    m_ValueMin: 
-    m_ValueMax: 
+    m_ValueMin: -80
+    m_ValueMax: 0
     m_Flags: 0
   - m_SectionName: Preferences
     m_OptionType: 4
