@@ -263,8 +263,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cee812ecb864262abbb27d35dcabeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_GameState: {fileID: 11400000, guid: f92ab9efa3d2e7b418acad26b30254d3, type: 2}
   m_AudioMixer: {fileID: 24100000, guid: 4759621312285e44a96d898f7125ff37, type: 2}
   m_MusicAudioGroup: {fileID: 1977674130651868848, guid: 4759621312285e44a96d898f7125ff37, type: 2}
+  m_SpeechAudioGroup: {fileID: 5946148411079927567, guid: 4759621312285e44a96d898f7125ff37, type: 2}
+  m_SfxAudioGroup: {fileID: 8693043637361787241, guid: 4759621312285e44a96d898f7125ff37, type: 2}
 --- !u!4 &2093306417
 Transform:
   m_ObjectHideFlags: 0

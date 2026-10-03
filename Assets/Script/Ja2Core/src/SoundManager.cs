@@ -12,7 +12,30 @@ namespace Ja2
 	/// </summary>
 	public sealed class SoundManager : MonoBehaviour
 	{
+#region Constants
+		/// <summary>
+		/// Music volume audio mixer parameter name.
+		/// </summary>
+		private const string ParameterMusicVolume = "MusicVolume";
+
+		/// <summary>
+		/// Speech volume audio mixer parameter name.
+		/// </summary>
+		private const string ParameterSpeechVolume = "SpeechVolume";
+
+		/// <summary>
+		/// Sfx volume audio mixer parameter name.
+		/// </summary>
+		private const string ParameterSfxVolume = "SfxVolume";
+#endregion
+
 #region Fields Component
+		/// <summary>
+		/// Game state.
+		/// </summary>
+		[SerializeField]
+		private GameState? m_GameState;
+
 		/// <summary>
 		/// Main audio mixer used.
 		/// </summary>
@@ -24,6 +47,18 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private AudioMixerGroup? m_MusicAudioGroup;
+
+		/// <summary>
+		/// Speech audio group in mixer.
+		/// </summary>
+		[SerializeField]
+		private AudioMixerGroup? m_SpeechAudioGroup;
+
+		/// <summary>
+		/// Sfx audio group in mixer.
+		/// </summary>
+		[SerializeField]
+		private AudioMixerGroup? m_SfxAudioGroup;
 #endregion
 
 #region Fields
@@ -67,6 +102,101 @@ namespace Ja2
 		}
 #endregion
 
+#region Methods Private Static
+		/// <summary>
+		/// Convert dB value to linear.
+		/// </summary>
+		/// <param name="Value">dB value.</param>
+		/// <returns>Linear value.</returns>
+		private static float DecibelToLinear(float Value)
+		{
+			return Mathf.Pow(10f,
+				Value / 20
+			);
+		}
+
+		/// <summary>
+		/// Convert linear value to dB.
+		/// </summary>
+		/// <param name="Value">Linear value.</param>
+		/// <returns>db Value.</returns>
+		private static float LinearToDecibel(float Value)
+		{
+			return 20f * Mathf.Log10(Value);
+		}
+
+		/// <summary>
+		/// Convert linear value range to dB range.
+		/// </summary>
+		/// <param name="Value">Linear value to convert.</param>
+		/// <param name="Min">dB range minimum value.</param>
+		/// <param name="Max">dB range maximum value.</param>
+		/// <returns>dB value in the <paramref name="Min"/>/<paramref name="Max"/> range.</returns>
+		private static float LinearRangeToDecibel(float Value, float Min, float Max)
+		{
+			// Be sure it is still in the range
+			Value = Mathf.Clamp01(Value);
+
+			return LinearToDecibel(
+				Mathf.Lerp(DecibelToLinear(Min),
+					DecibelToLinear(Max),
+					Value
+				)
+			);
+		}
+
+		/// <summary>
+		/// Set the audio group volume.
+		/// </summary>
+		/// <param name="AudioGroup">Audio mixer group used to set the volume.</param>
+		/// <param name="OptionValue">Option value.</param>
+		/// <param name="Parameter">Parameter name of the volume.</param>
+		private static void SetAudioGroupVolume(AudioMixerGroup AudioGroup, GameSettingOptionValue OptionValue, string Parameter)
+		{
+			(float min, float max) = OptionValue.GetMinMaxValues<float>();
+			AudioGroup.audioMixer.SetFloat(Parameter,
+				// Convert to the dB
+				LinearRangeToDecibel(OptionValue.GetValue<float>(),
+					min,
+					max
+				)
+			);
+		}
+#endregion
+
+#region Slots
+		/// <summary>
+		/// Handle volume settings changes.
+		/// </summary>
+		/// <param name="Sender">Sender object.</param>
+		/// <param name="Event">Event.</param>
+		private void OnSettingsChanged(object? Sender, GameSettingsEventArgs Event)
+		{
+			// Only volume settings
+			if(Event.optionValue.optionData.m_OptionType == GameSettingOptionData.OptionType.OptionMusicVolume)
+			{
+				SetAudioGroupVolume(m_MusicAudioGroup!,
+					Event.optionValue,
+					ParameterMusicVolume
+				);
+			}
+			else if(Event.optionValue.optionData.m_OptionType == GameSettingOptionData.OptionType.OptionSpeechVolume)
+			{
+				SetAudioGroupVolume(m_SpeechAudioGroup!,
+					Event.optionValue,
+					ParameterSpeechVolume
+				);
+			}
+			else if(Event.optionValue.optionData.m_OptionType == GameSettingOptionData.OptionType.OptionSoundEffectsVolume)
+			{
+				SetAudioGroupVolume(m_SfxAudioGroup!,
+					Event.optionValue,
+					ParameterSfxVolume
+				);
+			}
+		}
+#endregion
+
 #region Initialization
 		/// <summary>
 		/// Initialization.
@@ -77,7 +207,26 @@ namespace Ja2
 
 			Assert.IsNotNull(m_AudioMixer);
 
-			m_MusicAudioSources =  new List<AudioSource>();
+			m_MusicAudioSources = new List<AudioSource>();
+
+			// Set the volumes for the audio groups
+			{
+				SetAudioGroupVolume(m_MusicAudioGroup!,
+					m_GameState!.gameSettings[GameSettingOptionData.OptionType.OptionMusicVolume],
+					ParameterMusicVolume
+				);
+				SetAudioGroupVolume(m_SpeechAudioGroup!,
+					m_GameState!.gameSettings[GameSettingOptionData.OptionType.OptionSpeechVolume],
+					ParameterSpeechVolume
+				);
+				SetAudioGroupVolume(m_SfxAudioGroup!,
+					m_GameState!.gameSettings[GameSettingOptionData.OptionType.OptionSoundEffectsVolume],
+					ParameterSfxVolume
+				);
+			}
+
+			// Connect to settings events
+			m_GameState.gameSettings.eventSettingsChanged += OnSettingsChanged;
 		}
 #endregion
 	}
