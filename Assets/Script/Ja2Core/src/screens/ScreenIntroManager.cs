@@ -19,12 +19,6 @@ namespace Ja2
 	{
 #region Fields Component
 		/// <summary>
-		/// Mock manager.
-		/// </summary>
-		[SerializeField]
-		private AssetRefMockerManager? m_MockManager;
-
-		/// <summary>
 		/// Video player component.
 		/// </summary>
 		[SerializeField]
@@ -44,9 +38,6 @@ namespace Ja2
 #endregion
 
 #region Properties
-		/// <inheritdoc/>
-		public override IAssetRefMockRegistry assetRefMockRegistry => m_MockManager!;
-
 		/// <summary>
 		/// All the video clips to play.
 		/// </summary>
@@ -60,8 +51,9 @@ namespace Ja2
 
 			m_VideoPlayer.targetCamera = m_GameState.activeCamera;
 
+			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(false);
 			// As first, load all the needed assets
-			await m_MockManager!.LoadAssetsAsync();
+			await BootsrapManager.instance.assetRefMockerManager!.LoadAssetsAsync();
 
 			// Play all the clips
 			foreach(VideoClip? it in m_VideoClips)
@@ -108,7 +100,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			m_MockManager!.Initialize(m_GameState.assetManager);
+			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 #endregion
 	}

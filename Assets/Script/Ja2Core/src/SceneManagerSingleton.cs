@@ -17,13 +17,6 @@ namespace Ja2
 		protected GameState m_GameState = null!;
 #endregion
 
-#region Properties
-		/// <summary>
-		/// Asset ref mocker reigstry.
-		/// </summary>
-		public abstract IAssetRefMockRegistry assetRefMockRegistry { get; }
-#endregion
-
 #region Messages
 		public void Awake()
 		{

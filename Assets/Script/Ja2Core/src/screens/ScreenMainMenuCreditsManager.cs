@@ -39,12 +39,6 @@ namespace Ja2
 
 #region Fields Component
 		/// <summary>
-		/// Asset ref mocker manager.
-		/// </summary>
-		[SerializeField]
-		private AssetRefMockerManager? m_AssetRefMocker;
-
-		/// <summary>
 		/// Data component.
 		/// </summary>
 		[SerializeField]
@@ -164,11 +158,6 @@ namespace Ja2
 		private CreditsFaceComponent[] m_Faces = Array.Empty<CreditsFaceComponent>();
 #endregion
 
-#region Properties
-		/// <inheritdoc/>
-		public override IAssetRefMockRegistry assetRefMockRegistry => m_AssetRefMocker!;
-#endregion
-
 #region Messages
 		public void Start()
 		{
@@ -177,7 +166,8 @@ namespace Ja2
 
 			m_NodesShown = new Queue<CreditsDataNodeComponent>();
 
-			m_AssetRefMocker!.LoadAssets();
+			// Load all the assets
+			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
 
 			// Get the actual credits data after loading the data
 			m_CreditsData = m_DataComponent!.m_CreditsData;
@@ -414,7 +404,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			m_AssetRefMocker!.Initialize(m_GameState.assetManager);
+			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 #endregion
 	}

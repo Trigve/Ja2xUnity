@@ -9,12 +9,6 @@ namespace Ja2
 	{
 #region Fields Component
 		/// <summary>
-		/// Asset ref mocker.
-		/// </summary>
-		[SerializeField]
-		private AssetRefMockerManager? m_AssetRefMocker;
-
-		/// <summary>
 		/// Main menu music component.
 		/// </summary>
 		[SerializeField]
@@ -39,11 +33,6 @@ namespace Ja2
 		private GameScreen? m_PreferencesScreen;
 #endregion
 
-#region Properties
-		/// <inheritdoc/>
-		public override IAssetRefMockRegistry assetRefMockRegistry => m_AssetRefMocker!;
-#endregion
-
 #region Messages
 		public void Start()
 		{
@@ -55,7 +44,8 @@ namespace Ja2
 				new UI.ViewModel.ViewModelMainMenu(this)
 			);
 
-			m_AssetRefMocker!.LoadAssets();
+			// Load all the assets
+			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
 
 			// Start the main menu music, if not already started
 			BootsrapManager.instance.soundManager.AddMusicSource(m_Music!);
@@ -126,7 +116,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			m_AssetRefMocker!.Initialize(m_GameState.assetManager);
+			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 
 		/// <inheritdoc/>

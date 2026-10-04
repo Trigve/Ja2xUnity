@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-using Cysharp.Threading.Tasks;
-
 using UnityEngine;
+using UnityEngine.Assertions;
+
+using Cysharp.Threading.Tasks;
 
 using Object = UnityEngine.Object;
 
@@ -16,9 +17,9 @@ namespace Ja2
 	{
 #region Fields
 		/// <summary>
-		/// True, if the registered assets were loaded.
+		/// True, if the system is in a batch mode.
 		/// </summary>
-		private bool m_AssetLoaded;
+		private bool m_IsBatchMode;
 
 		/// <summary>
 		/// Asset manager.
@@ -32,6 +33,22 @@ namespace Ja2
 #endregion
 
 #region Methods Public
+		/// <inheritdoc/>
+		public void StartBatchMode()
+		{
+			Assert.IsFalse(m_IsBatchMode);
+			m_IsBatchMode = true;
+		}
+
+		/// <inheritdoc/>
+		public void StopBatchMode(bool DoLoadAssets)
+		{
+			m_IsBatchMode = false;
+
+			if(DoLoadAssets)
+				LoadAssets();
+		}
+
 		/// <summary>
 		/// Register new ref mocker to the manager.
 		/// </summary>
@@ -43,16 +60,12 @@ namespace Ja2
 				new AssetRefMockerInstance(MockerComponent)
 			);
 
-			// If it is called AFTER the initial loading, load on demenad
-			if(m_AssetLoaded)
-			{
+			// Not called during batch mode, load immediately
+			if(!m_IsBatchMode)
 				LoadAssets();
-			}
 		}
 
-		/// <summary>
-		/// Load all the assets from the AssetRefs.
-		/// </summary>
+		/// <inheritdoc/>
 		public void LoadAssets()
 		{
 			var asset_list = new List<Object?>();
@@ -93,9 +106,7 @@ namespace Ja2
 			MarkAssetsLoaded();
 		}
 
-		/// <summary>
-		/// Load all the assets from the AssetRefs.
-		/// </summary>
+		/// <inheritdoc/>
 		public async UniTask LoadAssetsAsync()
 		{
 			var asset_list = new List<Object?>();
@@ -143,7 +154,6 @@ namespace Ja2
 		/// </summary>
 		private void MarkAssetsLoaded()
 		{
-			m_AssetLoaded = true;
 			m_AssetMocks.Clear();
 		}
 #endregion

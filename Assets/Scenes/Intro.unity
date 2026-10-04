@@ -171,10 +171,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: VideoPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 9174612328239888633, guid: a5ba4e15fe7733240b6f7be46a0725a9, type: 3}
-      propertyPath: m_TargetCamera
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -217,7 +213,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GameState: {fileID: 11400000, guid: f92ab9efa3d2e7b418acad26b30254d3, type: 2}
-  m_MockManager: {fileID: 574964790}
   m_VideoPlayer: {fileID: 557628145}
   m_VideoClips:
   - {fileID: 0}
@@ -268,8 +263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c933314e5de443538c0d318ea212559c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetMocks:
-  - m_Component: {fileID: 574964789}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

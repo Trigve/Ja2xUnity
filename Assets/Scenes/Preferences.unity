@@ -1329,7 +1329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GameState: {fileID: 11400000, guid: f92ab9efa3d2e7b418acad26b30254d3, type: 2}
-  m_AssetRefMocker: {fileID: 1131475388}
   m_GameSettingsView: {fileID: 2072580407}
   m_PreferencesItemsView: {fileID: 1904703293}
 --- !u!4 &1131475390

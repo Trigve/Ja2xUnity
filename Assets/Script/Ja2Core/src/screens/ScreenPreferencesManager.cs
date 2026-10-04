@@ -11,12 +11,6 @@ namespace Ja2
 	{
 #region Fields Component
 		/// <summary>
-		/// Asset ref mocker manager.
-		/// </summary>
-		[SerializeField]
-		private AssetRefMockerManager? m_AssetRefMocker;
-
-		/// <summary>
 		/// Main menu view.
 		/// </summary>
 		[SerializeField]
@@ -36,15 +30,11 @@ namespace Ja2
 		private UI.Models.ModelPreferences m_ModelPreferences = null!;
 #endregion
 
-#region Properties
-		/// <inheritdoc/>
-		public override IAssetRefMockRegistry assetRefMockRegistry => m_AssetRefMocker!;
-#endregion
-
 #region Messages
 		public void Start()
 		{
-			m_AssetRefMocker!.LoadAssets();
+			// Load all the assets
+			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
 
 			m_ModelPreferences = new UI.Models.ModelPreferences(m_GameState);
 			m_ModelPreferences.eventDone += OnPreferencesDone;
@@ -64,7 +54,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			m_AssetRefMocker!.Initialize(m_GameState.assetManager);
+			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 
 		/// <inheritdoc/>

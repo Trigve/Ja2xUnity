@@ -57,7 +57,7 @@ namespace Ja2
 		public void Awake()
 		{
 			// Register the mocker
-			GameState.instance!.SceneManagerForScene(gameObject.scene).assetRefMockRegistry.RegisterAssetRefMocker(this);
+			BootsrapManager.instance.assetRefMockerManager!.RegisterAssetRefMocker(this);
 
 			DoAwake();
 		}

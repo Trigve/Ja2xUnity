@@ -21,6 +21,12 @@ namespace Ja2
 		private GameState m_GameState = null!;
 
 		/// <summary>
+		/// Asset ref mocker manager.
+		/// </summary>
+		[SerializeField]
+		private AssetRefMockerManager? m_AssetRefMocker;
+
+		/// <summary>
 		/// See <see cref="soundManager"/>.
 		/// </summary>
 		[SerializeField]
@@ -52,6 +58,11 @@ namespace Ja2
 		/// Sound manager.
 		/// </summary>
 		public SoundManager soundManager => m_SoundManager!;
+
+		/// <summary>
+		/// Asset ref mocker registry.
+		/// </summary>
+		public IAssetRefMockRegistry? assetRefMockerManager => m_AssetRefMocker;
 #endregion
 
 #region Messages
@@ -61,6 +72,8 @@ namespace Ja2
 			Assert.IsTrue(m_Instance is null);
 
 			m_Instance = this;
+
+			m_AssetRefMocker!.Initialize(m_GameState.assetManager);
 		}
 
 		public void Start()
