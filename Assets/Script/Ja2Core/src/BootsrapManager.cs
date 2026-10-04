@@ -33,6 +33,12 @@ namespace Ja2
 		private SoundManager? m_SoundManager;
 
 		/// <summary>
+		/// See <see cref="fastHelpTextManager"/>.
+		/// </summary>
+		[SerializeField]
+		private UI.FastHelpTextManager? m_FastHelpTextManager;
+
+		/// <summary>
 		/// Init screen to run.
 		/// </summary>
 		[SerializeField]
@@ -63,6 +69,11 @@ namespace Ja2
 		/// Asset ref mocker registry.
 		/// </summary>
 		public IAssetRefMockRegistry? assetRefMockerManager => m_AssetRefMocker;
+
+		/// <summary>
+		/// Fast help text manager.
+		/// </summary>
+		public UI.FastHelpTextManager? fastHelpTextManager => m_FastHelpTextManager;
 #endregion
 
 #region Messages
