@@ -277,25 +277,9 @@ PrefabInstance:
       value: ButtonContinue
       objectReference: {fileID: 0}
     - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Normal
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Pressed
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Disabled
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
       propertyPath: m_VisualRoot
       value: 
       objectReference: {fileID: 154677590}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Highlighted
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -866,21 +850,9 @@ PrefabInstance:
       value: ButtonQuit
       objectReference: {fileID: 0}
     - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Normal
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Pressed
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
       propertyPath: m_VisualRoot
       value: 
       objectReference: {fileID: 1156483830}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Highlighted
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1065,25 +1037,9 @@ PrefabInstance:
       value: ButtonCredits
       objectReference: {fileID: 0}
     - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Normal
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Pressed
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Disabled
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
       propertyPath: m_VisualRoot
       value: 
       objectReference: {fileID: 1303289780}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Highlighted
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1255,21 +1211,9 @@ PrefabInstance:
       value: ButtonPreferences
       objectReference: {fileID: 0}
     - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Normal
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Pressed
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
       propertyPath: m_VisualRoot
       value: 
       objectReference: {fileID: 1317479525}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Highlighted
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1639,21 +1583,9 @@ PrefabInstance:
       value: ButtonNewGame
       objectReference: {fileID: 0}
     - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Normal
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Pressed
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
       propertyPath: m_VisualRoot
       value: 
       objectReference: {fileID: 4192652728578662971}
-    - target: {fileID: 7643548790505367906, guid: 34ba994d73e06d547b093e1e558fce8f, type: 3}
-      propertyPath: m_Highlighted
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1672,10 +1604,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 366978043}
     m_Modifications:
-    - target: {fileID: -8213518190734738221, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
-      propertyPath: m_FontAsset
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
       propertyPath: m_text
       value: Copyright (C) 1999 Sir-tech Canada Ltd.  All rights reserved.

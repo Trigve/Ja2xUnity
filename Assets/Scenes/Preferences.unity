@@ -438,10 +438,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2072580406}
     m_Modifications:
-    - target: {fileID: -8213518190734738221, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
-      propertyPath: m_FontAsset
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
       propertyPath: m_text
       value: Music
@@ -692,14 +688,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOff
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_text
       value: Done
@@ -707,10 +695,6 @@ PrefabInstance:
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396230975671475308, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_Sprite
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7046488607060686005, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_Name
@@ -826,10 +810,6 @@ PrefabInstance:
     - target: {fileID: 248230768491329790, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323870950003576398, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
-      propertyPath: m_Sprite
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4662550159470387268, guid: cec43af09324ce34d986dc238169fcf1, type: 3}
       propertyPath: m_AssetRefs.Array.size
@@ -1245,18 +1225,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2791954001167205628, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_FontAsset
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOff
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_text
       value: Quit Game
@@ -1272,10 +1240,6 @@ PrefabInstance:
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396230975671475308, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_Sprite
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7046488607060686005, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_Name
@@ -1438,10 +1402,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicVolume
       objectReference: {fileID: 0}
-    - target: {fileID: 4384098307004040446, guid: 133f84f02e299f64296105ff5a39ad85, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5899687493346581612, guid: 133f84f02e299f64296105ff5a39ad85, type: 3}
       propertyPath: __id
       value: MusicVolume
@@ -1520,10 +1480,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2072580406}
     m_Modifications:
-    - target: {fileID: -8213518190734738221, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
-      propertyPath: m_FontAsset
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
       propertyPath: m_text
       value: Speech
@@ -1920,18 +1876,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2791954001167205628, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_FontAsset
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOff
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_text
       value: Load Game
@@ -1947,10 +1891,6 @@ PrefabInstance:
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396230975671475308, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_Sprite
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7046488607060686005, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_Name
@@ -1977,10 +1917,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2072580406}
     m_Modifications:
-    - target: {fileID: -8213518190734738221, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
-      propertyPath: m_FontAsset
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: -2700175247774201436, guid: 8a99154495ba6fb409116fd38a69d1e3, type: 3}
       propertyPath: m_text
       value: Effects
@@ -2512,10 +2448,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpeechVolume
       objectReference: {fileID: 0}
-    - target: {fileID: 4384098307004040446, guid: 133f84f02e299f64296105ff5a39ad85, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5899687493346581612, guid: 133f84f02e299f64296105ff5a39ad85, type: 3}
       propertyPath: __id
       value: SpeechVolume
@@ -2762,22 +2694,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2791954001167205628, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_FontAsset
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_NormalOff
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184879773005696420, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_DisableStyle
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_text
       value: Save Game
@@ -2797,10 +2713,6 @@ PrefabInstance:
     - target: {fileID: 3469567645782251712, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396230975671475308, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
-      propertyPath: m_Sprite
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7046488607060686005, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
       propertyPath: m_Name
@@ -2914,10 +2826,6 @@ PrefabInstance:
     - target: {fileID: 2818782295431954266, guid: 133f84f02e299f64296105ff5a39ad85, type: 3}
       propertyPath: m_Name
       value: SoundEffectsVolume
-      objectReference: {fileID: 0}
-    - target: {fileID: 4384098307004040446, guid: 133f84f02e299f64296105ff5a39ad85, type: 3}
-      propertyPath: m_Sprite
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5899687493346581612, guid: 133f84f02e299f64296105ff5a39ad85, type: 3}
       propertyPath: __id
