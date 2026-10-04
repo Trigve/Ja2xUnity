@@ -24,6 +24,13 @@ namespace Ja2.UI.View
 		[RequireBinder(typeof(string))]
 		[SerializeField]
 		private MonoBinder[]? m_Text;
+
+		/// <summary>
+		/// Fast help text.
+		/// </summary>
+		[RequireBinder(typeof(string))]
+		[SerializeField]
+		private MonoBinder[]? m_FastHelpText;
 #endregion
 	}
 }

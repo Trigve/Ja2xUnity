@@ -22,6 +22,12 @@ namespace Ja2.UI.ViewModel
 		private readonly string m_Text;
 
 		/// <summary>
+		/// Fast help text.
+		/// </summary>
+		[OneTimeBind]
+		private readonly string m_FastHelpText;
+
+		/// <summary>
 		/// Game settings used.
 		/// </summary>
 		private readonly GameSettings m_GameSettings;
@@ -60,6 +66,7 @@ namespace Ja2.UI.ViewModel
 			// Set the initial values
 			m_Value = m_Item.GetValue<bool>();
 			m_Text = m_Item.optionData.m_Text;
+			m_FastHelpText = m_Item.optionData.m_Description;
 		}
 #endregion
 	}

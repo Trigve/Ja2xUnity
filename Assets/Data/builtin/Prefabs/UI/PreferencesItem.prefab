@@ -53,6 +53,8 @@ MonoBehaviour:
   - {fileID: 9113162367151831350}
   m_Text:
   - {fileID: 4866003381749550346}
+  m_FastHelpText:
+  - {fileID: 5889420348252077263}
 --- !u!1001 &1622429081796831302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -168,10 +170,24 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7639397228081687609, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9113162367151831350}
+    - targetCorrespondingSourceObject: {fileID: 7639397228081687609, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5889420348252077263}
     - targetCorrespondingSourceObject: {fileID: 4152063311646582360, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4866003381749550346}
   m_SourcePrefab: {fileID: 100100000, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
+--- !u!114 &1197787766995288035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 440054273096325029, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
+  m_PrefabInstance: {fileID: 1622429081796831302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8971330895557084287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00c48ffb6d2b45d98e1125b9e9909e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2268383728713951608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 720272874493313342, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
@@ -250,6 +266,22 @@ MonoBehaviour:
   _isInvert: 0
   _isDebug: 0
   _log: []
+--- !u!114 &5889420348252077263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8971330895557084287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f645861b4047fd926d4d77d5ed8a9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  __view: {fileID: 8279432937969798200}
+  __id: FastHelpText
+  _mode: 1
+  _component: {fileID: 1197787766995288035}
 --- !u!224 &9096529391056178505 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7546163729588462863, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}

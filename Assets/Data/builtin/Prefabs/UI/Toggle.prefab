@@ -256,6 +256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7546163729588462863}
   - component: {fileID: 720272874493313342}
+  - component: {fileID: 440054273096325029}
   - component: {fileID: 6611939338199937889}
   m_Layer: 5
   m_Name: Toggle
@@ -337,6 +338,21 @@ MonoBehaviour:
   m_NormalOff: {fileID: 0}
   m_HiliteOn: {fileID: 0}
   m_HiliteOff: {fileID: 0}
+  m_FastHelp: {fileID: 0}
+--- !u!114 &440054273096325029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639397228081687609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00c48ffb6d2b45d98e1125b9e9909e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delay: 0.6
+  m_Text: 
 --- !u!114 &6611939338199937889
 MonoBehaviour:
   m_ObjectHideFlags: 0
