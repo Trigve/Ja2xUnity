@@ -84,7 +84,8 @@ MonoBehaviour:
     m_Names:
     - pause_txt_dlg
     m_Text: Pause Text Dialogue
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: If Subtitles are ON, turn this on also to be able to take your
+      time reading NPC dialogue.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -95,7 +96,8 @@ MonoBehaviour:
     m_Names:
     - smoke_anim
     m_Text: Animate Smoke
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: Turn off this option if animating smoke slows down your game's
+      framerate.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -106,7 +108,7 @@ MonoBehaviour:
     m_Names:
     - blood_n_gore
     m_Text: Blood n Gore
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: Turn this option OFF if blood offends you.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -117,7 +119,8 @@ MonoBehaviour:
     m_Names:
     - mouse_move
     m_Text: Never Move My Mouse!
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: Turn this option OFF to have your mouse automatically move over
+      pop-up confirmation boxes when they appear.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -128,7 +131,8 @@ MonoBehaviour:
     m_Names:
     - old_sel_meth
     m_Text: Old Selection Method
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: Turn this ON for character selection to work as in previous JAGGED
+      ALLIANCE games (which is the opposite of how it works otherwise).
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -139,7 +143,8 @@ MonoBehaviour:
     m_Names:
     - show_move_path
     m_Text: Show Movement Path
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: Turn this ON to display movement paths in Real-time (or leave
+      it off and use the SHIFT key when you do want them displayed).
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -150,7 +155,8 @@ MonoBehaviour:
     m_Names:
     - show_miss
     m_Text: Show Misses
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: Turn ON to have the game show you where your bullets ended up
+      when you "miss".
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -161,7 +167,8 @@ MonoBehaviour:
     m_Names:
     - rt_conf
     m_Text: Real Time Confirmation
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, an additional "safety" click will be required for movement
+      in Real-time.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -172,7 +179,8 @@ MonoBehaviour:
     m_Names:
     - disp_sl_wk_notif
     m_Text: Display sleep/wake notifications
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, you will be notified when mercs on "assignment" go to
+      sleep and resume work.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -183,7 +191,8 @@ MonoBehaviour:
     m_Names:
     - use_metric
     m_Text: Use Metric System
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, uses the metric system for measurements; otherwise it
+      uses the Imperial system.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -194,7 +203,8 @@ MonoBehaviour:
     m_Names:
     - merc_light_move
     m_Text: Merc Lights during Movement
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, the merc will light the ground while walking.  Turn OFF
+      for faster frame rate.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -205,7 +215,8 @@ MonoBehaviour:
     m_Names:
     - merc_curs_snap
     m_Text: Snap Cursor to Mercs
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, moving the cursor near your mercs will automatically
+      highlight them.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -216,7 +227,8 @@ MonoBehaviour:
     m_Names:
     - door_curs_snap
     m_Text: Snap Cursor to Doors
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, moving the cursor near a door will automatically position
+      the cursor over the door.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -227,7 +239,7 @@ MonoBehaviour:
     m_Names:
     - items_glow
     m_Text: Make Items Glow
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, |Items continuously glow
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -238,7 +250,7 @@ MonoBehaviour:
     m_Names:
     - tree_tops
     m_Text: Show Tree Tops
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, shows the |Tree tops.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -249,7 +261,7 @@ MonoBehaviour:
     m_Names:
     - show_wirefr
     m_Text: Show Wireframes
-    m_Description: Keep this option ON if you want to hear character dialogue.
+    m_Description: When ON, displays |Wireframes for obscured walls.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
