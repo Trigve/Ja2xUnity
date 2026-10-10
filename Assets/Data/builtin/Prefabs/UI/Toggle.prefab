@@ -338,7 +338,9 @@ MonoBehaviour:
   m_NormalOff: {fileID: 0}
   m_HiliteOn: {fileID: 0}
   m_HiliteOff: {fileID: 0}
-  m_FastHelp: {fileID: 0}
+  m_TextHiliteColor:
+    serializedVersion: 2
+    rgba: 4294967295
 --- !u!114 &440054273096325029
 MonoBehaviour:
   m_ObjectHideFlags: 0
