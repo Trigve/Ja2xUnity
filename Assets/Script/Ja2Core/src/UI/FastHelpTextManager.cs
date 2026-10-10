@@ -41,6 +41,7 @@ namespace Ja2.UI
 			GameObject ret = Instantiate(m_FastHelpTextPrefab,
 				m_Canvas!.transform
 			)!;
+			ret.GetComponent<FastHelpTextRendererComponent>().Initialize(m_Canvas);
 
 			m_ShowedTexts[Component] = ret;
 

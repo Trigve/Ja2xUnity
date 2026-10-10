@@ -23,6 +23,13 @@ namespace Ja2.UI
 		private int m_MaxTextWidth = 300;
 #endregion
 
+#region Fields
+		/// <summary>
+		/// Canvas to use.
+		/// </summary>
+		private Canvas m_Canvas = null!;
+#endregion
+
 #region Properties
 		/// <summary>
 		/// Set the text.
@@ -41,6 +48,7 @@ namespace Ja2.UI
 		{
 			var text_transform = ((RectTransform)m_Text!.transform);
 			var rect_transform = (RectTransform)transform;
+			var canvas_transform = (RectTransform)m_Canvas.transform;
 
 			// Measure the preferred width
 			float width = Mathf.Ceil(
@@ -52,6 +60,22 @@ namespace Ja2.UI
 					m_MaxTextWidth
 				)
 			);
+			// Use padding as defined for text control
+			width += Mathf.Abs(text_transform.offsetMin.x) + Mathf.Abs(text_transform.offsetMax.x);
+
+			var corners = new Vector3[4];
+
+			// Canvas dimension
+			canvas_transform.GetWorldCorners(corners);
+			float canvas_right = corners[3].x;
+
+			// Tooltip dimensions
+			rect_transform.GetWorldCorners(corners);
+
+			// Adjust the width (with some margin) so it doesn't extend past the canvas
+			width = Mathf.Min(width,
+				canvas_right - corners[0].x - 5
+			);
 
 			// Measure the preferred height, after the width is set
 			float height = Mathf.Ceil(
@@ -62,7 +86,6 @@ namespace Ja2.UI
 			);
 
 			// Use padding as defined for text control
-			width += Mathf.Abs(text_transform.offsetMin.x) + Mathf.Abs(text_transform.offsetMax.x);
 			height += Mathf.Abs(text_transform.offsetMin.y) + Mathf.Abs(text_transform.offsetMax.y);
 
 			rect_transform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
@@ -71,6 +94,17 @@ namespace Ja2.UI
 			rect_transform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
 				height
 			);
+		}
+#endregion
+
+#region Initialization
+		/// <summary>
+		/// Initialization.
+		/// </summary>
+		/// <param name="CanvasToUse">Canvas to use.</param>
+		public void Initialize(Canvas CanvasToUse)
+		{
+			m_Canvas = CanvasToUse;
 		}
 #endregion
 	}
