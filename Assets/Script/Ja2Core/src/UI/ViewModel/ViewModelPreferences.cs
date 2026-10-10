@@ -105,7 +105,9 @@ namespace Ja2.UI.ViewModel
 			m_CommandSaveGame = new RelayCommand(Model.SaveGame,
 				Model.canSaveGame
 			);
-			m_CommandLoadGame = new RelayCommand(Model.LoadGame);
+			m_CommandLoadGame = new RelayCommand(Model.LoadGame,
+				Model.canLoadGame
+			);
 			m_CommandDone = new RelayCommand(Model.Done);
 		}
 #endregion

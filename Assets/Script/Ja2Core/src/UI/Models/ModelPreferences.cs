@@ -25,6 +25,12 @@ namespace Ja2.UI.Models
 		/// Can save game.
 		/// </summary>
 		public Func<bool> canSaveGame => () => false;
+
+		// \FIXME Needs implementation
+		/// <summary>
+		/// Can load the game.
+		/// </summary>
+		public Func<bool> canLoadGame => () => false;
 #endregion
 
 #region Events
