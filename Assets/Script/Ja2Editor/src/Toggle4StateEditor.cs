@@ -22,6 +22,7 @@ namespace Ja2.Editor
 			SerializedProperty normal_off = serializedObject.FindProperty(UI.Toggle4State.PropertyNameNormalOff);
 			SerializedProperty hilite_off = serializedObject.FindProperty(UI.Toggle4State.PropertyNameHiliteOff);
 			SerializedProperty image = serializedObject.FindProperty(UI.Toggle4State.PropertyNameImage);
+			SerializedProperty text_hilite_color = serializedObject.FindProperty(UI.Toggle4State.PropertyNameTextHiliteColor);
 
 			VisualElement root = new();
 
@@ -57,6 +58,9 @@ namespace Ja2.Editor
 			);
 			root.Add(
 				new PropertyField(image)
+			);
+			root.Add(
+				new PropertyField(text_hilite_color)
 			);
 
 			return root;

@@ -1,4 +1,7 @@
+using TMPro;
+
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,6 +19,7 @@ namespace Ja2.UI
 		public const string PropertyNameNormalOff = nameof(m_NormalOff);
 		public const string PropertyNameHiliteOn = nameof(m_HiliteOn);
 		public const string PropertyNameHiliteOff = nameof(m_HiliteOff);
+		public const string PropertyNameTextHiliteColor = nameof(m_TextHiliteColor);
 		public const string PropertyNameImage = "m_TargetGraphic";
 #endregion
 #endif
@@ -44,8 +48,25 @@ namespace Ja2.UI
 		/// </summary>
 		[SerializeField]
 		private Sprite? m_HiliteOff;
+
+		/// <summary>
+		/// Text hilite color.
+		/// </summary>
+		[SerializeField]
+		private Color32 m_TextHiliteColor;
 #endregion
 
+#region Fields
+		/// <summary>
+		/// Text control.
+		/// </summary>
+		private TMP_Text? m_Text;
+
+		/// <summary>
+		/// Original text color.
+		/// </summary>
+		private Color32 m_TextColorOrig;
+#endregion
 
 #region Properties
 		/// <summary>
@@ -90,6 +111,11 @@ namespace Ja2.UI
 		{
 			base.Awake();
 
+			m_Text = GetComponentInChildren<TMP_Text>();
+			Assert.IsNotNull(m_Text);
+
+			m_TextColorOrig = m_Text.color;
+
 			onValueChanged.AddListener(OnValueChanged);
 		}
 #endregion
@@ -116,12 +142,21 @@ namespace Ja2.UI
 		/// </summary>
 		public void Refresh()
 		{
-			image.sprite = currentSelectionState switch
+			switch(currentSelectionState)
 			{
-				SelectionState.Normal => (isOn ? m_NormalOn : m_NormalOff),
-				SelectionState.Pressed or SelectionState.Selected or SelectionState.Highlighted => (isOn ? m_HiliteOn : m_HiliteOff),
-				_ => image.sprite
-			};
+			case SelectionState.Normal:
+				image.sprite = (isOn ? m_NormalOn : m_NormalOff);
+				m_Text!.color = m_TextColorOrig;
+				break;
+			case SelectionState.Pressed or SelectionState.Selected or SelectionState.Highlighted:
+				image.sprite = (isOn ? m_HiliteOn : m_HiliteOff);
+				m_Text!.color = m_TextHiliteColor;
+				break;
+			default:
+				image.sprite = image.sprite;
+				m_Text!.color = m_TextColorOrig;
+				break;
+			}
 		}
 
 #if UNITY_EDITOR
