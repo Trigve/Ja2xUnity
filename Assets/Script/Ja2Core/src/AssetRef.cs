@@ -160,11 +160,11 @@ namespace Ja2
 				bundle = path = string.Empty;
 
 			var sub_asset_name = string.Empty;
-			idx = AssetPathCombined.IndexOf('@');
+			idx = path.IndexOf('@');
 			if(idx >= 0)
 			{
-				path = AssetPathCombined[..(idx)];
-				sub_asset_name = AssetPathCombined[(idx + 1)..];
+				sub_asset_name = path[(idx + 1)..];
+				path = path[..(idx)];
 			}
 
 			return new AssetRef(path,
