@@ -144,7 +144,7 @@ MonoBehaviour:
     - show_move_path
     m_Text: Show Movement Path
     m_Description: Turn this ON to display movement paths in Real-time (or leave
-      it off and use the SHIFT key when you do want them displayed).
+      it off and use the <b>SHIFT</b> key when you do want them displayed).
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -239,7 +239,7 @@ MonoBehaviour:
     m_Names:
     - items_glow
     m_Text: Make Items Glow
-    m_Description: When ON, |Items continuously glow
+    m_Description: When ON, <b>I</b>tems continuously glow
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -250,7 +250,7 @@ MonoBehaviour:
     m_Names:
     - tree_tops
     m_Text: Show Tree Tops
-    m_Description: When ON, shows the |Tree tops.
+    m_Description: When ON, shows the <b>T</b>ree tops.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -261,7 +261,7 @@ MonoBehaviour:
     m_Names:
     - show_wirefr
     m_Text: Show Wireframes
-    m_Description: When ON, displays |Wireframes for obscured walls.
+    m_Description: When ON, displays <b>W</b>ireframes for obscured walls.
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -272,7 +272,7 @@ MonoBehaviour:
     m_Names:
     - curs_3d
     m_Text: Show 3D Cursor
-    m_Description: When ON, the movement cursor is shown in 3D. (|H|o|m|e)
+    m_Description: When ON, the movement cursor is shown in 3D. (<b>Home</b>)
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
@@ -284,7 +284,7 @@ MonoBehaviour:
     - merc_light_under
     m_Text: Show Lights under Mercs
     m_Description: When ON, mercs will display with lights around them during darkness
-      (|G).
+      (<b>G</b>).
     m_ValueType: 3
     m_DefaultValue: true
     m_ValueMin: 
