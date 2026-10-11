@@ -77,7 +77,7 @@ namespace Ja2
 		public AssetStciPalette? paletteFontBase => m_PaletteFontBase;
 #endregion
 
-#region Methods
+#region Methods Public
 		/// <summary>
 		/// Add the base font.
 		/// </summary>
