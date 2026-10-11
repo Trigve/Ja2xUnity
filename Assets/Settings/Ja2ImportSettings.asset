@@ -18,6 +18,7 @@ MonoBehaviour:
     - rid: 1055736991439913030
     - rid: 1055736991439913031
     - rid: 1055736991439913032
+    - rid: 7059307989765455998
   - m_FolderName: interface
     m_FileSettngs:
     - rid: 1055736991439913033
@@ -70,3 +71,10 @@ MonoBehaviour:
         m_FileName: cursor.sti
         m_IsCursorAnimated: 0
         m_AnimFps: 0
+    - rid: 7059307989765455998
+      type: {class: ImportDataFileFont, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 1
+        m_FileName: font10arialbold.sti
+        m_FontPointSize: 10
+        m_FontDescentLine: -2
