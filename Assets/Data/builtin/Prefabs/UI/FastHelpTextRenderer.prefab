@@ -596,8 +596,6 @@ GameObject:
   - component: {fileID: 8726336828395379885}
   - component: {fileID: 6387215116462734841}
   - component: {fileID: 1161529788309810346}
-  - component: {fileID: 8884222048373164420}
-  - component: {fileID: 480328246683227005}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -724,38 +722,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8884222048373164420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7212601596513371104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3849185a2a2e45a9b8856b4a9e4fd2d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TextComponent: {fileID: 1161529788309810346}
-  m_FontAsset: {fileID: 0}
-  m_UseShadow: 0
-  m_ShadowColorIndex: 0
---- !u!114 &480328246683227005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7212601596513371104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ff0d7a3b74d432ab62bdc43b745e52f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AssetRefs:
-  - m_Bundle: '[3618217556]'
-    m_AssetPath: font10arial.asset
-  m_Component: {fileID: 8884222048373164420}
 --- !u!1 &7801280568600011580
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using TMPro;
+
 namespace Ja2.UI
 {
 	/// <summary>
@@ -35,13 +37,16 @@ namespace Ja2.UI
 		/// Instantiate the prefab and return the game object.
 		/// </summary>
 		/// <param name="Component">Component, for which the prefab is instantiated.</param>
-		public GameObject GetGameObject(FastHelpTextComponent Component)
+		/// <param name="Font">Default font to use for the text.</param>
+		public GameObject GetGameObject(FastHelpTextComponent Component, TMP_FontAsset Font)
 		{
 			// Instantiate the prefab
 			GameObject ret = Instantiate(m_FastHelpTextPrefab,
 				m_Canvas!.transform
 			)!;
-			ret.GetComponent<FastHelpTextRendererComponent>().Initialize(m_Canvas);
+			ret.GetComponent<FastHelpTextRendererComponent>().Initialize(m_Canvas,
+				Font
+			);
 
 			m_ShowedTexts[Component] = ret;
 

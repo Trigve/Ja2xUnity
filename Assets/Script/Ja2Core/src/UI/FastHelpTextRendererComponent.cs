@@ -11,12 +11,6 @@ namespace Ja2.UI
 	{
 #region Fields Component
 		/// <summary>
-		/// Text control.
-		/// </summary>
-		[SerializeField]
-		private TMP_Text? m_Text;
-
-		/// <summary>
 		/// Max text width.
 		/// </summary>
 		[SerializeField]
@@ -28,6 +22,11 @@ namespace Ja2.UI
 		/// Canvas to use.
 		/// </summary>
 		private Canvas m_Canvas = null!;
+
+		/// <summary>
+		/// Text control.
+		/// </summary>
+		private TMP_Text? m_Text;
 #endregion
 
 #region Properties
@@ -102,9 +101,13 @@ namespace Ja2.UI
 		/// Initialization.
 		/// </summary>
 		/// <param name="CanvasToUse">Canvas to use.</param>
-		public void Initialize(Canvas CanvasToUse)
+		/// <param name="Font">Base font to use.</param>
+		public void Initialize(Canvas CanvasToUse, TMP_FontAsset Font)
 		{
 			m_Canvas = CanvasToUse;
+
+			m_Text = GetComponentInChildren<TMP_Text>();
+			m_Text.font = Font;
 		}
 #endregion
 	}

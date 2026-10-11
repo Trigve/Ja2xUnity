@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using TMPro;
+
+using Ja2.Attributes;
+
 namespace Ja2.UI
 {
 	/// <summary>
@@ -9,6 +13,12 @@ namespace Ja2.UI
 	public sealed class FastHelpTextComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 #region Fields Component
+		/// <summary>
+		/// Game state.
+		/// </summary>
+		[SerializeField]
+		private GameState m_GameState = null!;
+
 		/// <summary>
 		/// Delay, after which the fast help popup should be displayed.
 		/// </summary>
@@ -20,6 +30,27 @@ namespace Ja2.UI
 		/// </summary>
 		[SerializeField]
 		private string m_Text = string.Empty;
+
+		/// <summary>
+		/// Basic font asset ref.
+		/// </summary>
+		[Header("Font specs")]
+		[AssetRefType(typeof(TMP_FontAsset))]
+		[SerializeField]
+		private AssetRef m_FontBasicAssetRef;
+
+		/// <summary>
+		/// Bold font asset ref.
+		/// </summary>
+		[SerializeField]
+		[AssetRefType(typeof(TMP_FontAsset))]
+		private AssetRef m_FontBoldAssetRef;
+
+		/// <summary>
+		/// Color used for the hiliting.
+		/// </summary>
+		[SerializeField]
+		private Color32 m_ColorHilite;
 #endregion
 
 #region Fields
@@ -37,6 +68,11 @@ namespace Ja2.UI
 		/// Time elapsed after mouse entered.
 		/// </summary>
 		private float m_Timer;
+
+		/// <summary>
+		/// Basic font asset.
+		/// </summary>
+		private TMP_FontAsset? m_FontBasic;
 #endregion
 
 #region Properties
@@ -45,11 +81,32 @@ namespace Ja2.UI
 		/// </summary>
 		public string text
 		{
-			set => m_Text = value;
+			// ReSharper disable once ArrangeAccessorOwnerBody
+			set
+			{
+				// Process the formatting
+				//
+				// <b>...</b> - Bold font with color
+				m_Text = value.Replace("<b>",
+					string.Format("<font=\"@{0}\"><color=#{1}>",
+						m_FontBoldAssetRef.combinedPath,
+						ColorUtility.ToHtmlStringRGBA(m_ColorHilite)
+					)
+				)
+				.Replace("</b>",
+					"</color></font>"
+				);
+			}
 		}
 #endregion
 
 #region Messages
+		public void Awake()
+		{
+			// Load the basic font that will be used
+			m_FontBasic = m_GameState.assetManager.LoadAsset<TMP_FontAsset>(m_FontBasicAssetRef);
+		}
+
 		public void Update()
 		{
 			// Only if cursor is present
@@ -65,7 +122,9 @@ namespace Ja2.UI
 						m_IsShown = true;
 
 						// Instantiate the fast help
-						var fast_help = BootsrapManager.instance.fastHelpTextManager!.GetGameObject(this).GetComponent<FastHelpTextRendererComponent>();
+						var fast_help = BootsrapManager.instance.fastHelpTextManager!.GetGameObject(this,
+							m_FontBasic!
+						).GetComponent<FastHelpTextRendererComponent>();
 						fast_help.text = m_Text;
 
 						// Set the position

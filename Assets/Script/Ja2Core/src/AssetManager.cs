@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using Cysharp.Threading.Tasks;
-
 using UnityEngine;
 using UnityEngine.U2D;
+
+using TMPro;
+
+using Cysharp.Threading.Tasks;
 
 using Object = UnityEngine.Object;
 
@@ -378,6 +380,27 @@ namespace Ja2
 				asset_file_path
 			);
 		}
+
+		/// <summary>
+		/// Handle the font loading.
+		/// </summary>
+		/// <param name="Hash">Hash of the font.</param>
+		/// <param name="FontName">Font name.</param>
+		/// <returns></returns>
+		private TMP_FontAsset? OnTextFontAssetRequest(int Hash, string FontName)
+		{
+			TMP_FontAsset? ret = null;
+
+			// Asset ref string
+			if(FontName[0] == '@')
+			{
+				ret =  LoadAsset<TMP_FontAsset>(
+					AssetRef.Parse(FontName[1..])
+				);
+			}
+
+			return ret;
+		}
 #endregion
 
 #region Constructors
@@ -387,6 +410,7 @@ namespace Ja2
 			Ja2Logger.LogInfo("Loading all bundles ...");
 
 			SpriteAtlasManager.atlasRequested += OnAtlasRequested;
+			TMP_Text.OnFontAssetRequest += OnTextFontAssetRequest;
 
 			var asset_bundle_dir = string.Empty;
 
@@ -450,6 +474,7 @@ namespace Ja2
 			m_Bundles = Array.Empty<BundleData>();
 			m_LoadedBundles.Clear();
 
+			TMP_Text.OnFontAssetRequest -= OnTextFontAssetRequest;
 			SpriteAtlasManager.atlasRequested -= OnAtlasRequested;
 #if UNITY_EDITOR
 			// Only for testing inside editor
