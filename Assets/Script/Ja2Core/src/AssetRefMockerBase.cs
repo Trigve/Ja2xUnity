@@ -57,7 +57,7 @@ namespace Ja2
 		public void Awake()
 		{
 			// Register the mocker
-			BootsrapManager.instance.assetRefMockerManager!.RegisterAssetRefMocker(this);
+			BootstrapManager.instance.assetRefMockerManager!.RegisterAssetRefMocker(this);
 
 			DoAwake();
 		}

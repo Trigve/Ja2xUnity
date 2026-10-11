@@ -45,10 +45,10 @@ namespace Ja2
 			);
 
 			// Load all the assets
-			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
+			BootstrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
 
 			// Start the main menu music, if not already started
-			BootsrapManager.instance.soundManager.AddMusicSource(m_Music!);
+			BootstrapManager.instance.soundManager.AddMusicSource(m_Music!);
 		}
 
 		public void Update()
@@ -116,7 +116,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
+			BootstrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 
 		/// <inheritdoc/>

@@ -34,7 +34,7 @@ namespace Ja2
 		public void Start()
 		{
 			// Load all the assets
-			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
+			BootstrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
 
 			m_ModelPreferences = new UI.Models.ModelPreferences(m_GameState);
 			m_ModelPreferences.eventDone += OnPreferencesDone;
@@ -54,7 +54,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
+			BootstrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 
 		/// <inheritdoc/>

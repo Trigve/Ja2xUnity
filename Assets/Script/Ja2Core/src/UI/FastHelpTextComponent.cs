@@ -122,7 +122,7 @@ namespace Ja2.UI
 						m_IsShown = true;
 
 						// Instantiate the fast help
-						var fast_help = BootsrapManager.instance.fastHelpTextManager!.GetGameObject(this,
+						var fast_help = BootstrapManager.instance.fastHelpTextManager!.GetGameObject(this,
 							m_FontBasic!
 						).GetComponent<FastHelpTextRendererComponent>();
 						fast_help.text = m_Text;
@@ -157,7 +157,7 @@ namespace Ja2.UI
 			m_IsEntered = false;
 
 			// Destroy the fast help
-			BootsrapManager.instance.fastHelpTextManager!.ReleaseGameObject(this);
+			BootstrapManager.instance.fastHelpTextManager!.ReleaseGameObject(this);
 		}
 #endregion
 

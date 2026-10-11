@@ -167,7 +167,7 @@ namespace Ja2
 			m_NodesShown = new Queue<CreditsDataNodeComponent>();
 
 			// Load all the assets
-			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
+			BootstrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
 
 			// Get the actual credits data after loading the data
 			m_CreditsData = m_DataComponent!.m_CreditsData;
@@ -404,7 +404,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
+			BootstrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 #endregion
 	}

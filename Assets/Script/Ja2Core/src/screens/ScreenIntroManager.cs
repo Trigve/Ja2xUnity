@@ -51,9 +51,9 @@ namespace Ja2
 
 			m_VideoPlayer.targetCamera = m_GameState.activeCamera;
 
-			BootsrapManager.instance.assetRefMockerManager!.StopBatchMode(false);
+			BootstrapManager.instance.assetRefMockerManager!.StopBatchMode(false);
 			// As first, load all the needed assets
-			await BootsrapManager.instance.assetRefMockerManager!.LoadAssetsAsync();
+			await BootstrapManager.instance.assetRefMockerManager!.LoadAssetsAsync();
 
 			// Play all the clips
 			foreach(VideoClip? it in m_VideoClips)
@@ -100,7 +100,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoAwake()
 		{
-			BootsrapManager.instance.assetRefMockerManager!.StartBatchMode();
+			BootstrapManager.instance.assetRefMockerManager!.StartBatchMode();
 		}
 #endregion
 	}

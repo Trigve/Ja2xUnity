@@ -11,7 +11,7 @@ namespace Ja2
 	/// This is the main manager class, that is always present and is responsible for the initialization of the game.
 	/// It is also a singleton, so it could be accessed from other scenes.
 	/// </summary>
-	public sealed class BootsrapManager : MonoBehaviour
+	public sealed class BootstrapManager : MonoBehaviour
 	{
 #region Fields Component
 		/// <summary>
@@ -49,14 +49,14 @@ namespace Ja2
 		/// <summary>
 		/// Singleton instance.
 		/// </summary>
-		private static BootsrapManager? m_Instance;
+		private static BootstrapManager? m_Instance;
 #endregion
 
 #region Properties Static
 		/// <summary>
 		/// Get the singleton instance.
 		/// </summary>
-		public static BootsrapManager instance => m_Instance!;
+		public static BootstrapManager instance => m_Instance!;
 #endregion
 
 #region Properties
