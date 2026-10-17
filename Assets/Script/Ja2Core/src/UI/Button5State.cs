@@ -246,6 +246,11 @@ namespace Ja2.UI
 					break;
 				}
 			}
+			else
+			{
+				m_DisabledHatched!.SetActive(false);
+				m_DisabledShaded!.SetActive(false);
+			}
 		}
 
 		/// <summary>
