@@ -22,6 +22,7 @@ MonoBehaviour:
   - m_FolderName: interface
     m_FileSettngs:
     - rid: 1055736991439913033
+    - rid: 7059308144667131985
   - m_FolderName: laptop
     m_FileSettngs:
     - rid: 1055737026148827136
@@ -78,3 +79,17 @@ MonoBehaviour:
         m_FileName: font10arialbold.sti
         m_FontPointSize: 10
         m_FontDescentLine: -2
+    - rid: 7059308144667131985
+      type: {class: ImportDataFileSprite9Slice, ns: Ja2.Editor, asm: Ja2Editor}
+      data:
+        m_AssetType: 4
+        m_FileName: tactpopupmain.sti
+        m_Sprite9SliceData:
+          m_AIndex: 0
+          m_BIndex: 1
+          m_CIndex: 2
+          m_DIndex: 3
+          m_FIndex: 4
+          m_GIndex: 5
+          m_HIndex: 6
+          m_IIndex: 7
