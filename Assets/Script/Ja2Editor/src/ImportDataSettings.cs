@@ -101,7 +101,7 @@ namespace Ja2.Editor
 	}
 
 	/// <summary>
-	/// Base class for per file settings.
+	/// Base class for per-file settings.
 	/// </summary>
 	[Serializable]
 	public abstract class ImportDataFile
@@ -228,6 +228,35 @@ namespace Ja2.Editor
 #region Construction
 		public ImportDataFileCursor()
 			: base(StciImporter.AssetType.Cursor)
+		{
+		}
+#endregion
+	}
+
+	/// <summary>
+	/// 9-slice sprite import settings.
+	/// </summary>
+	[Serializable]
+	public sealed class ImportDataFileSprite9Slice : ImportDataFile
+	{
+#region Fields
+		/// <summary>
+		/// See <see cref="sprite9SliceData"/>.
+		/// </summary>
+		[SerializeField]
+		private Sprite9SliceData m_Sprite9SliceData = new(0);
+#endregion
+
+#region Properties
+		/// <summary>
+		/// Data for the 9-slice sprite.
+		/// </summary>
+		public Sprite9SliceData sprite9SliceData => m_Sprite9SliceData;
+#endregion
+
+#region Construction
+		public ImportDataFileSprite9Slice()
+			: base(StciImporter.AssetType.Sprite9Slice)
 		{
 		}
 #endregion

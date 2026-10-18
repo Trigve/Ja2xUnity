@@ -46,9 +46,17 @@ namespace Ja2.Editor
 					// Imported first time
 					if(assetImporter.importSettingsMissing)
 					{
-						// Found the section and file
-						if(ImportDataSettings.instance.FindSection("interface")?.FindFile(asset_file_name) is ImportDataFileSpriteAtlas atlas_section)
+						ImportDataSection? section = ImportDataSettings.instance.FindSection("interface");
+
+						// Atlas
+						if(section?.FindFile(asset_file_name) is ImportDataFileSpriteAtlas atlas_section)
 							stci_importer.assetType = atlas_section.assetType;
+						// 9-slice sprites
+						else if(section?.FindFile(asset_file_name) is ImportDataFileSprite9Slice sprite_section)
+						{
+							stci_importer.assetType = sprite_section.assetType;
+							stci_importer.sprite9SliceData = sprite_section.sprite9SliceData;
+						}
 					}
 				}
 				// Cursor assets

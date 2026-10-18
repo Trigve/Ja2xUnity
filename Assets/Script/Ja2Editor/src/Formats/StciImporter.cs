@@ -35,6 +35,7 @@ namespace Ja2.Editor
 			Font = 1,
 			SpriteAtlas = 2,
 			Cursor = 3,
+			Sprite9Slice = 4,
 		}
 #endregion
 
@@ -81,6 +82,12 @@ namespace Ja2.Editor
 		/// </summary>
 		[SerializeField]
 		private bool m_IsCursorAnimated;
+
+		/// <summary>
+		/// See <see cref="sprite9SliceData"/>.
+		/// </summary>
+		[SerializeField]
+		private Sprite9SliceData m_Sprite9SliceData;
 #endregion
 
 #region Fields Static
@@ -128,6 +135,15 @@ namespace Ja2.Editor
 		{
 			get => m_IsCursorAnimated;
 			set => m_IsCursorAnimated = value;
+		}
+
+		/// <summary>
+		/// 9-slice sprite data.
+		/// </summary>
+		public Sprite9SliceData sprite9SliceData
+		{
+			get => m_Sprite9SliceData;
+			set => m_Sprite9SliceData = value;
 		}
 #endregion
 
@@ -567,6 +583,141 @@ namespace Ja2.Editor
 
 				// Main object is the data
 				Context.SetMainObject(data);
+			}
+			// 9-slice sprite
+			else if(m_AssetType == AssetType.Sprite9Slice)
+			{
+				m_KeepTextureReadable = false;
+				m_FilterMode = FilterMode.Point;
+
+				// Parse the STCI as first
+				STCIData stci_data = STCIUtils.Load(
+					File.ReadAllBytes(Context.assetPath),
+					STCIUtils.ExtractionFlags.None
+				);
+
+				// There need to be at least 8 images
+				if(stci_data.m_SubImageData.Count < 8)
+					throw new InvalidDataException("Not enough images in STCI for 9-slice sprite");
+
+				// All the sub-textures
+				var textures = new Texture2D[8];
+
+				// Load the sub-textures
+				for(var i = 0; i < 8; ++i)
+				{
+					// Read the right image
+					STCIData.SubImage sub_image = stci_data.m_SubImageData[m_Sprite9SliceData[i]];
+
+					var texture = new Texture2D(sub_image.width,
+						sub_image.height,
+						stci_data.m_ImageFormat,
+						false
+					);
+					texture.filterMode = m_FilterMode;
+					texture.wrapMode = TextureWrapMode.Clamp;
+
+					texture.SetPixels32(sub_image.texture);
+
+					textures[i] = texture;
+				}
+
+				// Find the "border" for the 9-slice sprite
+				var border = new Vector4(
+					// Left
+					Mathf.Max(textures[0].width, textures[3].width, textures[5].width),
+					// Top
+					Mathf.Max(textures[0].height, textures[1].height, textures[2].height),
+					// Right
+					Mathf.Max(textures[2].width, textures[4].width, textures[7].width),
+					// Bottom
+					Mathf.Max(textures[5].height, textures[6].height, textures[7].height)
+				);
+
+				// Create the final texture
+				var texture_main = new Texture2D(textures[0].width + textures[1].width + textures[2].width,
+					textures[0].height + textures[3].height + textures[5].height,
+					stci_data.m_ImageFormat,
+					false
+				);
+				texture_main.filterMode = m_FilterMode;
+				texture_main.wrapMode = TextureWrapMode.Clamp;
+				texture_main.name = "texture";
+
+				// Clear the texture (transparent)
+				texture_main.SetPixels32(new Color32[texture_main.width * texture_main.height],
+					0
+				);
+
+				// Position where the sub-textures will be copied
+				var positions = new Vector2Int[]
+				{
+					new(0, texture_main.height - textures[0].height),
+					new(textures[0].width, texture_main.height - textures[1].height),
+					new(textures[0].width + textures[1].width, texture_main.height - textures[2].height),
+					new(0, texture_main.height - textures[0].height - textures[3].height),
+					new(texture_main.width - textures[4].width, texture_main.height - textures[2].height - textures[4].height),
+					new(0, 0),
+					new(textures[5].width, 0),
+					new(textures[5].width + textures[6].width, 0),
+				};
+
+				// Copy the all sub-texture to the main one
+				for(var i = 0; i < positions.Length; ++i)
+				{
+					Texture2D texture = textures[i];
+
+					Graphics.CopyTexture(texture,
+						0,
+						0,
+						0,
+						0,
+						texture.width,
+						texture.height,
+						texture_main,
+						0,
+						0,
+						positions[i].x,
+						positions[i].y
+					);
+				}
+
+				texture_main.Apply(false,
+					!m_KeepTextureReadable
+				);
+
+				// Destory the sub-textures, as they aren't neede anymore
+				foreach(Texture2D it in textures)
+					DestroyImmediate(it);
+
+				// Create the sprite
+				var sprite = Sprite.Create(texture_main,
+					new Rect(0,
+						0,
+						texture_main.width,
+						texture_main.height
+					),
+					new Vector2(0.5f,
+						0.5f
+					),
+					100.0f,
+					0,
+					SpriteMeshType.FullRect,
+					border
+				);
+				sprite.name = "sprite";
+
+				// Texture
+				Context.AddObjectToAsset(texture_main.name,
+					texture_main
+				);
+				// Sprite
+				Context.AddObjectToAsset(sprite.name,
+					sprite
+				);
+
+				// Main object is the data
+				Context.SetMainObject(texture_main);
 			}
 			else
 			{
