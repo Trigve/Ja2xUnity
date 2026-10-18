@@ -31,10 +31,10 @@ namespace Ja2.Editor
 		/// </summary>
 		public enum AssetType
 		{
-			Generic,
-			Font,
-			SpriteAtlas,
-			Cursor,
+			Generic = 0,
+			Font = 1,
+			SpriteAtlas = 2,
+			Cursor = 3,
 		}
 #endregion
 
