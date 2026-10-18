@@ -104,6 +104,10 @@ PrefabInstance:
       value: font10arial.sti@font10arial Font
       objectReference: {fileID: 0}
     - target: {fileID: 1686332168880978458, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.00000037252903
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686332168880978458, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0.5
       objectReference: {fileID: 0}
@@ -112,8 +116,12 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1686332168880978458, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686332168880978458, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4602375575935241290, guid: 47d29877c542ff64ea086711dce29bf3, type: 3}
       propertyPath: m_fontColor.b
