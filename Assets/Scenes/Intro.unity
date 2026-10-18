@@ -191,7 +191,6 @@ GameObject:
   m_Component:
   - component: {fileID: 574964788}
   - component: {fileID: 574964787}
-  - component: {fileID: 574964790}
   - component: {fileID: 574964789}
   m_Layer: 0
   m_Name: IntroManager
@@ -251,18 +250,6 @@ MonoBehaviour:
   - m_Bundle: '[1507694452]'
     m_AssetPath: talonsoftid_endhold.mp4
   m_Component: {fileID: 574964787}
---- !u!114 &574964790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574964786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c933314e5de443538c0d318ea212559c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

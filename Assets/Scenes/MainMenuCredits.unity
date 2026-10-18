@@ -302,7 +302,6 @@ GameObject:
   - component: {fileID: 234132437}
   - component: {fileID: 234132440}
   - component: {fileID: 234132439}
-  - component: {fileID: 234132436}
   m_Layer: 0
   m_Name: CreditsManager
   m_TagString: Untagged
@@ -310,18 +309,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &234132436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234132435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c933314e5de443538c0d318ea212559c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &234132437
 MonoBehaviour:
   m_ObjectHideFlags: 0
