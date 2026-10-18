@@ -39,6 +39,12 @@ namespace Ja2
 		private UI.FastHelpTextManager? m_FastHelpTextManager;
 
 		/// <summary>
+		/// See <see cref="dialogManager"/>.
+		/// </summary>
+		[SerializeField]
+		private UI.DialogManager m_DialogManager = null!;
+
+		/// <summary>
 		/// Init screen to run.
 		/// </summary>
 		[SerializeField]
@@ -74,6 +80,11 @@ namespace Ja2
 		/// Fast help text manager.
 		/// </summary>
 		public UI.FastHelpTextManager? fastHelpTextManager => m_FastHelpTextManager;
+
+		/// <summary>
+		/// Dialog manager.
+		/// </summary>
+		public UI.DialogManager dialogManager => m_DialogManager;
 #endregion
 
 #region Messages
