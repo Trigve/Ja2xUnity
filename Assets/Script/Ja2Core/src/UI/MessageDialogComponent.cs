@@ -25,6 +25,7 @@ namespace Ja2.UI
 			ButtonNone = 0,
 			ButtonYes = 1 << 0,
 			ButtonNo = 1 << 1,
+			ButtonOk = 1 << 2,
 		}
 #endregion
 
@@ -41,6 +42,12 @@ namespace Ja2.UI
 		/// </summary>
 		[SerializeField]
 		private Button5State m_ButtonNo = null!;
+
+		/// <summary>
+		/// Ok button.
+		/// </summary>
+		[SerializeField]
+		private Button5State m_ButtonOk = null!;
 #endregion
 
 #region Fields
@@ -97,6 +104,12 @@ namespace Ja2.UI
 			{
 				AddButton(ButtonType.ButtonNo,
 					m_ButtonNo
+				);
+			}
+			if((Buttons & ButtonType.ButtonOk) != 0)
+			{
+				AddButton(ButtonType.ButtonOk,
+					m_ButtonOk
 				);
 			}
 
