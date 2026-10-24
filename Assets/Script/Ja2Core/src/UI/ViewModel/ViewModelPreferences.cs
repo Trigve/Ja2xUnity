@@ -19,14 +19,26 @@ namespace Ja2.UI.ViewModel
 		/// <summary>
 		/// Sound effect volume.
 		/// </summary>
-		[Bind]
+		[OneWayBind]
 		private float m_SoundEffectsVolume;
+
+		/// <summary>
+		/// Speech volume command.
+		/// </summary>
+		[OneWayBind]
+		private RelayCommand<float>? m_SoundEffectsVolumeCommand;
 
 		/// <summary>
 		/// Speech volume.
 		/// </summary>
-		[Bind]
+		[OneWayBind]
 		private float m_SpeechVolume;
+
+		/// <summary>
+		/// Speech volume command.
+		/// </summary>
+		[OneWayBind]
+		private RelayCommand<float>? m_SpeechVolumeCommand;
 
 		/// <summary>
 		/// Music volume.
@@ -69,6 +81,11 @@ namespace Ja2.UI.ViewModel
 		/// Message dialog prefab.
 		/// </summary>
 		private readonly GameObject m_MessageDialogPrefab;
+
+		/// <summary>
+		/// Audio preview service.
+		/// </summary>
+		private readonly AudioPreviewService m_AudioPreviewService;
 #endregion
 
 #region Methods Public
@@ -81,32 +98,6 @@ namespace Ja2.UI.ViewModel
 #endregion
 
 #region Methods Private
-		/// <summary>
-		/// Called when changing the value.
-		/// </summary>
-		/// <param name="newValue"></param>
-		partial void OnSoundEffectsVolumeChanged(float newValue)
-		{
-			m_Model.gameSettings.SetValue(GameSettingOptionData.OptionType.OptionSoundEffectsVolume,
-				ConvertValueToDecibel(GameSettingOptionData.OptionType.OptionSoundEffectsVolume,
-					newValue
-				)
-			);
-		}
-
-		/// <summary>
-		/// Called when changing the value.
-		/// </summary>
-		/// <param name="newValue"></param>
-		partial void OnSpeechVolumeChanged(float newValue)
-		{
-			m_Model.gameSettings.SetValue(GameSettingOptionData.OptionType.OptionSpeechVolume,
-				ConvertValueToDecibel(GameSettingOptionData.OptionType.OptionSpeechVolume,
-					newValue
-				)
-			);
-		}
-
 		/// <summary>
 		/// Called when changing the value.
 		/// </summary>
@@ -176,6 +167,36 @@ namespace Ja2.UI.ViewModel
 			if(ret == MessageDialogComponent.ButtonType.ButtonYes)
 				m_Model.Quit();
 		}
+
+		/// <summary>
+		/// Handle sound effects volume changes from view.
+		/// </summary>
+		/// <param name="Value">New value.</param>
+		private void OnSoundEffectsVolumeCommand(float Value)
+		{
+			m_Model.gameSettings.SetValue(GameSettingOptionData.OptionType.OptionSoundEffectsVolume,
+				ConvertValueToDecibel(GameSettingOptionData.OptionType.OptionSoundEffectsVolume,
+					Value
+				)
+			);
+
+			m_AudioPreviewService.PreviewSfx();
+		}
+
+		/// <summary>
+		/// Handle speech volume changes from view.
+		/// </summary>
+		/// <param name="Value">New value.</param>
+		private void OnSpeechVolumeCommand(float Value)
+		{
+			m_Model.gameSettings.SetValue(GameSettingOptionData.OptionType.OptionSpeechVolume,
+				ConvertValueToDecibel(GameSettingOptionData.OptionType.OptionSpeechVolume,
+					Value
+				)
+			);
+
+			m_AudioPreviewService.PreviewSpeech();
+		}
 #endregion
 
 #region Constructor
@@ -184,10 +205,12 @@ namespace Ja2.UI.ViewModel
 		/// </summary>
 		/// <param name="Model">Model used.</param>
 		/// <param name="MessageDialogPrefab">Message dialog prefab.</param>
-		public ViewModelPreferences(Models.ModelPreferences Model, GameObject MessageDialogPrefab)
+		/// <param name="PreviewService">Audio preview service.</param>
+		public ViewModelPreferences(Models.ModelPreferences Model, GameObject MessageDialogPrefab, AudioPreviewService PreviewService)
 		{
 			m_Model = Model;
 			m_MessageDialogPrefab = MessageDialogPrefab;
+			m_AudioPreviewService = PreviewService;
 
 			// Initial values
 			SoundEffectsVolume = ConvertValueToLinear(GameSettingOptionData.OptionType.OptionSoundEffectsVolume);
@@ -204,6 +227,13 @@ namespace Ja2.UI.ViewModel
 			m_CommandQuit = new RelayCommandAsync(OnQuit);
 
 			m_CommandDone = new RelayCommand(Model.Done);
+
+			// Use relay commands for speech/sfx volume changes so only changes from view are processed. This is needed,
+			// otherwise, when using the two-way bind properties, the preview sound would be trigger also during the initial
+			// volume setting. But now, for the initial volume settings, one-way bind property is used so no roudntrip of the
+			// events are made
+			SpeechVolumeCommand = new RelayCommand<float>(OnSpeechVolumeCommand);
+			SoundEffectsVolumeCommand = new RelayCommand<float>(OnSoundEffectsVolumeCommand);
 		}
 #endregion
 	}

@@ -19,11 +19,25 @@ namespace Ja2.UI.View
 		private MonoBinder[]? m_SoundEffectsVolume;
 
 		/// <summary>
+		/// Command for the sound effect volume change.
+		/// </summary>
+		[RequireBinder(typeof(RelayCommand<float>))]
+		[SerializeField]
+		private MonoBinder[]? m_SoundEffectsVolumeCommand;
+
+		/// <summary>
 		/// Speech volume slider binder.
 		/// </summary>
 		[RequireBinder(typeof(float))]
 		[SerializeField]
 		private MonoBinder[]? m_SpeechVolume;
+
+		/// <summary>
+		/// Command for the speech volume change.
+		/// </summary>
+		[RequireBinder(typeof(RelayCommand<float>))]
+		[SerializeField]
+		private MonoBinder[]? m_SpeechVolumeCommand;
 
 		/// <summary>
 		/// Music volume slider binder.

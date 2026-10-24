@@ -35,6 +35,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameScreen? m_MainMenuScreen;
+
+		/// <summary>
+		/// Audio preview service.
+		/// </summary>
+		[SerializeField]
+		private AudioPreviewService m_AudioPreviewService = null!;
 #endregion
 
 #region Fields
@@ -58,7 +64,8 @@ namespace Ja2
 			// UI initalization
 			m_GameSettingsView!.Initialize(
 				new UI.ViewModel.ViewModelPreferences(m_ModelPreferences,
-					m_MessageDialogPrefab!
+					m_MessageDialogPrefab!,
+					m_AudioPreviewService
 				)
 			);
 			//
