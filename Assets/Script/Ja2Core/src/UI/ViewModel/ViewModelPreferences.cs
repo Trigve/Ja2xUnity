@@ -124,7 +124,7 @@ namespace Ja2.UI.ViewModel
 		/// Convert the value to the linear range.
 		/// </summary>
 		/// <param name="Option">Option for which data are used.</param>
-		/// <returns>Value in linear range.</returns>
+		/// <returns>Value in the linear range.</returns>
 		private float ConvertValueToLinear(GameSettingOptionData.OptionType Option)
 		{
 

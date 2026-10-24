@@ -151,7 +151,7 @@ namespace Ja2
 		public OptionType m_OptionType;
 
 		/// <summary>
-		/// All the name aliases for this option. The firs one is used for saving.
+		/// All the name aliases for this option. The first one is used for saving.
 		/// </summary>
 		[SerializeField]
 		public string[] m_Names =  Array.Empty<string>();

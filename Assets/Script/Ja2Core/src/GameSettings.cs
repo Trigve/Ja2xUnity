@@ -176,7 +176,7 @@ namespace Ja2
 		}
 
 		/// <summary>
-		/// Constructor with using INI file for initialization.
+		/// Constructor with using the INI file for initialization.
 		/// </summary>
 		/// <param name="SettingsData">Game settings option.</param>
 		/// <param name="Ini">Ini file for initialization</param>
@@ -296,7 +296,7 @@ namespace Ja2
 		/// Get the min and max value for the option.
 		/// </summary>
 		/// <typeparam name="T">Type.</typeparam>
-		/// <returns>Minimum and maxmimum value for the option. If the options don't have min/max value define, exception is thrown.</returns>
+		/// <returns>Minimum and maxmimum value for the option. If the options don't have min/max value defined, an exception is thrown.</returns>
 		public (T min, T max) GetMinMaxValues<T>()
 		{
 			// Min/Max values should be specified

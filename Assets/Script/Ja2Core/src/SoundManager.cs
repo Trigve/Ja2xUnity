@@ -110,13 +110,13 @@ namespace Ja2
 
 #region Methods Public
 		/// <summary>
-		/// Add and play music audio source.
+		/// Add and play a music audio source.
 		/// </summary>
 		/// <param name="Source">Music audio source.</param>
 		/// <param name="RestartIfPlaying">If true, the music will be restarted from playing. Otherwise, no audio source would be added.</param>
 		public void AddMusicSource(AudioSource Source, bool RestartIfPlaying = false)
 		{
-			// Find if the same audio source exist
+			// Find if the same audio source exists
 			AudioSource? audio_source = m_MusicAudioSources!.FirstOrDefault(Value => Value.clip == Source.clip);
 
 			// Exist
