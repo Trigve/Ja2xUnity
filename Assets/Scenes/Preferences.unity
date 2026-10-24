@@ -1306,6 +1306,7 @@ MonoBehaviour:
   m_GameState: {fileID: 11400000, guid: f92ab9efa3d2e7b418acad26b30254d3, type: 2}
   m_GameSettingsView: {fileID: 2072580407}
   m_PreferencesItemsView: {fileID: 1904703293}
+  m_MessageDialogPrefab: {fileID: 9055987614129142225, guid: d496495cc1cf7a04cb360803712df3d1, type: 3}
 --- !u!4 &1131475390
 Transform:
   m_ObjectHideFlags: 0

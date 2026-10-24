@@ -313,3 +313,5 @@ MonoBehaviour:
     m_ValueMin: 
     m_ValueMax: 
     m_Flags: -1
+  m_OptionsNeededGroup:
+  - m_OptionsNeeded: 0400000006000000

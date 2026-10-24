@@ -21,6 +21,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private UI.View.ViewPreferencesAllItems? m_PreferencesItemsView;
+
+		/// <summary>
+		/// Prefab for the message dialog.
+		/// </summary>
+		[SerializeField]
+		private GameObject? m_MessageDialogPrefab;
 #endregion
 
 #region Fields
@@ -45,7 +51,9 @@ namespace Ja2
 			);
 			//
 			m_PreferencesItemsView!.Initialize(
-				new UI.ViewModel.ViewModelPreferencesAllItems(m_ModelPreferences.gameSettings)
+				new UI.ViewModel.ViewModelPreferencesAllItems(m_ModelPreferences.gameSettings,
+					m_MessageDialogPrefab!
+				)
 			);
 		}
 #endregion

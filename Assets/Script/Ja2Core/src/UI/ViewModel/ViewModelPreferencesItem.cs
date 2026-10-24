@@ -1,3 +1,5 @@
+using System;
+
 using Aspid.MVVM;
 
 namespace Ja2.UI.ViewModel
@@ -38,6 +40,24 @@ namespace Ja2.UI.ViewModel
 		private readonly GameSettingOptionValue m_Item;
 #endregion
 
+#region Events
+		/// <summary>
+		/// Event raised when the bool option was changed.
+		/// </summary>
+		public event EventHandler<EvenArgsGameOption>? eventOptionChanged;
+#endregion
+
+#region Methods Public
+		/// <summary>
+		/// Force setting the value.
+		/// </summary>
+		/// <param name="ValueNew">Value to set</param>
+		public void ForceValue(bool ValueNew)
+		{
+            this.Value = ValueNew;
+		}
+#endregion
+
 #region Methods Private
 		/// <summary>
 		/// Value changed handler.
@@ -45,9 +65,14 @@ namespace Ja2.UI.ViewModel
 		/// <param name="newValue"></param>
 		partial void OnValueChanged(bool newValue)
 		{
-			// Set new value
 			m_GameSettings.SetValue(m_Item.optionData.m_OptionType,
 				newValue
+			);
+
+			eventOptionChanged?.Invoke(this,
+				new EvenArgsGameOption(m_Item.optionData,
+					newValue
+				)
 			);
 		}
 #endregion
