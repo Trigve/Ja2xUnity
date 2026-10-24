@@ -61,7 +61,9 @@ namespace Ja2.UI.ViewModel
 		partial void OnSoundEffectsVolumeChanged(float newValue)
 		{
 			m_Model.gameSettings.SetValue(GameSettingOptionData.OptionType.OptionSoundEffectsVolume,
-				in newValue
+				ConvertValueToDecibel(GameSettingOptionData.OptionType.OptionSoundEffectsVolume,
+					newValue
+				)
 			);
 		}
 
@@ -72,7 +74,9 @@ namespace Ja2.UI.ViewModel
 		partial void OnSpeechVolumeChanged(float newValue)
 		{
 			m_Model.gameSettings.SetValue(GameSettingOptionData.OptionType.OptionSpeechVolume,
-				in newValue
+				ConvertValueToDecibel(GameSettingOptionData.OptionType.OptionSpeechVolume,
+					newValue
+				)
 			);
 		}
 
@@ -83,7 +87,45 @@ namespace Ja2.UI.ViewModel
 		partial void OnMusicVolumeChanged(float newValue)
 		{
 			m_Model.gameSettings.SetValue(GameSettingOptionData.OptionType.OptionMusicVolume,
-				in newValue
+				ConvertValueToDecibel(GameSettingOptionData.OptionType.OptionMusicVolume,
+					newValue
+				)
+			);
+		}
+
+		/// <summary>
+		/// Convert the value to the linear range.
+		/// </summary>
+		/// <param name="Option">Option for which data are used.</param>
+		/// <returns>Value in linear range.</returns>
+		private float ConvertValueToLinear(GameSettingOptionData.OptionType Option)
+		{
+
+			// Range of the option
+			(float min, float max) = m_Model.gameSettings[Option].GetMinMaxValues<float>();
+
+			return SoundManager.DecibelRangeToLinear(m_Model.gameSettings.GetValue<float>(Option),
+				min,
+				max
+			);
+		}
+
+		/// <summary>
+		/// Convert the value to the dB range.
+		/// </summary>
+		/// <param name="Option">Option form which data are used.</param>
+		/// <param name="Value">Value.</param>
+		/// <returns>Value in the dB range.</returns>
+		private float ConvertValueToDecibel(GameSettingOptionData.OptionType Option, float Value)
+		{
+			// Range of the option
+			(float min, float max) = m_Model.gameSettings[Option].GetMinMaxValues<float>();
+
+			return SoundManager.LinearRangeToDecibel(Value,
+				min,
+				max
+			);
+		}
 			);
 		}
 #endregion
@@ -98,9 +140,9 @@ namespace Ja2.UI.ViewModel
 			m_Model = Model;
 
 			// Initial values
-			SoundEffectsVolume = m_Model.gameSettings.GetValue<float>(GameSettingOptionData.OptionType.OptionSoundEffectsVolume);
-			SpeechVolume = m_Model.gameSettings.GetValue<float>(GameSettingOptionData.OptionType.OptionSpeechVolume);
-			MusicVolume = m_Model.gameSettings.GetValue<float>(GameSettingOptionData.OptionType.OptionMusicVolume);
+			SoundEffectsVolume = ConvertValueToLinear(GameSettingOptionData.OptionType.OptionSoundEffectsVolume);
+			SpeechVolume = ConvertValueToLinear(GameSettingOptionData.OptionType.OptionSpeechVolume);
+			MusicVolume = ConvertValueToLinear(GameSettingOptionData.OptionType.OptionMusicVolume);
 
 			m_CommandSaveGame = new RelayCommand(Model.SaveGame,
 				Model.canSaveGame

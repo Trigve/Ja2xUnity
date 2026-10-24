@@ -150,6 +150,7 @@ namespace Ja2
 		/// <summary>
 		/// Default value.
 		/// </summary>
+		[Tooltip("Default value in in <min, max> range.")]
 		[SerializeField]
 		public string m_DefaultValue = string.Empty;
 

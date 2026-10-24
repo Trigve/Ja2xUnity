@@ -68,6 +68,46 @@ namespace Ja2
 		private List<AudioSource>? m_MusicAudioSources;
 #endregion
 
+#region Methods Public Static
+		/// <summary>
+		/// Convert a value in a linear range to dB value.
+		/// </summary>
+		/// <param name="Value">Linear value to convert in &lt;0, 1> range.</param>
+		/// <param name="Min">dB range minimum value.</param>
+		/// <param name="Max">dB range maximum value.</param>
+		/// <returns>dB value in the <paramref name="Min"/>/<paramref name="Max"/> range.</returns>
+		public static float LinearRangeToDecibel(float Value, float Min, float Max)
+		{
+			// Be sure it is still in the range
+			Value = Mathf.Clamp01(Value);
+
+			return LinearToDecibel(
+				Mathf.Lerp(DecibelToLinear(Min),
+					DecibelToLinear(Max),
+					Value
+				)
+			);
+		}
+
+		/// <summary>
+		/// Convert a value in dB range to a linear value.
+		/// </summary>
+		/// <param name="Value">dB value to convert.</param>
+		/// <param name="Min">dB range minimum value.</param>
+		/// <param name="Max">dB range maximum value.</param>
+		/// <returns>Linear value in &lt;0, 1> range</returns>
+		public static float DecibelRangeToLinear(float Value, float Min, float Max)
+		{
+			return Mathf.Clamp01(
+				Mathf.InverseLerp(
+					DecibelToLinear(Min),
+					DecibelToLinear(Max),
+					DecibelToLinear(Value)
+				)
+			);
+		}
+#endregion
+
 #region Methods Public
 		/// <summary>
 		/// Add and play music audio source.
@@ -126,26 +166,6 @@ namespace Ja2
 		}
 
 		/// <summary>
-		/// Convert linear value range to dB range.
-		/// </summary>
-		/// <param name="Value">Linear value to convert.</param>
-		/// <param name="Min">dB range minimum value.</param>
-		/// <param name="Max">dB range maximum value.</param>
-		/// <returns>dB value in the <paramref name="Min"/>/<paramref name="Max"/> range.</returns>
-		private static float LinearRangeToDecibel(float Value, float Min, float Max)
-		{
-			// Be sure it is still in the range
-			Value = Mathf.Clamp01(Value);
-
-			return LinearToDecibel(
-				Mathf.Lerp(DecibelToLinear(Min),
-					DecibelToLinear(Max),
-					Value
-				)
-			);
-		}
-
-		/// <summary>
 		/// Set the audio group volume.
 		/// </summary>
 		/// <param name="AudioGroup">Audio mixer group used to set the volume.</param>
@@ -153,13 +173,8 @@ namespace Ja2
 		/// <param name="Parameter">Parameter name of the volume.</param>
 		private static void SetAudioGroupVolume(AudioMixerGroup AudioGroup, GameSettingOptionValue OptionValue, string Parameter)
 		{
-			(float min, float max) = OptionValue.GetMinMaxValues<float>();
 			AudioGroup.audioMixer.SetFloat(Parameter,
-				// Convert to the dB
-				LinearRangeToDecibel(OptionValue.GetValue<float>(),
-					min,
-					max
-				)
+				OptionValue.GetValue<float>()
 			);
 		}
 #endregion
