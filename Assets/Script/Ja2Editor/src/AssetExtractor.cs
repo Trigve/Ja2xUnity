@@ -25,7 +25,7 @@ namespace Ja2.Editor
 		{
 			string project_path = Path.GetDirectoryName(Application.dataPath)!;
 		    // Root path
-		    string root_path = Directory.GetParent(PathInput)!.Name;
+		    string root_path = Path.GetDirectoryName(PathInput)!;
 		    // File name
 		    string file_name = Path.GetFileName(PathInput).ToLower();
 			// File extension
@@ -126,7 +126,7 @@ namespace Ja2.Editor
 				// File name for the asset
 				string out_file_path = Path.Combine(PathDirOutput,
 					root_path,
-					Path.GetFileName(file_name)
+					file_name
 				);
 
 				// Be sure directory exist
