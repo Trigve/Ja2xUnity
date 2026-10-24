@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 
@@ -17,6 +18,13 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameSettingOptionData[] m_Options = Array.Empty<GameSettingOptionData>();
+
+		/// <summary>
+		/// The group of options, in which at least 1 one option needs to be enabled.
+		/// </summary>
+		[Tooltip("The group of options, in which at least 1 one option needs to be enabled.")]
+		[SerializeField]
+		private GameSettingOptionGroup[] m_OptionsNeededGroup = Array.Empty<GameSettingOptionGroup>();
 #endregion
 
 #region Properties
@@ -24,6 +32,25 @@ namespace Ja2
 		/// Gett all the options.
 		/// </summary>
 		public IEnumerable<GameSettingOptionData> options => m_Options;
+#endregion
+
+#region Methods Public
+		/// <summary>
+		/// Get all the groups, in which the <paramref name="Option"/> figures.
+		/// </summary>
+		/// <param name="Option">Option to check on.</param>
+		/// <returns>All option groups, in which the option is in.</returns>
+		public IEnumerable<GameSettingOptionGroup> GetOptionsNeededGroup(GameSettingOptionData.OptionType Option)
+		{
+			// Process all groups and don't exit early if found, because more than 1 group could contain the
+			// option in combination with other options
+			foreach(GameSettingOptionGroup it in m_OptionsNeededGroup)
+			{
+				// If option is in the given group, returns it
+				if(it.m_OptionsNeeded.Contains(Option))
+					yield return it;
+			}
+		}
 #endregion
 	}
 
@@ -171,6 +198,21 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		public OptionFlag m_Flags = OptionFlag.ShowInSettings;
+#endregion
+	}
+
+	/// <summary>
+	/// Group of game setting options.
+	/// </summary>
+	[Serializable]
+	public class GameSettingOptionGroup
+	{
+#region Fields Component
+		/// <summary>
+		/// Game setting option types.
+		/// </summary>
+		[SerializeField]
+		public GameSettingOptionData.OptionType[] m_OptionsNeeded = Array.Empty<GameSettingOptionData.OptionType>();
 #endregion
 	}
 }

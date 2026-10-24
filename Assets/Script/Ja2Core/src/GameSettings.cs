@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ja2
 {
@@ -9,6 +10,11 @@ namespace Ja2
 	internal sealed class GameSettings
 	{
 #region Fields
+		/// <summary>
+		/// The original asset for game settings.
+		/// </summary>
+		private readonly AssetGameSettingsData m_GameSettingsAsset;
+
 		/// <summary>
 		/// All the options with values.
 		/// </summary>
@@ -131,6 +137,25 @@ namespace Ja2
 				}
 			}
 		}
+
+		/// <summary>
+		/// Check if the given option could be "turned off". This is needed, because in some combinations, at least
+		/// one of the options must be enabled.
+		/// </summary>
+		/// <param name="Option">Option to check.</param>
+		/// <returns>Option group, in which all the options are turned off.</returns>
+		public GameSettingOptionGroup? CheckOptionValue(GameSettingOptionData.OptionType Option)
+		{
+			// Find each option group in which the option is present
+			foreach(GameSettingOptionGroup it in m_GameSettingsAsset.GetOptionsNeededGroup(Option))
+			{
+				// If there is no option set in the given group, it is error
+				if(!it.m_OptionsNeeded.Any(OptionOther => OptionOther != Option && GetValue<bool>(OptionOther)))
+					return it;
+			}
+
+			return null;
+		}
 #endregion
 
 #region Construction
@@ -140,6 +165,7 @@ namespace Ja2
 		/// <param name="SettingsData">Game settings options.</param>
 		public GameSettings(AssetGameSettingsData SettingsData)
 		{
+			m_GameSettingsAsset = SettingsData;
 			m_Options = new Dictionary<GameSettingOptionData.OptionType, GameSettingOptionValue>();
 
 			// Generate the options
@@ -156,6 +182,7 @@ namespace Ja2
 		/// <param name="Ini">Ini file for initialization</param>
 		public GameSettings(AssetGameSettingsData SettingsData, IniFile Ini)
 		{
+			m_GameSettingsAsset = SettingsData;
 			m_Options = new Dictionary<GameSettingOptionData.OptionType, GameSettingOptionValue>();
 
 			// Load from the INI file
@@ -196,6 +223,7 @@ namespace Ja2
 		/// <param name="Copy">Instance, from which the copy is made.</param>
 		public GameSettings(GameSettings Copy)
 		{
+			m_GameSettingsAsset = Copy.m_GameSettingsAsset;
 			m_Options = new Dictionary<GameSettingOptionData.OptionType, GameSettingOptionValue>(Copy.m_Options);
 
 			// Also, forward events
