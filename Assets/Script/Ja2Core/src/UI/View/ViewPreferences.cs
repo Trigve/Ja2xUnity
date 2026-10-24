@@ -47,6 +47,13 @@ namespace Ja2.UI.View
 		private MonoBinder[]? m_CommandLoadGame;
 
 		/// <summary>
+		/// Quit command.
+		/// </summary>
+		[RequireBinder(typeof(IRelayCommand))]
+		[SerializeField]
+		private MonoBinder[]? m_CommandQuit;
+
+		/// <summary>
 		/// Load game command.
 		/// </summary>
 		[RequireBinder(typeof(IRelayCommand))]

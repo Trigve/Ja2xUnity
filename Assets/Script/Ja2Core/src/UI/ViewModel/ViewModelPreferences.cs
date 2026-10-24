@@ -1,12 +1,19 @@
+using System;
+using System.Threading;
+
+using UnityEngine;
+
 using Aspid.MVVM;
+
+using Cysharp.Threading.Tasks;
 
 namespace Ja2.UI.ViewModel
 {
 	/// <summary>
-	/// ViewModel for the preferences screen.
+	/// ViewModel for the "preferences" screen.
 	/// </summary>
 	[ViewModel]
-	internal sealed partial class ViewModelPreferences
+	internal sealed partial class ViewModelPreferences : IDisposable
 	{
 #region Fields View
 		/// <summary>
@@ -40,6 +47,12 @@ namespace Ja2.UI.ViewModel
 		private IRelayCommand m_CommandLoadGame;
 
 		/// <summary>
+		/// Quit command.
+		/// </summary>
+		[Bind]
+		private IRelayCommand m_CommandQuit;
+
+		/// <summary>
 		/// Done command.
 		/// </summary>
 		[Bind]
@@ -51,6 +64,20 @@ namespace Ja2.UI.ViewModel
 		/// Model used.
 		/// </summary>
 		private readonly Models.ModelPreferences m_Model;
+
+		/// <summary>
+		/// Message dialog prefab.
+		/// </summary>
+		private readonly GameObject m_MessageDialogPrefab;
+#endregion
+
+#region Methods Public
+		/// <inheritdoc/>
+		public void Dispose()
+		{
+			// Dispose async command so it is stopped
+			((RelayCommandAsync)CommandQuit).Dispose();
+		}
 #endregion
 
 #region Methods Private
@@ -126,7 +153,28 @@ namespace Ja2.UI.ViewModel
 				max
 			);
 		}
+#endregion
+
+#region Slots
+		/// <summary>
+		/// "Quit" command handler.
+		/// </summary>
+		private async UniTask OnQuit(CancellationToken Token)
+		{
+			DialogManager dialog_manager = BootstrapManager.instance.dialogManager;
+
+			// Create the dialog
+			DialogHandle dialog = dialog_manager.CreateMessageDialog(m_MessageDialogPrefab);
+			// \FIXME Text shouldn't be hardoced
+			dialog.m_Dialog.text = "Quit game and return to the main menu?";
+
+			// Show the dialog
+			MessageDialogComponent.ButtonType ret = await dialog.m_Dialog.ShowAsync(MessageDialogComponent.ButtonType.ButtonYes | MessageDialogComponent.ButtonType.ButtonNo,
+				Token
 			);
+
+			if(ret == MessageDialogComponent.ButtonType.ButtonYes)
+				m_Model.Quit();
 		}
 #endregion
 
@@ -135,9 +183,11 @@ namespace Ja2.UI.ViewModel
 		/// Constructor.
 		/// </summary>
 		/// <param name="Model">Model used.</param>
-		public ViewModelPreferences(Models.ModelPreferences Model)
+		/// <param name="MessageDialogPrefab">Message dialog prefab.</param>
+		public ViewModelPreferences(Models.ModelPreferences Model, GameObject MessageDialogPrefab)
 		{
 			m_Model = Model;
+			m_MessageDialogPrefab = MessageDialogPrefab;
 
 			// Initial values
 			SoundEffectsVolume = ConvertValueToLinear(GameSettingOptionData.OptionType.OptionSoundEffectsVolume);
@@ -150,6 +200,9 @@ namespace Ja2.UI.ViewModel
 			m_CommandLoadGame = new RelayCommand(Model.LoadGame,
 				Model.canLoadGame
 			);
+
+			m_CommandQuit = new RelayCommandAsync(OnQuit);
+
 			m_CommandDone = new RelayCommand(Model.Done);
 		}
 #endregion

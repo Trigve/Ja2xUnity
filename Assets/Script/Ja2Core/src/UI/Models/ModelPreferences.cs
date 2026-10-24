@@ -12,6 +12,11 @@ namespace Ja2.UI.Models
 		/// Game state instance.
 		/// </summary>
 		private readonly GameState m_GameState;
+
+		/// <summary>
+		/// Screen which gets loaded on quit.
+		/// </summary>
+		private GameScreen m_Quitcreen;
 #endregion
 
 #region Properties
@@ -84,6 +89,19 @@ namespace Ja2.UI.Models
 				EventArgs.Empty
 			);
 		}
+
+		/// <summary>
+		/// Quit the "preferences" screen.
+		/// </summary>
+		public void Quit()
+		{
+			m_GameState.screenManager.SetPendingScreen(m_Quitcreen,
+				new GameScreenOptions()
+				{
+					destroyActiveSceen = true
+				}
+			);
+		}
 #endregion
 
 #region Construction
@@ -91,9 +109,12 @@ namespace Ja2.UI.Models
 		/// Constructor.
 		/// </summary>
 		/// <param name="State">Game state.</param>
-		public ModelPreferences(GameState State)
+		/// <param name="Quitcreen">Quitting screen.</param>
+		public ModelPreferences(GameState State, GameScreen Quitcreen)
 		{
 			m_GameState = State;
+			m_Quitcreen = Quitcreen;
+
 			// Get copy of the settings
 			gameSettings = new GameSettings(State.gameSettings);
 		}

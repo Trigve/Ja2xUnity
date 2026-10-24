@@ -1269,11 +1269,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8861919058650668469, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
+      propertyPath: __id
+      value: CommandQuit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861919058650668469, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
+      propertyPath: __view
+      value: 
+      objectReference: {fileID: 2072580407}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
+--- !u!114 &1113564302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8861919058650668469, guid: 373701b4c4dfdfe4fa5a5cb553af7dff, type: 3}
+  m_PrefabInstance: {fileID: 1113564301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1031e6094e49b18ad59645c320d692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1131475387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,6 +1326,7 @@ MonoBehaviour:
   m_GameSettingsView: {fileID: 2072580407}
   m_PreferencesItemsView: {fileID: 1904703293}
   m_MessageDialogPrefab: {fileID: 9055987614129142225, guid: d496495cc1cf7a04cb360803712df3d1, type: 3}
+  m_MainMenuScreen: {fileID: 11400000, guid: 3ee40f131a333524fb3f6ad2c2991295, type: 2}
 --- !u!4 &1131475390
 Transform:
   m_ObjectHideFlags: 0
@@ -2592,6 +2612,8 @@ MonoBehaviour:
   - {fileID: 1232197985}
   m_CommandLoadGame:
   - {fileID: 668206594}
+  m_CommandQuit:
+  - {fileID: 1113564302}
   m_CommandDone:
   - {fileID: 1059189764}
 --- !u!1 &2123315876

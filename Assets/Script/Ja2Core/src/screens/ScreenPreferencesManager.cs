@@ -2,6 +2,8 @@ using System;
 
 using UnityEngine;
 
+using Aspid.MVVM;
+
 namespace Ja2
 {
 	/// <summary>
@@ -27,6 +29,12 @@ namespace Ja2
 		/// </summary>
 		[SerializeField]
 		private GameObject? m_MessageDialogPrefab;
+
+		/// <summary>
+		/// Main menu screen.
+		/// </summary>
+		[SerializeField]
+		private GameScreen? m_MainMenuScreen;
 #endregion
 
 #region Fields
@@ -42,12 +50,16 @@ namespace Ja2
 			// Load all the assets
 			BootstrapManager.instance.assetRefMockerManager!.StopBatchMode(true);
 
-			m_ModelPreferences = new UI.Models.ModelPreferences(m_GameState);
+			m_ModelPreferences = new UI.Models.ModelPreferences(m_GameState,
+				m_MainMenuScreen!
+			);
 			m_ModelPreferences.eventDone += OnPreferencesDone;
 
 			// UI initalization
 			m_GameSettingsView!.Initialize(
-				new UI.ViewModel.ViewModelPreferences(m_ModelPreferences)
+				new UI.ViewModel.ViewModelPreferences(m_ModelPreferences,
+					m_MessageDialogPrefab!
+				)
 			);
 			//
 			m_PreferencesItemsView!.Initialize(
@@ -68,6 +80,7 @@ namespace Ja2
 		/// <inheritdoc/>
 		protected override void DoOnDestroy()
 		{
+			m_GameSettingsView?.ViewModel?.DisposeViewModel();
 			m_GameSettingsView?.Deinitialize();
 			m_PreferencesItemsView?.Deinitialize();
 		}
