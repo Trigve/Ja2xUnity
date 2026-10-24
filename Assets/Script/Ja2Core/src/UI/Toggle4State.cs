@@ -1,9 +1,11 @@
-using TMPro;
+using System;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+using TMPro;
 
 namespace Ja2.UI
 {
@@ -106,6 +108,13 @@ namespace Ja2.UI
 		}
 #endregion
 
+#region Events
+		/// <summary>
+		/// Event raised when toggle is clicked.
+		/// </summary>
+		public event EventHandler<bool>? eventToggleClicked;
+#endregion
+
 #region Messages
 		protected override void Awake()
 		{
@@ -135,6 +144,29 @@ namespace Ja2.UI
 			base.OnPointerExit(eventData);
 
 			Refresh();
+		}
+
+		/// <inheritdoc/>
+		public override void OnPointerClick(PointerEventData EventData)
+		{
+			if(EventData.button != PointerEventData.InputButton.Left)
+				return;
+
+			eventToggleClicked?.Invoke(this,
+				!isOn
+			);
+
+			base.OnPointerClick(EventData);
+		}
+
+		/// <inheritdoc/>
+		public override void OnSubmit(BaseEventData EventData)
+		{
+			eventToggleClicked?.Invoke(this,
+				!isOn
+			);
+
+			base.OnSubmit(EventData);
 		}
 
 		/// <summary>
