@@ -8,8 +8,11 @@ using Object = UnityEngine.Object;
 namespace Ja2
 {
 	/// <summary>
-	/// Base class for all asset ref mockers.
+	/// Base class for all asset ref mockers. Scrip execution order is needed, because target components
+	/// need to be fully initialized (<code>Awake()</code> called) when this class <code>Awake()</code> is called.
+	/// It is fragile, but before some acceptable solution is found, this will be used.
 	/// </summary>
+	[DefaultExecutionOrder(1000)]
 	public abstract class AssetRefMockerBase : MonoBehaviour
 	{
 #if UNITY_EDITOR
