@@ -68,6 +68,11 @@ namespace Ja2.UI
 		/// Original text color.
 		/// </summary>
 		private Color32 m_TextColorOrig;
+
+		/// <summary>
+		/// Original pivot of the image component.
+		/// </summary>
+		private Vector2 m_PivotOrig;
 #endregion
 
 #region Properties
@@ -119,6 +124,8 @@ namespace Ja2.UI
 		protected override void Awake()
 		{
 			base.Awake();
+
+			m_PivotOrig = image.rectTransform.pivot;
 
 			m_Text = GetComponentInChildren<TMP_Text>();
 			Assert.IsNotNull(m_Text);
@@ -174,20 +181,38 @@ namespace Ja2.UI
 		/// </summary>
 		public void Refresh()
 		{
+			Sprite? sprite_to_set = null;
+
 			switch(currentSelectionState)
 			{
 			case SelectionState.Normal:
-				image.sprite = (isOn ? m_NormalOn : m_NormalOff);
+				sprite_to_set = (isOn ? m_NormalOn : m_NormalOff);
 				m_Text!.color = m_TextColorOrig;
 				break;
 			case SelectionState.Pressed or SelectionState.Selected or SelectionState.Highlighted:
-				image.sprite = (isOn ? m_HiliteOn : m_HiliteOff);
+				sprite_to_set = (isOn ? m_HiliteOn : m_HiliteOff);
 				m_Text!.color = m_TextHiliteColor;
 				break;
 			default:
-				image.sprite = image.sprite;
+				sprite_to_set = image.sprite;
 				m_Text!.color = m_TextColorOrig;
 				break;
+			}
+
+			if(sprite_to_set != null)
+			{
+				image.sprite = sprite_to_set;
+
+				// Update the pivot based on the sprite pivot
+				RectTransform rect_trans = image.rectTransform;
+
+				Vector2 pos = m_PivotOrig;
+
+				pos.x += sprite_to_set.pivot.x / sprite_to_set.rect.height;
+				pos.y -= (sprite_to_set.rect.height - sprite_to_set.pivot.y) / sprite_to_set.rect.height;
+
+				rect_trans.pivot = pos;
+
 			}
 		}
 
