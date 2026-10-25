@@ -867,11 +867,11 @@ namespace Ja2.Editor
 
 					Texture2D texture = textures[i];
 
-					// JA2 stores a per-tile draw offset rather than a centered pivot, therfore conversion into the
+					// JA2 stores a per-tile draw offset from top-left corner, therfore conversion into the
 					// sprite pivot space is needed
 					var pivot = new Vector2(
-						0.5f - sub_image.offsetX / sub_image.width,
-						0.5f + sub_image.offsetY / sub_image.height
+						-(((float)sub_image.offsetX) / sub_image.width),
+						(sub_image.height + ((float)sub_image.offsetY)) / sub_image.height
 					);
 
 					var sprite = Sprite.Create(
